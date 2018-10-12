@@ -62,7 +62,7 @@
 					cache: false
 				},
 				url: "/tournamentEventsTable",
-				rowCount: [10],
+				rowCount: [20],
 				navigation: 0,
 				sorting: false,
 				formatters: {
@@ -91,14 +91,6 @@
 			loadRankingTopN("RANK");
 		});
 	</script>
-	<style type="text/css">
-		body {
-			background: url("/images/home-bg.jpg") repeat;
-		}
-		.component-header {
-			margin: 0;
-		}
-	</style>
 	<script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "WebSite",
@@ -113,15 +105,18 @@
 	<header th:include="fragments/header :: title"></header>
 	<div class="row">
 		<div class="col-lg-10 col-md-9">
-			<div>
+			<!--div>
 				<h1 style="margin-top: 10px; margin-bottom: 20px"><th:block th:include="fragments/promotion :: logo"/></h1>
 			</div>
 			<p>
 				Welcome to <th:block th:include="fragments/promotion :: logo"/>, the ultimate tennis statistics destination for the die-hard tennis fans!<br/>
 				Be it latest or historical results, in-match statistics, records or all-time greats comparisons, Elo ratings or tournament forecasts, you will find it here. More details at <a href="/about" class="text-nowrap"><i class="fa fa-question-circle"></i> About</a> page.
-			</p>
+			</p-->
 			<th:block th:if="${hasInProgressEvents}">
-			<h4 class="text-nowrap" style="margin-top: 25px"><i class="fa fa-eye"></i> Latest Forecasts <sup style="font-size: 60%"><i class="text-muted">Powered by <th:block th:include="fragments/promotion :: tcb"/></i></sup></h4>
+				<h4 class="text-nowrap"><i class="fa fa-eye"></i> Latest Forecasts <sup style="font-size: 60%"><i
+						class="text-muted">Powered by
+					<th:block th:include="fragments/promotion :: tcb"/>
+				</i></sup></h4>
 			<table id="inProgressEventsTable" class="table table-condensed table-hover table-striped" style="margin-bottom: 0">
 				<thead>
 				<tr>
@@ -139,7 +134,7 @@
 				<a href="/rankingsTable?rankType=ELO_RANK" class="label label-B" title="Current Elo rankings">Elo Rankings</a>
 			</div>
 			</th:block>
-			<h4 class="text-nowrap" style="margin-top: 25px"><i class="fa fa-calendar"></i> Latest Results</h4>
+			<h4 class="text-nowrap"><i class="fa fa-calendar"></i> Latest Results</h4>
 			<table id="latestEvents" class="table table-condensed table-hover table-striped" style="margin-bottom: 0">
 				<thead>
 				<tr>
@@ -158,7 +153,7 @@
 				<a href="/tournamentEvents" class="label label-default" title="Show more tournament results">More Results</a>
 				<a th:href="@{/season(season=${currentSeason})}" class="label label-B" th:title="|Show season ${currentSeason} figures|">Season [(${currentSeason})]</a>
 			</div>
-			<h4 class="text-nowrap" style="margin-top: 25px"><i class="fa fa-star-o"></i> Latest New Features<sup class="new-feature"></sup></h4>
+			<!--h4 class="text-nowrap" style="margin-top: 25px"><i class="fa fa-star-o"></i> Latest New Features<sup class="new-feature"></sup></h4>
 			<ul>
 				<li>New Records for Different Masters Slot <a href="/record?recordId=DifferentMastersSlotTitles">Titles</a> (+2 'GOAT' Points) / <a href="/record?recordId=DifferentMastersSlotFinals">Finals</a> (Masters Slot is an order number (1-9) by date of the Masters event within the season) and <a href="/record?recordId=YoungestEndOfSeasonATPNo1">Youngest</a> / <a href="/record?recordId=OldestEndOfSeasonATPNo1">Oldest</a> year-end No. 1</li>
 				<li>Court Speed Index (0 - 100) for tournaments and tournament events (more info about the formula used at <a href="/glossary">Glossary</a> page, visible by default on 1440+ pixels screens)</li>
@@ -198,19 +193,11 @@
 				<li>On H2H page, when comparing player matches, H2H checkbox <div class="checkbox" style="display: inline-block; margin-left: 25px; margin-bottom: 0"><input type="checkbox" disabled="disabled"/>H2H</div> controls whether only H2H matches are displayed or comparision of last matches played by each player is displayed.
 					By unchecking the H2H checkbox, comparision of last matches is activated.
 				</li>
-			</ul>
+			</ul-->
 		</div>
 		<div class="col-lg-2 col-md-3">
 			<div id="rankingTopN"></div>
-			<div class="panel panel-default component text-center text-nowrap">
-				<a href="/liveScores" title="Live scores"><strong>Live Scores</strong> <img src="/images/active.png" style="vertical-align: -5%" width="12" height="12"/></a> via<br/>
-				<a href="https://www.livescore.in" title="Livescore.in" target="_blank">Livescore.in</a>
-			</div>
 			<th:block th:include="fragments/goatTopN :: goatTopN"/>
-			<th:block th:include="fragments/promotion :: facebook"/>
-			<th:block th:include="fragments/promotion :: twitter('')"/>
-			<th:block th:include="fragments/promotion :: paypal"/>
-			<th:block th:include="fragments/promotion :: license"/>
 		</div>
 	</div>
 	<th:block th:include="fragments/deviceDetector :: deviceDetectors"/>

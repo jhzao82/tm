@@ -212,7 +212,7 @@
 		<th:block th:with="wl=${performance.matches}">
 		<table th:unless="${wl.empty}" class="table table-condensed text-nowrap">
 			<tr>
-				<th>[[#{profile.overall}]]</th>
+                <th>[[#{overall}]]</th>
 				<th width="100%">
 					<div class="progress progress-profile">
 						<div class="progress-bar progress-bar-overall" th:attrappend="class=${player.active ? ' progress-bar-striped' : ''}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -225,7 +225,7 @@
 			</th:block>
 			<th:block th:with="wl=${performance.hardMatches}">
 			<tr th:unless="${wl.empty}">
-				<th>[[#{profile.hard}]]</th>
+                <th>[[#{hard}]]</th>
 				<th>
 					<div class="progress progress-profile">
 						<div class="progress-bar progress-bar-profile progress-bar-primary" th:attrappend="class=${player.active ? ' progress-bar-striped' : ''}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -240,7 +240,7 @@
 			</th:block>
 			<th:block th:with="wl=${performance.clayMatches}">
 			<tr th:unless="${wl.empty}">
-				<th>[[#{profile.clay}]]</th>
+                <th>[[#{clay}]]</th>
 				<th>
 					<div class="progress progress-profile">
 						<div class="progress-bar progress-bar-profile progress-bar-danger" th:attrappend="class=${player.active ? ' progress-bar-striped' : ''}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -255,7 +255,7 @@
 			</th:block>
 			<th:block th:with="wl=${performance.grassMatches}">
 			<tr th:unless="${wl.empty}">
-				<th>[[#{profile.grass}]]</th>
+                <th>[[#{grass}]]</th>
 				<th>
 					<div class="progress progress-profile">
 						<div class="progress-bar progress-bar-profile progress-bar-success" th:attrappend="class=${player.active ? ' progress-bar-striped' : ''}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -270,7 +270,7 @@
 			</th:block>
 			<th:block th:with="wl=${performance.carpetMatches}">
 			<tr th:unless="${wl.empty}">
-				<th>[[#{profile.carpet}]]</th>
+                <th>[[#{carpet}]]</th>
 				<th>
 					<div class="progress progress-profile">
 						<div class="progress-bar progress-bar-profile progress-bar-warning" th:attrappend="class=${player.active ? ' progress-bar-striped' : ''}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">

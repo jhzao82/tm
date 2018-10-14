@@ -15,6 +15,7 @@
 	<meta name="description" content="Open Era GOAT List (a.k.a. GOATometer) compares tennis player career achievements expressed by GOAT Points"/>
 	<script type="text/javascript" th:inline="javascript">
 		var surface = [[${surface}]];
+		var language = [[${language}]] ? [[${language}]] : "";
 		$(function() {
 			var $goatListTable = $("#goatListTable");
 			var device = detectDevice();
@@ -66,7 +67,7 @@
 				formatters: {
 					"player": playerCountryFormatter,
 					"totalPoints": function(column, row) {
-						return "<a href='/playerProfile?playerId=" + row.playerId + "&tab=goatPoints" + (surface ? "&surface=" + surface : "") + "' title='Show GOAT points distribution'><b>" + row.totalPoints + "</b></a>";
+						return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "&tab=goatPoints" + (surface ? "&surface=" + surface : "") + "' title='Show GOAT points distribution'><b>" + row.totalPoints + "</b></a>";
 					},
 					"tournamentPoints": function(column, row) {
 						if (row.tournamentPoints > 0) {
@@ -140,16 +141,16 @@
 					"weeksAtNo1":  function(column, row) {
 						var weeksAtNo1 = row.weeksAtNo1;
 						if (weeksAtNo1 > 0)
-							return "<a href='/playerProfile?playerId=" + row.playerId + "&tab=ranking" + (surface ? "&rankType=" + surfaceName(surface).toUpperCase() + "_ELO_RANK" : "") + "' title='Show " + (surface ? surfaceName(surface) + " Elo" : "ATP") + " ranking'>" + weeksAtNo1 + "</a>";
+							return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "&tab=ranking" + (surface ? "&rankType=" + surfaceName(surface).toUpperCase() + "_ELO_RANK" : "") + "' title='Show " + (surface ? surfaceName(surface) + " Elo" : "ATP") + " ranking'>" + weeksAtNo1 + "</a>";
 						else
 							return "<span class='text-muted'>0</span>";
 
 					},
 					"wonPct": function(column, row) {
-						return "<a href='/playerProfile?playerId=" + row.playerId + "&tab=performance" + (surface ? "&surface=" + surface : "") + "' title='" + row.wonLost + "'>" + row.wonPct + "</a>";
+						return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "&tab=performance" + (surface ? "&surface=" + surface : "") + "' title='" + row.wonLost + "'>" + row.wonPct + "</a>";
 					},
 					"bestEloRating": function(column, row) {
-						return "<a href='/playerProfile?playerId=" + row.playerId + "&tab=ranking&rankType=" + (surface ? surfaceName(surface).toUpperCase() + "_" : "") + "ELO_RATING' title='" + formatDate(row.bestEloRatingDate) + "'>" + row.bestEloRating + "</a>";
+						return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "&tab=ranking&rankType=" + (surface ? surfaceName(surface).toUpperCase() + "_" : "") + "ELO_RATING' title='" + formatDate(row.bestEloRatingDate) + "'>" + row.bestEloRating + "</a>";
 					}
 				},
 				labels: {
@@ -221,7 +222,7 @@
 			return function(column, row) {
 				var count = row[attr];
 				if (count > 0)
-					return "<a href='/playerProfile?playerId=" + row.playerId + "&tab=events&result=W" + (surface ? "&surface=" + surface : "") + params + "' title='Show" + title + " titles'>" + count + "</a>";
+					return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "&tab=events&result=W" + (surface ? "&surface=" + surface : "") + params + "' title='Show" + title + " titles'>" + count + "</a>";
 				else
 					return "<span class='text-muted'>" + (row.dob && ((attr === "olympics" && row.dob[0] < 1950) || (attr === "altFinals" && row.dob[0] >= 1982)) ? "-" : "0") + "</span>";
 			};
@@ -275,7 +276,7 @@
 			reloadGOATListTableAndLegend();
 		}
 		function goatListUrl() {
-			var url = "/goatList?oldLegends=" + $("#oldLegends").prop("checked");
+			var url = language + "/goatList?oldLegends=" + $("#oldLegends").prop("checked");
 			var surface = $("#surface").val();
 			if (surface)
 				url += "&surface=" + surface;
@@ -293,7 +294,7 @@
 		}
 		function goatLegendUrl() {
 			var surface = $("#surface").val();
-			return "/goatLegend?surface=" + (surface ? surface : "") + goatListFactors();
+			return language + "/goatLegend?surface=" + (surface ? surface : "") + goatListFactors();
 		}
 		function goatListFactors() {
 			var url = "";
@@ -386,11 +387,24 @@
 	<div id="goatListQuickPicks" class="btn-group margin-right">
 		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Quick Picks <span class="caret"></span></button>
 		<ul class="dropdown-menu">
-			<li><a href="/goatList" title="All GOAT Points constituents are included with weight x 1"><i class="fa fa-flag"></i> Default</a></li>
-			<li><a href="/goatList?levelFactors=G=2&resultFactors=W=2&weeksAtNo1Factor=4&grandSlamFactor=4" title="Grand Slam tournament titles are emphasized with x 4 the default weight, other GS tournament points (F, SF, QF) x 2, other titles x 2 (resulting in 1 GS = 4 Masters, 1 title = 4 finals), Grand Slam achievement points x 4 and weeks at No. 1 points x 4"><i class="fa fa-trophy"></i> GS, titles and No. 1 focus</a></li>
-			<li><a href="/goatList?levelFactors=F=0,L=0,M=0,O=0,A=0,B=0,D=0,T=0&resultFactors=F=0,SF=0,QF=0,RR=0,BR=0&yearEndRankFactor=0&bestRankFactor=0&weeksAtEloTopNFactor=0&bestEloRatingFactor=0&bigWinsFactor=0&h2hFactor=0&recordsFactor=0&bestSeasonFactor=0&greatestRivalriesFactor=0&performanceFactor=0&statisticsFactor=0" title="Grand Slam titles and achievement points and weeks at No. 1 points are the only ones selected"><i class="fa fa-sun-o"></i> Minimalist</a></li>
-			<li><a href="/goatList?bestRankFactor=4&bestEloRatingFactor=4&bestSeasonFactor=4" title="Peak achievements (Career High Ranking, Peak Elo Ratings, and Best Seasons) are emphasized x 4 the default weight"><i class="fa fa-bullseye"></i> Peak emphasis</a></li>
-			<li><a href="/goatList?tournamentFactor=0&yearEndRankFactor=0&weeksAtNo1Factor=0&weeksAtEloTopNFactor=0&grandSlamFactor=0&bigWinsFactor=0&h2hFactor=0&recordsFactor=0&greatestRivalriesFactor=0&performanceFactor=0&statisticsFactor=0" title="Peak achievements (Career High Ranking, Peak Elo Ratings and Best Seasons) are the only ones selected"><i class="fa fa-dot-circle-o"></i> Minimalist Peak</a></li>
+			<li><a th:href="${language}+'/goatList'"
+				   title="All GOAT Points constituents are included with weight x 1"><i class="fa fa-flag"></i> Default</a>
+			</li>
+			<li>
+				<a th:href="${language}+'/goatList?levelFactors=G=2&resultFactors=W=2&weeksAtNo1Factor=4&grandSlamFactor=4'"
+				   title="Grand Slam tournament titles are emphasized with x 4 the default weight, other GS tournament points (F, SF, QF) x 2, other titles x 2 (resulting in 1 GS = 4 Masters, 1 title = 4 finals), Grand Slam achievement points x 4 and weeks at No. 1 points x 4"><i
+						class="fa fa-trophy"></i> GS, titles and No. 1 focus</a></li>
+			<li>
+				<a th:href="${language}+'/goatList?levelFactors=F=0,L=0,M=0,O=0,A=0,B=0,D=0,T=0&resultFactors=F=0,SF=0,QF=0,RR=0,BR=0&yearEndRankFactor=0&bestRankFactor=0&weeksAtEloTopNFactor=0&bestEloRatingFactor=0&bigWinsFactor=0&h2hFactor=0&recordsFactor=0&bestSeasonFactor=0&greatestRivalriesFactor=0&performanceFactor=0&statisticsFactor=0'"
+				   title="Grand Slam titles and achievement points and weeks at No. 1 points are the only ones selected"><i
+						class="fa fa-sun-o"></i> Minimalist</a></li>
+			<li><a th:href="${language}+'/goatList?bestRankFactor=4&bestEloRatingFactor=4&bestSeasonFactor=4'"
+				   title="Peak achievements (Career High Ranking, Peak Elo Ratings, and Best Seasons) are emphasized x 4 the default weight"><i
+					class="fa fa-bullseye"></i> Peak emphasis</a></li>
+			<li>
+				<a th:href="${language}+'/goatList?tournamentFactor=0&yearEndRankFactor=0&weeksAtNo1Factor=0&weeksAtEloTopNFactor=0&grandSlamFactor=0&bigWinsFactor=0&h2hFactor=0&recordsFactor=0&greatestRivalriesFactor=0&performanceFactor=0&statisticsFactor=0'"
+				   title="Peak achievements (Career High Ranking, Peak Elo Ratings and Best Seasons) are the only ones selected"><i
+						class="fa fa-dot-circle-o"></i> Minimalist Peak</a></li>
 		</ul>
 	</div>
 	<table id="goatListTable" class="table table-condensed table-hover table-striped">

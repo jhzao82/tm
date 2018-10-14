@@ -23,7 +23,12 @@ public abstract class PageController extends BaseController {
 	}
 
 	@ModelAttribute("languages")
-	public Languages[] getLangeuages() {
-		return Languages.values();
-	}
+    public Language[] getLangeuages() {
+        return Language.values();
+    }
+
+    @ModelAttribute("language")
+    public String getLanguage() {
+        return "/en";
+    }
 }

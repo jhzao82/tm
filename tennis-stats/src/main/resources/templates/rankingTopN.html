@@ -39,7 +39,8 @@
 					<li th:each="aRankType : ${rankTypes}" th:unless="${aRankType.points || (aRankType.surface != null && aRankType.surface.name() == 'CARPET')}"><a href="#" th:class="${aRankType.surface != null ? 'bg-surface-' + aRankType.surface.code : _}" th:onclick="'event.preventDefault(); loadRankingTopN(\'' + ${aRankType} + '\', ' + ${count} + ')'" th:text="${aRankType.shortText}" th:title="${aRankType.text}">ATP</a></li>
 				</ul>
 			</div>
-			<a th:href="@{/rankingsTable(rankType=${rankType})}" style="vertical-align: text-top" title="Full Rankings Table"><i class="fa fa-search-plus"></i></a>
+			<a th:href="${language}+@{/rankingsTable(rankType=${rankType})}" style="vertical-align: text-top"
+			   title="Full Rankings Table"><i class="fa fa-search-plus"></i></a>
 		</h4>
 	</div>
 	<table class="table table-condensed table-hover table-striped small">
@@ -55,7 +56,8 @@
 			<td th:text="${player.rank}" class="top-rank">1</td>
 			<td class="top-player">
 				<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/ch.png'" th:title="${player.country.id}" title="SUI" width="24" height="20"/>
-				<a th:href="@{/playerProfile(playerId=${player.playerId})}" th:text="${player.name}" style="vertical-align: middle" title="Show profile">Federer</a>
+				<a th:href="${language}+@{/playerProfile(playerId=${player.playerId})}" th:text="${player.name}"
+				   style="vertical-align: middle" title="Show profile">Federer</a>
 			</td>
 			<td th:text="${player.points}" class="top-points">1000</td>
 		</tr>

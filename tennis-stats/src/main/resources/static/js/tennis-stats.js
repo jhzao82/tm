@@ -685,7 +685,7 @@ function detectDevice() {
 // Perf/Stats
 
 function performancePlayerMatchesUrl(playerId, outcome, prefix) {
-	var url = "/playerProfile?playerId=" + playerId + "&tab=matches";
+	var url = language + "/playerProfile?playerId=" + playerId + "&tab=matches";
 	var category = paramValue("category", prefix);
 	var season = paramValue("season", prefix);
 	if (season) url += "&season=" + season;
@@ -754,7 +754,7 @@ function performancePlayerMatchesUrl(playerId, outcome, prefix) {
 }
 
 function statisticsPlayerMatchesUrl(playerId, prefix) {
-	var url = "/playerProfile?playerId=" + playerId + "&tab=matches";
+	var url = language + "/playerProfile?playerId=" + playerId + "&tab=matches";
 	var season = paramValue("season", prefix);
 	if (season) url += "&season=" + season;
 	var fromDate = paramValue("fromDate", prefix);

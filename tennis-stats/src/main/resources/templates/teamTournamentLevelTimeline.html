@@ -21,7 +21,8 @@
 		</thead>
 		<tbody>
 			<tr th:each="item : ${timeline}">
-				<td><a th:href="@{/tournamentEvent(tournamentEventId=${item.tournamentEventId})}" th:text="${item.season}">2005</a></td>
+				<td><a th:href="${language}+@{/tournamentEvent(tournamentEventId=${item.tournamentEventId})}"
+					   th:text="${item.season}">2005</a></td>
 				<td>
 					<img th:src="@{/images/flags/{code}.png(code=${item.winner.code})}" src="/images/flags/us.png'" th:title="${item.winner.id}" title="USA" width="24" height="20"/>
 					<strong th:text="${item.winner.name}">United States</strong>

@@ -9,7 +9,7 @@
 	<meta name="description" content="ATP or Elo top rankings timeline"/>
 	<script type="text/javascript">
 		function onRankTypeChange() {
-			window.location.href = "/topRankingsTimeline?rankType=" + $("#rankType").val();
+			window.location.href = language + "/topRankingsTimeline?rankType=" + $("#rankType").val();
 		}
 	</script>
 	<style type="text/css">
@@ -45,13 +45,18 @@
 		<tbody>
 			<tr th:each="season : ${timeline.seasons}" th:unless="${season > 2007 && rankTypeName.startsWith('CARPET')}">
 				<th>
-					<a th:unless="${rankType.category.name() == 'GOAT'}" th:href="@{/rankingsTable(rankType=${rankType}, season=${season})}" th:text="${season}" title="Show season year-end rankings">2000</a>
-					<a th:if="${rankType.category.name() == 'GOAT'}" th:href="@{/season(season=${season}, tab=goatPoints, surface=${rankType.surface != null ? rankType.surface.code : _})}" th:text="${season}" title="Show season GOAT Points">2000</a>
+					<a th:unless="${rankType.category.name() == 'GOAT'}"
+					   th:href="${language}+@{/rankingsTable(rankType=${rankType}, season=${season})}"
+					   th:text="${season}" title="Show season year-end rankings">2000</a>
+					<a th:if="${rankType.category.name() == 'GOAT'}"
+					   th:href="${language}+@{/season(season=${season}, tab=goatPoints, surface=${rankType.surface != null ? rankType.surface.code : _})}"
+					   th:text="${season}" title="Show season GOAT Points">2000</a>
 					<th:block th:if="${season < 1973 && rankTypeName == 'RANK'}"> *</th:block>
 				</th>
 				<td th:each="player : ${timeline.getTopPlayers(season)}">
 					<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/ch.png'" th:title="${player.country.id}" title="SUI" width="24" height="20"/>
-					<a th:href="@{/playerProfile(playerId=${player.playerId})}" th:text="${player.name}" style="vertical-align: middle" title="Show profile">Roger Federer</a>
+					<a th:href="${language}+@{/playerProfile(playerId=${player.playerId})}" th:text="${player.name}"
+					   style="vertical-align: middle" title="Show profile">Roger Federer</a>
 					<img th:if="${player.active}" src="/images/active.png" title="Active" width="12" height="12"/>
 					<span th:if="${player.rank == 1}" class="small-dimmed" th:text="'(' + ${player.yeNo1} + '/' + ${timeline.getYENo1(player.playerId)} + ')'">(2/5)</span>
 				</td>

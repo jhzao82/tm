@@ -30,7 +30,7 @@
 				sorting: false,
 				formatters: {
 					"event": function(column, row) {
-						return "<a href='/inProgressEventForecast?inProgressEventId=" + row.id + "' class='label label-" + row.level + "' title='Show full forecast'>" + row.name + "</a>";
+						return "<a href='" + language + "/inProgressEventForecast?inProgressEventId=" + row.id + "' class='label label-" + row.level + "' title='Show full forecast'>" + row.name + "</a>";
 					},
 					"surface": surfaceFormatter,
 					"favorite1":  function(column, row) {
@@ -40,7 +40,7 @@
 						return formatFavorite(column, row.favorite2);
 					},
 					"forecast": function(column, row) {
-						return "<a href='/inProgressEventForecast?inProgressEventId=" + row.id + "' class='label label-primary label-btn' title='Show full forecast'><i class='fa fa-eye'></i>&nbsp;&nbsp;Forecast</a>";
+						return "<a href='" + language + "/inProgressEventForecast?inProgressEventId=" + row.id + "' class='label label-primary label-btn' title='Show full forecast'><i class='fa fa-eye'></i>&nbsp;&nbsp;Forecast</a>";
 					}
 				},
 				labels: {
@@ -76,7 +76,7 @@
 					"final": finalFormatter,
 					"finalEx": finalExFormatter,
 					"winner": function(column, row) {
-						return row.winner ? "<a href='/playerProfile?playerId=" + row.winner.id + "' title='Show profile'><strong>" + row.winner.name + "</strong></a>" : "";
+						return row.winner ? "<a href='" + language + "/playerProfile?playerId=" + row.winner.id + "' title='Show profile'><strong>" + row.winner.name + "</strong></a>" : "";
 					}
 				},
 				labels: {
@@ -130,8 +130,10 @@
 				</thead>
 			</table>
 			<div class="pull-right" style="margin: 5px 10px">
-				<a href="/inProgressEventsForecasts" class="label label-default" title="Full forecasts details">All Forecasts</a>
-				<a href="/rankingsTable?rankType=ELO_RANK" class="label label-B" title="Current Elo rankings">Elo Rankings</a>
+				<a th:href="${language}+'/inProgressEventsForecasts'" class="label label-default"
+				   title="Full forecasts details">All Forecasts</a>
+				<a th:href="${language}+'/rankingsTable?rankType=ELO_RANK'" class="label label-B"
+				   title="Current Elo rankings">Elo Rankings</a>
 			</div>
 			</th:block>
 			<h4 class="text-nowrap"><i class="fa fa-calendar"></i> Latest Results</h4>
@@ -150,8 +152,10 @@
 				</thead>
 			</table>
 			<div class="pull-right">
-				<a href="/tournamentEvents" class="label label-default" title="Show more tournament results">More Results</a>
-				<a th:href="@{/season(season=${currentSeason})}" class="label label-B" th:title="|Show season ${currentSeason} figures|">Season [(${currentSeason})]</a>
+				<a th:href="${language}+'/tournamentEvents'" class="label label-default"
+				   title="Show more tournament results">More Results</a>
+				<a th:href="${language}+@{/season(season=${currentSeason})}" class="label label-B"
+				   th:title="|Show season ${currentSeason} figures|">Season [(${currentSeason})]</a>
 			</div>
 			<!--h4 class="text-nowrap" style="margin-top: 25px"><i class="fa fa-star-o"></i> Latest New Features<sup class="new-feature"></sup></h4>
 			<ul>

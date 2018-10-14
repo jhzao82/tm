@@ -42,7 +42,7 @@
 						for (var i = 0, count = Math.min(2, levels.length); i < count; i++) {
 							if (s !== "") s += " ";
 							var name = levelName(levels[i]);
-							s += "<a href='/tournamentEvents?level=" + levels[i] + "' class='label label-" + levels[i] + "' title='Show " + name + " tournament events'>" + name + "</a>";
+							s += "<a href='" + language + "/tournamentEvents?level=" + levels[i] + "' class='label label-" + levels[i] + "' title='Show " + name + " tournament events'>" + name + "</a>";
 						}
 						return s;
 					},
@@ -54,13 +54,13 @@
 							if (s !== "") s += " ";
 							var surface = surfaces[i];
 							var name = surfaceName(surface);
-							s += "<a href='/tournamentEvents?tournamentId=" + row.id + "&surface=" + surface + "' class='label label-" + surfaceClassSuffix(surface) + "' title='Show " + name + " tournament events'>" + (multi ? surfaceShortName(surface) : name) + "</a>";
+							s += "<a href='" + language + "/tournamentEvents?tournamentId=" + row.id + "&surface=" + surface + "' class='label label-" + surfaceClassSuffix(surface) + "' title='Show " + name + " tournament events'>" + (multi ? surfaceShortName(surface) : name) + "</a>";
 						}
 						return s;
 					},
 					"courtSpeeds": courtSpeedsFormatter,
 					"eventCount": function(column, row) {
-					  	return "<a href='/tournamentEvents?tournamentId=" + row.id + filterParams() + "' title='Show tournament events'>" + row.eventCount + "</a>";
+					  	return "<a href='" + language + "/tournamentEvents?tournamentId=" + row.id + filterParams() + "' title='Show tournament events'>" + row.eventCount + "</a>";
 					},
 					"seasons": seasonsFormatter,
 					"participation": participationFormatter,
@@ -68,7 +68,7 @@
 						var topPlayers = row.topPlayers;
 						if (topPlayers.length === 0) return "";
 						var topPlayer = topPlayers[0];
-						var html = "<a href='/playerProfile?playerId=" + topPlayer.playerId + "&tab=events&tournamentId=" + row.id + filterParams() + "&result=W' title='Show titles'>" + topPlayer.rank + " <i class='fa fa-trophy fa-b'></i></a> " + playerCountryFormatter(column, topPlayer);
+						var html = "<a href='" + language + "/playerProfile?playerId=" + topPlayer.playerId + "&tab=events&tournamentId=" + row.id + filterParams() + "&result=W' title='Show titles'>" + topPlayer.rank + " <i class='fa fa-trophy fa-b'></i></a> " + playerCountryFormatter(column, topPlayer);
 						if (topPlayers.length > 1) {
 							var tiedPlayers = "<div class=\"text-left\">";
 							for (var i = 1; i < topPlayers.length; i++)

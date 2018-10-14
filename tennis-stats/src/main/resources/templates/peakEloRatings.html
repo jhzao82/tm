@@ -49,7 +49,7 @@
 						return event ? formatTournamentEvent(event.id, event.level, event.name + " " + event.season) : "";
 					},
 					"points": function(column, row) {
-						return "<a href='/playerProfile?playerId=" + row.playerId + "&tab=ranking&rankType=" + $("#rankType").val() + "' title='Show Elo Rating chart'>" + row.points + "</a>";
+						return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "&tab=ranking&rankType=" + $("#rankType").val() + "' title='Show Elo Rating chart'>" + row.points + "</a>";
 					}
 				},
 				labels: {

@@ -14,5 +14,13 @@
 	<script th:src="@{/webjars/bootstrap/{version}/js/bootstrap.min.js(version=${versions['bootstrap']})}"></script>
 	<script th:if="${bootgrid}" th:src="@{/webjars/jquery-bootgrid/{version}/dist/jquery.bootgrid.min.js(version=${versions['bootgrid']})}"></script>
 	<script th:src="@{/js/tennis-stats.js}"></script>
+	<script type="text/javascript">
+		var language = "[[${language}]]" ? "[[${language}]]" : "";
+		var messageHard = "[[#{hard}]]";
+		var messageClay = "[[#{clay}]]";
+		var messageGrass = "[[#{grass}]]";
+		var messageCarpet = "[[#{carpet}]]";
+
+	</script>
 	<th:block th:include="${template}"/>
 </head>

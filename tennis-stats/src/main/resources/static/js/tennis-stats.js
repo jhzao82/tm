@@ -347,10 +347,10 @@ function surfaceClassSuffix(surface) {
 
 function surfaceName(surface) {
 	switch (surface) {
-		case "H": return $("#messageHard").val();
-		case "C": return $("#messageClay").val();
-		case "G": return $("#messageGrass").val();
-		case "P": return $("#messageCarpet").val();
+		case "H": return messageHard;
+		case "C": return messageClay;
+		case "G": return messageGrass;
+		case "P": return messageCarpet;
 		default: return surface;
 	}
 }

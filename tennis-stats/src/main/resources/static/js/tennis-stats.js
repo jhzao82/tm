@@ -279,7 +279,7 @@ function formatCountry(row) {
 
 // Player Formatter
 function playerFormatter(column, row) {
-	return "<a href='/playerProfile?playerId=" + row.playerId + "' title='Show " + row.name + "&apos;s profile'>" + row.name + "</a>" +
+	return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "' title='Show " + row.name + "&apos;s profile'>" + row.name + "</a>" +
 		(row.active ? " <img src='/images/active.png' title='Active' width='12' height='12' style='vertical-align: 0'/>" : "");
 }
 
@@ -300,19 +300,19 @@ function levelFormatter(column, row) {
 
 function levelName(level) {
 	switch (level) {
-		case "G": return "Grand Slam";
-		case "F": return "Tour Finals";
-		case "L": return "Alt. Finals";
-		case "M": return "Masters";
-		case "O": return "Olympics";
+		case "G": return messageGrandSlams;
+		case "F": return messageTourFinals;
+		case "L": return messageAltFinals;
+		case "M": return messageMasters;
+		case "O": return messageOlympics;
 		case "A": return "ATP 500";
 		case "B": return "ATP 250";
-		case "C": return "Challengers";
-		case "U": return "Futures";
-		case "E": return "Exhibitions";
-		case "H": return "Others";
-		case "D": return "Davis Cup";
-		case "T": return "World Team Cup";
+		case "C": return messageChallengers;
+		case "U": return messageFutures;
+		case "E": return messageExhibitions;
+		case "H": return messageOthers;
+		case "D": return messageDavisCup;
+		case "T": return messageWorldTeamCup;
 		default: return level;
 	}
 }
@@ -429,7 +429,7 @@ function decorateCourtSpeed(selector) {
 
 // Tournament Formatter
 function tournamentFormatter(column, row) {
-	return "<a href='/tournament?tournamentId=" + row.id + "' title='Show tournament" + (row.extId ? " - " +  row.extId : "") + "'>" + row.name + "</a>";
+	return "<a href='" + language + "/tournament?tournamentId=" + row.id + "' title='Show tournament" + (row.extId ? " - " +  row.extId : "") + "'>" + row.name + "</a>";
 }
 
 // Tournament Event Formatter
@@ -450,7 +450,7 @@ function endTournamentEventFormatter(column, row) {
 }
 
 function formatTournamentEvent(id, level, name, extId) {
-	return "<a href='/tournamentEvent?tournamentEventId=" + id + "' class='label label-" + level + "' title='" + levelName(level) + (extId ? " - " +  extId : "") +"'>" + name + "</a>";
+	return "<a href='" + language + "/tournamentEvent?tournamentEventId=" + id + "' class='label label-" + level + "' title='" + levelName(level) + (extId ? " - " +  extId : "") +"'>" + name + "</a>";
 }
 
 function participationFormatter(column, row) {
@@ -489,7 +489,7 @@ function finalExFormatter(column, row) {
 
 function formatMatchPlayer(player, winner, playerId) {
 	var name = (winner ? "<strong>" : "") + player.name + (winner ? "</strong>" : "") + formatSeedEntry(player.seed, player.entry);
-	return player.id === playerId ? name : "<a href='/playerProfile?playerId=" + player.id + "' title='Show profile'>" + name + "</a>";
+	return player.id === playerId ? name : "<a href='" + language + "/playerProfile?playerId=" + player.id + "' title='Show profile'>" + name + "</a>";
 }
 
 function formatMatchExPlayer(player, winner, playerId) {
@@ -529,7 +529,7 @@ function seasonsFormatter(column, row) {
 
 // Record Formatter
 function recordFormatter(column, row) {
-	return "<a href='/record?recordId=" + row.id + "' title='Show Record'>" + row.name + "</a>";
+	return "<a href='" + language + "/record?recordId=" + row.id + "' title='Show Record'>" + row.name + "</a>";
 }
 
 function recordValueFormatter(column, row) {
@@ -551,7 +551,7 @@ function recordHoldersFormatter(column, row) {
 }
 
 function formatRecordDetail(detail, detailUrl) {
-	return detailUrl ? "<a href='" + detailUrl + "' title='Show record detail'>" + detail + "</a>" : detail;
+	return detailUrl ? "<a href='" + language + "" + detailUrl + "' title='Show record detail'>" + detail + "</a>" : detail;
 }
 
 

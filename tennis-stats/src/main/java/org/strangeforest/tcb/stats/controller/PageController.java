@@ -31,16 +31,9 @@ public abstract class PageController extends BaseController {
     @ModelAttribute("language")
     public String getLanguage(HttpServletRequest request) {
         String language = request.getParameter("language");
-        String[] listOfLanguages = {"zh", "tw", "en"};
 
-        if (!language.isEmpty()) {
+        if (language != null && !language.isEmpty()) {
             return "/" + language;
-        }
-
-        for (String alanguage : listOfLanguages) {
-            if (alanguage.equals(language)) {
-                return "/" + alanguage;
-            }
         }
 
         return "";

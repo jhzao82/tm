@@ -35,23 +35,12 @@
 			waitForFinalEvent(setGOATLegendWidth, 100, fullDateString.getTime());
 		});
 	</script>
-	<style type="text/css">
-		body {
-			background: url("/images/home-bg.jpg") repeat;
-		}
-		.component-header {
-			margin: 0;
-		}
-	</style>
 	</template>
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
 	<div class="row">
 		<div class="col-lg-10 col-md-9">
-			<div>
-				<h1 style="margin-top: 10px; margin-bottom: 20px"><a href="/" title="Home"><th:block th:include="fragments/promotion :: logo"/></a></h1>
-			</div>
 			<h4 class="text-nowrap"><i class="fa fa-book"></i> Glossary</h4>
 			<ul>
 				<li><strong><i class="fa fa-flag"></i> 'GOAT' Points</strong> - The points assigned to players for various tennis achievements, like winning or going deep into tournaments, ATP and Elo rankings, Grand Slam (career and calendar year), big wins, head-to-head ratios, title, streak, performance and statistics records.</li>
@@ -71,14 +60,6 @@
 				<li><strong>Draw Bonus</strong> - [[#{forecast.drawBonus.title}]]</li>
 				<li><strong>Surface Specialization</strong> - [[#{player.surfaceSpecialization.title}]]</li>
 			</ul>
-		</div>
-		<div class="col-lg-2 col-md-3">
-			<th:block th:include="fragments/goatTopN :: goatTopN"/>
-			<div id="rankingTopN"></div>
-			<th:block th:include="fragments/promotion :: facebook"/>
-			<th:block th:include="fragments/promotion :: twitter('')"/>
-			<th:block th:include="fragments/promotion :: paypal"/>
-			<th:block th:include="fragments/promotion :: license"/>
 		</div>
 	</div>
 	<th:block th:include="fragments/deviceDetector :: deviceDetectors"/>

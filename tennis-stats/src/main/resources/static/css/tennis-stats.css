@@ -407,3 +407,8 @@ a.black:focus {
 	background-color: #dd7777;
 	font-size: 14px;
 }
+
+/* fix */
+.form-control {
+    padding: 4px 10px;
+}

@@ -16,14 +16,6 @@
 			});
 		});
 	</script>
-	<style type="text/css">
-		body {
-			background: url("/images/home-bg.jpg") repeat;
-		}
-		.component-header {
-			margin: 0;
-		}
-	</style>
 	</template>
 </head>
 <body class="container">
@@ -44,21 +36,6 @@
 				<div id="eloKfactorTweaks" class="tab-pane fade"><div class="loading"></div></div>
 				<div id="gameEvolution" class="tab-pane fade"><div class="loading"></div></div>
 			</div>
-		</div>
-		<div class="col-lg-2 col-md-3">
-			<th:block th:switch="${post}">
-				<th:block th:case="'eloKfactorTweaks'">
-					<div id="rankingTopN"></div>
-					<script type="text/javascript">
-						$(function() {
-							loadRankingTopN("ELO_RANK", 20);
-						});
-					</script>
-				</th:block>
-				<th:block th:case="*" th:include="fragments/goatTopN :: goatTopN"/>
-			</th:block>
-			<th:block th:include="fragments/promotion :: facebook"/>
-			<th:block th:include="fragments/promotion :: twitter('/blog?post=' + ${post})"/>
 		</div>
 	</div>
 	<th:block th:include="fragments/deviceDetector :: deviceDetectors"/>

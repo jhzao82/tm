@@ -15,7 +15,7 @@ public class UrlFilter implements Filter {
         final HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(hsRequest);
 
         String url = hsRequest.getRequestURI().substring(hsRequest.getContextPath().length());
-        String[] listOfLanguages = {"zh", "tw", "en"};
+        String[] listOfLanguages = {"zh", "en"};
 
         for (String alanguage : listOfLanguages) {
             String urlPrefix = '/' + alanguage + '/';

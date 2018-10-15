@@ -5,7 +5,6 @@ import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
-import org.strangeforest.tcb.stats.model.core.*;
 import org.strangeforest.tcb.stats.model.price.*;
 import org.strangeforest.tcb.stats.service.*;
 
@@ -22,11 +21,6 @@ public abstract class PageController extends BaseController {
 	public PriceFormat[] getPriceFormats() {
 		return PriceFormat.values();
 	}
-
-	@ModelAttribute("languages")
-    public Language[] getLangeuages() {
-        return Language.values();
-    }
 
     @ModelAttribute("language")
     public String getLanguage(HttpServletRequest request) {

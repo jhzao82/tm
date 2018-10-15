@@ -1,7 +1,7 @@
 package org.strangeforest.tcb.stats;
 
 import java.io.*;
-import java.util.*;
+import java.net.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -11,20 +11,17 @@ public class UrlFilter implements Filter {
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("sssssssssssssssssssssssssss");
         final HttpServletRequest hsRequest = (HttpServletRequest) request;
         final HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(hsRequest);
 
         String url = hsRequest.getRequestURI().substring(hsRequest.getContextPath().length());
+        String[] listOfLanguages = {"zh", "tw", "en"};
 
-        //This is read from a .properties file actually, but for now it's ok
-        String supportedLanguages = "/zh/,/tw/,/en/";
-        List<String> listOfLanguages = Arrays.asList(supportedLanguages.split(","));
-
-        //If the URL already contains any of the allowed language identifiers, we continue with the original flow
-        for (String language : listOfLanguages) {
-            if (url.toLowerCase().startsWith(language)) {
+        for (String alanguage : listOfLanguages) {
+            String urlPrefix = '/' + alanguage + '/';
+            if (url.toLowerCase().startsWith(urlPrefix)) {
                 String filtered = url.substring(3);
+                filtered = appendUri(filtered, "language=" + alanguage).toString();
                 RequestDispatcher dispatcher = wrapper.getRequestDispatcher(filtered);
                 dispatcher.forward(request, response);
                 return;
@@ -35,5 +32,25 @@ public class UrlFilter implements Filter {
     }
 
     public void destroy() {
+    }
+
+    public URI appendUri(String uri, String appendQuery) {
+        try {
+            URI oldUri = new URI(uri);
+
+            String newQuery = oldUri.getQuery();
+            if (newQuery == null) {
+                newQuery = appendQuery;
+            } else {
+                newQuery += "&" + appendQuery;
+            }
+
+            URI newUri = new URI(oldUri.getScheme(), oldUri.getAuthority(),
+                    oldUri.getPath(), newQuery, oldUri.getFragment());
+
+            return newUri;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

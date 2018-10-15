@@ -1,6 +1,7 @@
 package org.strangeforest.tcb.stats.controller;
 
 import java.time.*;
+import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,20 @@ public abstract class PageController extends BaseController {
     }
 
     @ModelAttribute("language")
-    public String getLanguage() {
-        return "/en";
+    public String getLanguage(HttpServletRequest request) {
+        String language = request.getParameter("language");
+        String[] listOfLanguages = {"zh", "tw", "en"};
+
+        if (!language.isEmpty()) {
+            return "/" + language;
+        }
+
+        for (String alanguage : listOfLanguages) {
+            if (alanguage.equals(language)) {
+                return "/" + alanguage;
+            }
+        }
+
+        return "";
     }
 }

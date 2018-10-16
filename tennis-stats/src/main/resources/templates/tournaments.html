@@ -5,7 +5,7 @@
 <!--/*@thymesVar id="levelGroups" type="java.util.Set<org.strangeforest.tcb.stats.model.core.TournamentLevelGroup>"*/-->
 <!--/*@thymesVar id="surfaces" type="org.strangeforest.tcb.stats.model.core.Surface[]"*/-->
 <!--/*@thymesVar id="surfaceGroups" type="org.strangeforest.tcb.stats.model.core.SurfaceGroup[]"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{tournaments.title}, true, ~{::template})">
 	<title>Tournaments</title>
 	<template>
 	<meta name="description" content="Tennis tournaments aggregated figures"/>
@@ -135,7 +135,8 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3 id="tournamentsTable-title" class="grid-title text-nowrap"><i class="fa fa-calendar-o"></i> Tournaments</h3>
+	<h3 id="tournamentsTable-title" class="grid-title text-nowrap"><i class="fa fa-calendar-o"></i>
+		[[#{tournaments.title}]]</h3>
 	<div id="levelDiv" class="btn-group margin-right">
 		<select id="level" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Filter by tournament level">
 			<option value="">All levels</option>

@@ -7,7 +7,7 @@
 <!--/*@thymesVar id="season" type="java.lang.Integer"*/-->
 <!--/*@thymesVar id="date" type="java.time.LocalDate"*/-->
 <!--/*@thymesVar id="dates" type="java.util.List<java.time.LocalDate>"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{rankingsTable.title}, true, ~{::template})">
 	<title>Rankings Table</title>
 	<template>
 	<meta name="description" content="Weekly ATP and Elo rankings"/>

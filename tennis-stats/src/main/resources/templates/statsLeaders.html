@@ -12,7 +12,7 @@
 <!--/*@thymesVar id="tournaments" type="java.util.List<org.strangeforest.tcb.stats.model.core.TournamentItem>"*/-->
 <!--/*@thymesVar id="opponentCategories" type="java.util.Map<org.strangeforest.tcb.stats.service.Opponent.OpponentCategory, List<org.strangeforest.tcb.stats.service.Opponent>>"*/-->
 <!--/*@thymesVar id="countries" type="java.util.List<com.neovisionaries.i18n.CountryCode>"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{seasons.statsLeaders}, true, ~{::template})">
 	<title>Statistics Leaders</title>
 	<template>
 	<meta name="description" content="Tennis statistics leaders by more than 80 figures filtered by various filters"/>
@@ -146,11 +146,12 @@
 	<header th:include="fragments/header :: title"></header>
 	<div class="row">
 		<div class="col-md-8">
-			<h3 class="text-nowrap" style="display: inline"><span class="glyphicon glyphicon-stats"></span> Statistics Leaders</h3>
+			<h3 class="text-nowrap" style="display: inline"><span class="glyphicon glyphicon-stats"></span>
+				[[#{seasons.statsLeaders}]]</h3>
 		</div>
 		<div class="col-md-4">
 			<div class="input-group" data-toggle="tooltip" data-placement="top" title="Select statistics category">
-				<label for="category" class="input-group-addon">Category:</label>
+				<label for="category" class="input-group-addon">[[#{category}]]:</label>
 				<select id="category" class="form-control" onchange="reloadStatsLeaders()">
 					<optgroup th:each="categoryClass : ${categoryClasses}" th:label="${categoryClass.key}" label="Serve">
 						<option th:each="aCategory : ${categoryClass.value}" th:value="${aCategory.name}" value="aces" th:text="${aCategory.title}" th:title="#{__${aCategory.descriptionId}__}" th:selected="${aCategory.name == category}">Aces</option>

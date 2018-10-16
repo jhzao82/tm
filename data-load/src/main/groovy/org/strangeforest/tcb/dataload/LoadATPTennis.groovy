@@ -32,7 +32,7 @@ sqlPool.withSql { sql -> loader.refreshMaterializedViews(sql) }
 
 sqlPool.withSql { sql -> loader.vacuum(sql) }
 
-//sqlPool.withSql { sql -> new RecordsLoader().loadRecords(loader, sql) }
+sqlPool.withSql { sql -> new RecordsLoader().loadRecords(loader, sql) }
 
 LoadInProgressTournaments.loadTournaments(sqlPool)
 

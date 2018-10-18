@@ -1,51 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="goatTopN" type="java.util.List<org.strangeforest.tcb.stats.model.PlayerRanking>"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, false, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{introduction.title}, false, ~{::template})">
 	<title>About</title>
 	<template>
 	<meta name="description" content="About Ultimate Tennis Statistics and Tennis Crystal Ball match prediction and tournament forecasts"/>
-	<script type="text/javascript">
-		$(function() {
-			loadRankingTopN("RANK");
-			bindPopovers();
-			$("[data-toggle='collapse']").click(collapseClick);
-			$("#goatLegend").on("show.bs.collapse", setGOATLegendWidth);
-		});
-		function goatLegendWidth() {
-			switch (detectDevice()) {
-				case "lg": return "120%";
-				case "md": return "133%";
-				default: return "100%";
-			}
-		}
-		function setGOATLegendWidth() {
-			$("#goatLegend").css("width", goatLegendWidth());
-		}
-		var waitForFinalEvent = function() {
-			var b = {};
-			return function(c, d, a) {
-				a || (a = "dummy");
-				b[a] && clearTimeout(b[a]);
-				b[a] = setTimeout(c, d);
-			}
-		}();
-		var fullDateString = new Date();
-		$(window).resize(function() {
-			waitForFinalEvent(setGOATLegendWidth, 100, fullDateString.getTime());
-		});
-	</script>
 	</template>
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
 	<div class="row">
-		<div class="col-lg-10 col-md-9">
-			<h4 class="text-nowrap"><i class="fa fa-home"></i> Introduction</h4>
+		<div class="col-lg-12 col-md-12">
+			<h4 class="text-nowrap"><i class="fa fa-home"></i> [[#{introduction.title}]]</h4>
 			<p>
-				<th:block th:include="fragments/promotion :: logo"/> aims to become the ultimate tennis statistics destination for the die-hard tennis fans.
-				It tries to provide all kind of tennis statistics in the <a href="https://en.wikipedia.org/wiki/History_of_tennis#Open_Era" target="_blank" class="external">Open Era</a> male tennis with simple yet effective web GUI.
-				If you have any suggestions for additional features or tweaks to the current features, please e-mail me at <a href="mailto:mcekovic@gmail.com" target="_blank">mcekovic@gmail.com</a> or log a <a href="https://github.com/mcekovic/tennis-crystal-ball/issues" target="_blank" class="external">GitHub issue</a>.
+				[[#{introduction.content}]]
 			</p>
 		</div>
 	</div>

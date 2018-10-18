@@ -9,7 +9,7 @@
 <!--/*@thymesVar id="factors" type="java.util.Map<java.lang.String, java.lang.String>"*/-->
 <!--/*@thymesVar id="levels" type="java.util.List<java.lang.String>"*/-->
 <!--/*@thymesVar id="results" type="java.util.List<java.lang.String>"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{goatList.title}, true, ~{::template})">
 	<title>GOAT List</title>
 	<template>
 	<meta name="description" content="Open Era GOAT List (a.k.a. GOATometer) compares tennis player career achievements expressed by GOAT Points"/>

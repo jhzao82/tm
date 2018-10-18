@@ -132,6 +132,7 @@ class ATPWorldTourTournamentLoader extends BaseATPWorldTourTournamentLoader {
 						println()
 				}
 			}.get()
+		} catch (Exception ignore) {
 		}
 		finally {
 			pool.shutdown()

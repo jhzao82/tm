@@ -40,7 +40,7 @@
 						return formatFavorite(column, row.favorite2);
 					},
 					"forecast": function(column, row) {
-						return "<a href='" + language + "/inProgressEventForecast?inProgressEventId=" + row.id + "' class='label label-primary label-btn' title='Show full forecast'><i class='fa fa-eye'></i>&nbsp;&nbsp;[[#{forecast}]]</a>";
+						return "<a href='" + language + "/inProgressEventForecast?inProgressEventId=" + row.id + "' class='label label-primary label-btn' title='Show full forecast'><i class='fa fa-eye'></i>&nbsp;&nbsp;" + [[#{forecast}]] + "</a>";
 					}
 				},
 				labels: {
@@ -62,7 +62,7 @@
 					cache: false
 				},
 				url: "/tournamentEventsTable",
-				rowCount: [20],
+				rowCount: [15],
 				navigation: 0,
 				sorting: false,
 				formatters: {
@@ -134,12 +134,13 @@
 			</table>
 			<div class="pull-right" style="margin: 5px 10px">
 				<a th:href="${language}+'/inProgressEventsForecasts'" class="label label-default"
-				   title="Full forecasts details">All Forecasts</a>
+                   title="Full forecasts details">[[#{index.allForecasts}]]</a>
 				<a th:href="${language}+'/rankingsTable?rankType=ELO_RANK'" class="label label-B"
-				   title="Current Elo rankings">Elo Rankings</a>
+                   title="Current Elo rankings">[[#{index.eloRankings}]]</a>
 			</div>
 			</th:block>
-			<h4 class="text-nowrap"><i class="fa fa-calendar"></i> [[#{index.latestResults}]]</h4>
+            <h4 class="text-nowrap" style="margin-top: 25px;"><i class="fa fa-calendar"></i> [[#{index.latestResults}]]
+            </h4>
 			<table id="latestEvents" class="table table-condensed table-hover table-striped" style="margin-bottom: 0">
 				<thead>
 				<tr>

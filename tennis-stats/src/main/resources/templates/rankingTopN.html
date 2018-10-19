@@ -46,9 +46,9 @@
 	<table class="table table-condensed table-hover table-striped small">
 		<thead>
 		<tr th:class="${rankType.surface != null ? 'bg-surface-' + rankType.surface.code : _}">
-			<th class="text-right" th:title="${rankType.text}">R.</th>
-			<th>Name</th>
-			<th class="text-right" th:title="${rankType.pointsType.text}">Pts.</th>
+            <th class="text-right" th:title="${rankType.text}">[[#{r}]]</th>
+            <th>[[#{name}]]</th>
+            <th class="text-right" th:title="${rankType.pointsType.text}">[[#{pts}]]</th>
 		</tr>
 		</thead>
 		<tbody>

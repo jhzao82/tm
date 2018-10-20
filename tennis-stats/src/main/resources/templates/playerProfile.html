@@ -28,7 +28,7 @@
 <head th:replace="fragments/head :: commonHead(${player.name}, true, ~{::template})">
 	<title>Player Profile</title>
 	<template>
-	<meta name="description" th:content="|${player.name} profile at Ultimate Tennis Statistics|"/>
+		<meta name="description" th:content="|${player.name}#{playerProfile}|"/>
 	<script type="text/javascript" th:inline="javascript">
 		$(function() {
 			$("#playerPills").find("a").click(tabClick);

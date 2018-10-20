@@ -8,7 +8,6 @@
 	<link th:href="@{/webjars/font-awesome/{version}/css/font-awesome.min.css(version=${versions['font-awesome']})}" rel="stylesheet" media="screen"/>
 	<link th:if="${bootgrid}" th:href="@{/webjars/jquery-bootgrid/{version}/dist/jquery.bootgrid.min.css(version=${versions['bootgrid']})}" rel="stylesheet" media="screen"/>
 	<link th:href="@{/css/tennis-stats.css}" rel="stylesheet" media="screen"/>
-	<link href="/feed.atom" rel="alternate" type="application/atom+xml" title="Ultimate Tennis Statistics"/>
 	<script th:src="@{/webjars/jquery/{version}/jquery.min.js(version=${versions['jquery']})}"></script>
 	<script th:src="@{/webjars/jquery-ui/{version}/jquery-ui.min.js(version=${versions['jquery-ui']})}"></script>
 	<script th:src="@{/webjars/bootstrap/{version}/js/bootstrap.min.js(version=${versions['bootstrap']})}"></script>
@@ -31,7 +30,6 @@
 		var messageOthers = "[[#{others}]]";
 		var messageDavisCup = "[[#{davisCup}]]";
 		var messageWorldTeamCup = "[[#{worldTeamCup}]]";
-
 	</script>
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<script>
@@ -39,6 +37,16 @@
           google_ad_client: "ca-pub-2336246503619877",
           enable_page_level_ads: true
      });
+
+	</script>
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?aaa2260b47788b4bc767c1a824ca8462";
+	  var s = document.getElementsByTagName("script")[0];
+	  s.parentNode.insertBefore(hm, s);
+	})();
 	</script>
 	<th:block th:include="${template}"/>
 </head>

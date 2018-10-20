@@ -11,6 +11,7 @@ public class Player {
 	// General
 	private final int id;
 	private String name;
+	private String chinese_name;
 	private LocalDate dob;
 	private int age;
 	private Country country;
@@ -74,6 +75,14 @@ public class Player {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getChineseName() {
+		return chinese_name;
+	}
+
+	public void setChineseName(String name) {
+		this.chinese_name = name;
 	}
 
 	public LocalDate getDob() {

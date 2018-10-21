@@ -66,6 +66,7 @@ CREATE TABLE player (
 	player_id SERIAL PRIMARY KEY,
 	first_name TEXT,
 	last_name TEXT,
+	chinese_name TEXT,
 	dob DATE,
 	country_id TEXT NOT NULL,
 	birthplace TEXT,

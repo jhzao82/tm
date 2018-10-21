@@ -28,7 +28,8 @@
 <head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh_CN' or __${#locale}__ == 'zh'?${player.chineseName}:${player.name}, true, ~{::template})">
 	<title>Player Profile</title>
 	<template>
-		<meta name="description" th:content="|${player.name}#{playerProfile}|"/>
+		<meta name="description"
+			  th:content="__${#locale}__ == 'zh_CN' or __${#locale}__ == 'zh'?${player.chineseName}+#{playerProfile}:${player.name}+#{playerProfile}"/>
 	<script type="text/javascript" th:inline="javascript">
 		$(function() {
 			$("#playerPills").find("a").click(tabClick);

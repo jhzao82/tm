@@ -25,11 +25,11 @@
 <!--/*@thymesVar id="infamous" type="java.lang.Boolean"*/-->
 <!--/*@thymesVar id="searchPhrase" type="java.lang.String"*/-->
 <!--/*@thymesVar id="params" type="org.strangeforest.tcb.stats.controller.ParamsUtil"*/-->
-<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh_CN' or __${#locale}__ == 'zh'?${player.chineseName}:${player.name}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh' ? ${player.chineseName} : ${player.name}, true, ~{::template})">
 	<title>Player Profile</title>
 	<template>
 		<meta name="description"
-			  th:content="__${#locale}__ == 'zh_CN' or __${#locale}__ == 'zh'?${player.chineseName}+#{playerProfile}:${player.name}+#{playerProfile}"/>
+              th:content="__${#locale}__ == 'zh' ? ${player.chineseName} + #{playerProfile} : ${player.name} + #{playerProfile}"/>
 	<script type="text/javascript" th:inline="javascript">
 		$(function() {
 			$("#playerPills").find("a").click(tabClick);

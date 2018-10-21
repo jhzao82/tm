@@ -31,7 +31,7 @@ public class TennisStatsWebConfig implements WebMvcConfigurer {
 	@Bean
 	public LocaleResolver localeResolver() {
 		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-		cookieLocaleResolver.setDefaultLocale(Locale.CHINA);
+		cookieLocaleResolver.setDefaultLocale(Locale.CHINESE);
 		return cookieLocaleResolver;
 	}
 

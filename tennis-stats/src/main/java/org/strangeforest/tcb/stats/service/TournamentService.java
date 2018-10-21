@@ -55,7 +55,7 @@ public class TournamentService {
 		"    rank() OVER (PARTITION BY tournament_id ORDER BY titles DESC) AS titles_rank\n" +
 		"  FROM player_tournament_titles\n" +
 		")\n" +
-		"SELECT tournament_id, mp.ext_tournament_id, name, level,\n" +
+				"SELECT tournament_id, mp.ext_tournament_id, name, chinese_name, level,\n" +
 		"  array_to_json(array(SELECT row_to_json(event) FROM (\n" +
 		"    SELECT e.level, e.surface, e.season, p.player_count, p.participation, p.strength, p.average_elo_rating, s.court_speed\n" +
 		"    FROM tournament_event e\n" +
@@ -86,7 +86,7 @@ public class TournamentService {
 		"  SELECT player_id, titles, rank() OVER (ORDER BY titles DESC, last_date) AS rank\n" +
 		"  FROM player_tournament_titles\n" +
 		")\n" +
-		"SELECT tournament_id, mp.ext_tournament_id, name, level,\n" +
+				"SELECT tournament_id, mp.ext_tournament_id, name, chinese_name, level,\n" +
 		"  array_to_json(array(SELECT row_to_json(event) FROM (\n" +
 		"    SELECT e.level, e.surface, e.season, p.player_count, p.participation, p.strength, p.average_elo_rating, s.court_speed\n" +
 		"    FROM tournament_event e\n" +
@@ -265,6 +265,7 @@ public class TournamentService {
 		int tournamentId = rs.getInt("tournament_id");
 		String extTournamentId = rs.getString("ext_tournament_id");
 		String name = rs.getString("name");
+		String chineseName = rs.getString("chinese_name");
 		Map<String, Integer> levels = new HashMap<>();
 		Map<String, Integer> surfaces = new HashMap<>();
 		Map<String, List<Integer>> courtSpeeds = new HashMap<>();
@@ -321,7 +322,7 @@ public class TournamentService {
 			throw new SQLException(ex);
 		}
 
-		return new Tournament(tournamentId, extTournamentId, name, levelList, surfaceList, avgCourtSpeeds, eventCount, formattedSeasons, avgPlayerCount, avgParticipation, avgStrength, avgAverageEloRating, topPlayers);
+		return new Tournament(tournamentId, extTournamentId, name, chineseName, levelList, surfaceList, avgCourtSpeeds, eventCount, formattedSeasons, avgPlayerCount, avgParticipation, avgStrength, avgAverageEloRating, topPlayers);
 	}
 
 	private static Integer increment(String s, Integer i) {

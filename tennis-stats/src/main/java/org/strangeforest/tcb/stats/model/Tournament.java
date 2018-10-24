@@ -10,7 +10,7 @@ public class Tournament {
     private final String chineseName;
 	private final List<String> levels;
 	private final List<String> surfaces;
-	private Map<String, Integer> courtSpeeds;
+	private Map<String, Integer> speeds;
 	private final int eventCount;
 	private final String seasons;
 	private double participation;
@@ -26,7 +26,7 @@ public class Tournament {
         this.chineseName = chineseName;
 		this.levels = levels;
 		this.surfaces = surfaces;
-		this.courtSpeeds = courtSpeeds;
+		this.speeds = speeds;
 		this.eventCount = eventCount;
 		this.seasons = seasons;
 		this.playerCount = playerCount;
@@ -60,8 +60,8 @@ public class Tournament {
 		return surfaces;
 	}
 
-	public Map<String, Integer> getCourtSpeeds() {
-		return courtSpeeds;
+	public Map<String, Integer> getSpeeds() {
+		return speeds;
 	}
 
 	public int getEventCount() {

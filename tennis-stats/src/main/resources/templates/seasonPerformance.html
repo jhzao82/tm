@@ -5,9 +5,10 @@
 <!--/*@thymesVar id="levelGroups" type="java.util.Set<org.strangeforest.tcb.stats.model.core.TournamentLevelGroup>"*/-->
 <!--/*@thymesVar id="surfaces" type="org.strangeforest.tcb.stats.model.core.Surface[]"*/-->
 <!--/*@thymesVar id="surfaceGroups" type="org.strangeforest.tcb.stats.model.core.SurfaceGroup[]"*/-->
+<!--/*@thymesVar id="speeds" type="org.strangeforest.tcb.stats.model.core.CourtSpeed[]"*/-->
 <!--/*@thymesVar id="rounds" type="org.strangeforest.tcb.stats.model.core.Round[]"*/-->
 <!--/*@thymesVar id="results" type="org.strangeforest.tcb.stats.model.core.EventResult[]"*/-->
-<!--/*@thymesVar id="tournaments" type="java.util.List<org.strangeforest.tcb.stats.model.core.TournamentItem>"*/-->
+<!--/*@thymesVar id="tournaments" type="java.util.Map<org.strangeforest.tcb.stats.model.core.TournamentLevel, List<org.strangeforest.tcb.stats.model.core.TournamentItem>>"*/-->
 <!--/*@thymesVar id="opponentCategories" type="java.util.Map<org.strangeforest.tcb.stats.service.Opponent.OpponentCategory, List<org.strangeforest.tcb.stats.service.Opponent>>"*/-->
 <!--/*@thymesVar id="countries" type="java.util.List<com.neovisionaries.i18n.CountryCode>"*/-->
 <script type="text/javascript">
@@ -31,6 +32,7 @@
 				request.bestOf = $("#perfBestOf").val();
 				request.surface = $("#perfSurface").val();
 				request.indoor = $("#perfIndoor").val();
+				request.speed = $("#perfSpeed").val();
 				request.round = $("#perfRound").val();
 				request.result = $("#perfResult").val();
 				request.tournamentId = $("#perfTournament").val();
@@ -90,6 +92,7 @@
 		url += "&bestOf=" + $("#perfBestOf").val();
 		url += "&surface=" + $("#perfSurface").val();
 		url += "&indoor=" + $("#perfIndoor").val();
+		url += "&speed=" + $("#perfSpeed").val();
 		url += "&round=" + encodeURIComponent($("#perfRound").val());
 		url += "&result=" + encodeURIComponent($("#perfResult").val());
 		url += "&tournamentId=" + $("#perfTournament").val();
@@ -145,6 +148,7 @@
 		$("#perfBestOf").val("");
 		$("#perfSurface").val(""); perfSurfaceChanged();
 		$("#perfIndoor").val("");
+		$("#perfSpeed").val("");
 		$("#perfRound").val(""); perfRoundChanged();
 		$("#perfResult").val("");
 		$("#perfOpponent").val(""); perfOpponentChanged();
@@ -180,21 +184,29 @@
 				</optgroup>
 			</select>
 		</div>
+		<div class="col-md-2">
+			<select id="perfSpeed" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by court speed">
+				<option value="">All speeds</option>
+				<option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|" style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			<select id="perfTournament" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
+				<option value="">All tournaments</option>
+				<optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam" th:class="'bg-level-' + ${lts.key.code}">
+					<option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101" th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}">Wimbledon</option>
+				</optgroup>
+			</select>
+		</div>
 		<div class="col-md-3">
 			<select id="perfCountry" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
 				<option value="">Vs all countries</option>
 				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI" th:text="${country.name}">Switzerland</option>
 			</select>
 		</div>
-		<div class="col-md-3">
-			<select id="perfTournament" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-				<option value="">All tournaments</option>
-				<option th:each="tournament : ${tournaments}" th:if="${tournament.level != 'D' and tournament.level != 'T'}" th:value="${tournament.id}" value="101" th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}">Wimbledon</option>
-			</select>
-		</div>
 		<div class="col-md-2">
 			<div class="input-group" data-toggle="tooltip" data-placement="top" title="Override minimum entries">
-				<label for="perfMinEntriesOverride" class="input-group-addon">Min. entries:</label>
+				<label for="perfMinEntriesOverride" class="input-group-addon">Min. entr.:</label>
 				<input id="perfMinEntriesOverride" type="text" size="6" class="form-control" oninput="reloadTopPerformers()" onchange="reloadTopPerformers()"/>
 			</div>
 		</div>

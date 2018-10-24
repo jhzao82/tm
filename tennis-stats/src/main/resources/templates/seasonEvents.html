@@ -7,7 +7,7 @@
 <!--/*@thymesVar id="levelGroups" type="java.util.Set<org.strangeforest.tcb.stats.model.core.TournamentLevelGroup>"*/-->
 <!--/*@thymesVar id="surfaces" type="org.strangeforest.tcb.stats.model.core.Surface[]"*/-->
 <!--/*@thymesVar id="surfaceGroups" type="org.strangeforest.tcb.stats.model.core.SurfaceGroup[]"*/-->
-<!--/*@thymesVar id="speeds" type="org.strangeforest.tcb.stats.model.core.CourtSpeed[]"*/-->
+    <!--/*@thymesVar id="speeds" type="org.strangeforest.tcb.stats.model.core.CourtSpeed[]"*/-->
 <script type="text/javascript">
 	$(function() {
 		var $seasonEventsTable = $("#seasonEventsTable");
@@ -101,13 +101,16 @@
 		<option value="">Outdoor / Indoor</option>
 		<option value="false" th:selected="${indoor == false}">Outdoor</option>
 		<option value="true" th:selected="${indoor}">Indoor</option>
-	</select>
+    </select>
 </div>
-<div id="eventsSpeedDiv" class="btn-group pull-left margin-right">
-	<select id="eventsSpeed" class="form-control" onchange="reloadSeasonEvents()" data-toggle="tooltip" data-placement="top" title="Filter by court speed">
-		<option value="">All speeds</option>
-		<option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|" style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium</option>
-	</select>
+    <div id="eventsSpeedDiv" class="btn-group pull-left margin-right">
+        <select id="eventsSpeed" class="form-control" onchange="reloadSeasonEvents()" data-toggle="tooltip"
+                data-placement="top" title="Filter by court speed">
+            <option value="">All speeds</option>
+            <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
+                    style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium
+            </option>
+        </select>
 </div>
 <div id="eventsClearDiv" class="btn-group margin-right">
 	<button type="button" class="btn btn-default" onclick="clearSeasonEventsFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
@@ -120,7 +123,9 @@
 		<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">Date</th>
 		<th data-column-id="name" data-formatter="event" data-width="200">Name</th>
 		<th data-column-id="surface" data-formatter="surface" data-width="80">Surface</th>
-		<th data-column-id="speed" data-formatter="speed" data-width="70" data-align="center" data-header-align="center">Speed</th>
+        <th data-column-id="speed" data-formatter="speed" data-width="70" data-align="center"
+            data-header-align="center">Speed
+        </th>
 		<th data-column-id="draw" data-width="65">Draw</th>
 		<th data-column-id="playerCount" data-type="numeric" data-width="55" data-align="right" data-header-align="right">Pls.</th>
 		<th data-column-id="participation" data-formatter="participation" data-width="60" data-align="right" data-header-align="right">Part.</th>

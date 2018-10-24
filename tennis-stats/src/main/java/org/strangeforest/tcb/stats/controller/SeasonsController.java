@@ -28,15 +28,15 @@ public class SeasonsController extends PageController {
 
 	@GetMapping("/season")
 	public ModelAndView season(
-		@RequestParam(name = "season") int season,
-		@RequestParam(name = "tab", required = false) String tab,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId
+            @RequestParam(name = "season") int season,
+            @RequestParam(name = "tab", required = false) String tab,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId
 	) {
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("season", season);
@@ -45,7 +45,7 @@ public class SeasonsController extends PageController {
 		modelMap.addAttribute("bestOf", bestOf);
 		modelMap.addAttribute("surface", surface);
 		modelMap.addAttribute("indoor", indoor);
-		modelMap.addAttribute("speed", speed);
+        modelMap.addAttribute("speed", speed);
 		modelMap.addAttribute("round", round);
 		modelMap.addAttribute("tournamentId", tournamentId);
 		modelMap.addAttribute("params", ParamsUtil.INSTANCE);
@@ -85,7 +85,7 @@ public class SeasonsController extends PageController {
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.INDIVIDUAL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		return new ModelAndView("seasonEvents", modelMap);
 	}
 
@@ -111,7 +111,7 @@ public class SeasonsController extends PageController {
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.ALL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("rounds", Round.values());
 		modelMap.addAttribute("results", EventResult.values());
 		modelMap.addAttribute("tournaments", tournamentService.getSeasonTournaments(season));
@@ -122,14 +122,14 @@ public class SeasonsController extends PageController {
 
 	@GetMapping("/seasonStats")
 	public ModelAndView seasonStats(
-		@RequestParam(name = "season") int season,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId
+            @RequestParam(name = "season") int season,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId
 	) {
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("season", season);
@@ -138,7 +138,7 @@ public class SeasonsController extends PageController {
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.ALL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("rounds", Round.values());
 		modelMap.addAttribute("results", EventResult.values());
 		modelMap.addAttribute("tournaments", tournamentService.getSeasonTournaments(season));
@@ -148,7 +148,7 @@ public class SeasonsController extends PageController {
 		modelMap.addAttribute("bestOf", bestOf);
 		modelMap.addAttribute("surface", surface);
 		modelMap.addAttribute("indoor", indoor);
-		modelMap.addAttribute("speed", speed);
+        modelMap.addAttribute("speed", speed);
 		modelMap.addAttribute("round", round);
 		modelMap.addAttribute("tournamentId", tournamentId);
 		return new ModelAndView("seasonStats", modelMap);

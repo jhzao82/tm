@@ -14,7 +14,7 @@ public class Match {
 	private final int bestOf;
 	private final String surface;
 	private final boolean indoor;
-	private final Integer speed;
+    private final Integer speed;
 	private final String round;
 	private final MatchPlayer winner;
 	private final MatchPlayer loser;
@@ -26,8 +26,8 @@ public class Match {
 	private Integer rank;
 	private Integer matchScore;
 
-	public Match(long id, LocalDate date, int tournamentEventId, String tournament, String level, int bestOf, String surface, boolean indoor, Integer speed, String round,
-	             MatchPlayer winner, MatchPlayer loser, String score, String outcome, boolean hasStats) {
+    public Match(long id, LocalDate date, int tournamentEventId, String tournament, String level, int bestOf, String surface, boolean indoor, Integer speed, String round,
+                 MatchPlayer winner, MatchPlayer loser, String score, String outcome, boolean hasStats) {
 		this.id = id;
 		this.date = date;
 		this.tournamentEventId = tournamentEventId;
@@ -36,7 +36,7 @@ public class Match {
 		this.bestOf = bestOf;
 		this.surface = surface;
 		this.indoor = indoor;
-		this.speed = speed;
+        this.speed = speed;
 		this.round = round;
 		this.winner = winner;
 		this.loser = loser;
@@ -77,9 +77,9 @@ public class Match {
 		return indoor;
 	}
 
-	public Integer getSpeed() {
-		return speed;
-	}
+    public Integer getSpeed() {
+        return speed;
+    }
 
 	public String getRound() {
 		return round;

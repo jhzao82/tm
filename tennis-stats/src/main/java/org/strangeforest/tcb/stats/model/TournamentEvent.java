@@ -10,6 +10,7 @@ public class TournamentEvent {
 	private final int season;
 	private final LocalDate date;
 	private final String name;
+	private final String chineseName;
 	private final String level;
 	private final String surface;
 	private final boolean indoor;
@@ -27,13 +28,14 @@ public class TournamentEvent {
 	private Double titleDifficulty;
 	private String mapProperties;
 
-	public TournamentEvent(int id, int tournamentId, String tournamentExtId, int season, LocalDate date, String name, String level, String surface, boolean indoor) {
+	public TournamentEvent(int id, int tournamentId, String tournamentExtId, int season, LocalDate date, String name, String chineseName, String level, String surface, boolean indoor) {
 		this.id = id;
 		this.tournamentId = tournamentId;
 		this.tournamentExtId = tournamentExtId;
 		this.season = season;
 		this.date = date;
 		this.name = name;
+		this.chineseName = chineseName;
 		this.level = level;
 		this.surface = surface;
 		this.indoor = indoor;
@@ -96,6 +98,10 @@ public class TournamentEvent {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getChineseName() {
+		return chineseName;
 	}
 
 	public String getLevel() {

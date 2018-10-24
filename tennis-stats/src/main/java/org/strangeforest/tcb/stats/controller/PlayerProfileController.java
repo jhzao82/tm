@@ -39,32 +39,32 @@ public class PlayerProfileController extends PageController {
 
 	@GetMapping("/playerProfile")
 	public ModelAndView playerProfile(
-		@RequestParam(name = "playerId", required = false) Integer playerId,
-		@RequestParam(name = "name", required = false) String name,
-		@RequestParam(name = "tab", required = false) String tab,
-		@RequestParam(name = "season", required = false) Integer season,
-		@RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
-		@RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "result", required = false) String result,
-		@RequestParam(name = "opponent", required = false) String opponent,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId,
-		@RequestParam(name = "tournamentEventId", required = false) Integer tournamentEventId,
-		@RequestParam(name = "outcome", required = false) String outcome,
-		@RequestParam(name = "score", required = false) String score,
-		@RequestParam(name = "countryId", required = false) String countryId,
-		@RequestParam(name = "bigWin", defaultValue = "false") boolean bigWin,
-		@RequestParam(name = "h2h", required = false) Integer h2h,
-		@RequestParam(name = "matches", required = false) Integer matches,
-		@RequestParam(name = "rankType", required = false) String rankType,
-		@RequestParam(name = "bySeason", defaultValue = "false") boolean bySeason,
-		@RequestParam(name = "infamous", required = false) Boolean infamous,
-		@RequestParam(name = "searchPhrase", required = false) String searchPhrase
+            @RequestParam(name = "playerId", required = false) Integer playerId,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "tab", required = false) String tab,
+            @RequestParam(name = "season", required = false) Integer season,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "result", required = false) String result,
+            @RequestParam(name = "opponent", required = false) String opponent,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId,
+            @RequestParam(name = "tournamentEventId", required = false) Integer tournamentEventId,
+            @RequestParam(name = "outcome", required = false) String outcome,
+            @RequestParam(name = "score", required = false) String score,
+            @RequestParam(name = "countryId", required = false) String countryId,
+            @RequestParam(name = "bigWin", defaultValue = "false") boolean bigWin,
+            @RequestParam(name = "h2h", required = false) Integer h2h,
+            @RequestParam(name = "matches", required = false) Integer matches,
+            @RequestParam(name = "rankType", required = false) String rankType,
+            @RequestParam(name = "bySeason", defaultValue = "false") boolean bySeason,
+            @RequestParam(name = "infamous", required = false) Boolean infamous,
+            @RequestParam(name = "searchPhrase", required = false) String searchPhrase
 	) {
 		if (playerId == null && name == null)
 			throw new NotFoundException("Player", null);
@@ -80,7 +80,7 @@ public class PlayerProfileController extends PageController {
 		modelMap.addAttribute("bestOf", bestOf);
 		modelMap.addAttribute("surface", surface);
 		modelMap.addAttribute("indoor", indoor);
-		modelMap.addAttribute("speed", speed);
+        modelMap.addAttribute("speed", speed);
 		modelMap.addAttribute("round", round);
 		modelMap.addAttribute("result", result);
 		modelMap.addAttribute("opponent", opponent);
@@ -160,35 +160,35 @@ public class PlayerProfileController extends PageController {
 
 	@GetMapping("/playerEvents")
 	public ModelAndView playerEvents(
-		@RequestParam(name = "playerId") int playerId,
-		@RequestParam(name = "season", required = false) Integer season,
-		@RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
-		@RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "result", required = false) String result,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId
+            @RequestParam(name = "playerId") int playerId,
+            @RequestParam(name = "season", required = false) Integer season,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "result", required = false) String result,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId
 	) {
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("playerId", playerId);
-		modelMap.addAttribute("playerName", playerService.getPlayerName(playerId));
-		modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
+        modelMap.addAttribute("playerName", playerService.getPlayerName(playerId));
+        modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
 		modelMap.addAttribute("levels", TournamentLevel.MAIN_TOURNAMENT_LEVELS);
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.INDIVIDUAL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("results", EventResult.values());
-		modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
+        modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
 		modelMap.addAttribute("season", season);
 		modelMap.addAttribute("fromDate", fromDate);
 		modelMap.addAttribute("toDate", toDate);
 		modelMap.addAttribute("level", level);
 		modelMap.addAttribute("surface", surface);
 		modelMap.addAttribute("indoor", indoor);
-		modelMap.addAttribute("speed", speed);
+        modelMap.addAttribute("speed", speed);
 		modelMap.addAttribute("result", result);
 		modelMap.addAttribute("tournamentId", tournamentId);
 		modelMap.addAttribute("categoryClasses", StatsCategory.getCategoryClasses());
@@ -197,41 +197,41 @@ public class PlayerProfileController extends PageController {
 
 	@GetMapping("/playerMatches")
 	public ModelAndView playerMatches(
-		@RequestParam(name = "playerId") int playerId,
-		@RequestParam(name = "season", required = false) Integer season,
-		@RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
-		@RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "result", required = false) String result,
-		@RequestParam(name = "opponent", required = false) String opponent,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId,
-		@RequestParam(name = "tournamentEventId", required = false) Integer tournamentEventId,
-		@RequestParam(name = "outcome", required = false) String outcome,
-		@RequestParam(name = "score", required = false) String score,
-		@RequestParam(name = "countryId", required = false) String countryId,
-		@RequestParam(name = "bigWin", defaultValue = "false") boolean bigWin,
-		@RequestParam(name = "searchPhrase", required = false) String searchPhrase
+            @RequestParam(name = "playerId") int playerId,
+            @RequestParam(name = "season", required = false) Integer season,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "result", required = false) String result,
+            @RequestParam(name = "opponent", required = false) String opponent,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId,
+            @RequestParam(name = "tournamentEventId", required = false) Integer tournamentEventId,
+            @RequestParam(name = "outcome", required = false) String outcome,
+            @RequestParam(name = "score", required = false) String score,
+            @RequestParam(name = "countryId", required = false) String countryId,
+            @RequestParam(name = "bigWin", defaultValue = "false") boolean bigWin,
+            @RequestParam(name = "searchPhrase", required = false) String searchPhrase
 	) {
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("playerId", playerId);
-		modelMap.addAttribute("playerName", playerService.getPlayerName(playerId));
-		modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
+        modelMap.addAttribute("playerName", playerService.getPlayerName(playerId));
+        modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
 		modelMap.addAttribute("levels", TournamentLevel.ALL_TOURNAMENT_LEVELS);
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.ALL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("rounds", Round.values());
 		modelMap.addAttribute("results", EventResult.values());
 		modelMap.addAttribute("opponentCategories", Opponent.categories());
-		modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
-		modelMap.addAttribute("tournamentEvents", tournamentService.getPlayerTournamentEventItems(playerId));
-		modelMap.addAttribute("countries", matchesService.getOpponentCountries(playerId));
+        modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
+        modelMap.addAttribute("tournamentEvents", tournamentService.getPlayerTournamentEventItems(playerId));
+        modelMap.addAttribute("countries", matchesService.getOpponentCountries(playerId));
 		modelMap.addAttribute("season", season);
 		modelMap.addAttribute("fromDate", fromDate);
 		modelMap.addAttribute("toDate", toDate);
@@ -239,7 +239,7 @@ public class PlayerProfileController extends PageController {
 		modelMap.addAttribute("bestOf", bestOf);
 		modelMap.addAttribute("surface", surface);
 		modelMap.addAttribute("indoor", indoor);
-		modelMap.addAttribute("speed", speed);
+        modelMap.addAttribute("speed", speed);
 		modelMap.addAttribute("round", round);
 		modelMap.addAttribute("result", result);
 		if (!isNullOrEmpty(opponent)) {
@@ -285,16 +285,16 @@ public class PlayerProfileController extends PageController {
 	) {
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("playerId", playerId);
-		modelMap.addAttribute("playerName", playerService.getPlayerName(playerId));
-		modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
+        modelMap.addAttribute("playerName", playerService.getPlayerName(playerId));
+        modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
 		modelMap.addAttribute("levels", TournamentLevel.TOURNAMENT_LEVELS);
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.ALL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("rounds", Round.values());
-		modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
-		modelMap.addAttribute("countries", matchesService.getOpponentCountries(playerId));
+        modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
+        modelMap.addAttribute("countries", matchesService.getOpponentCountries(playerId));
 		modelMap.addAttribute("season", season);
 		modelMap.addAttribute("level", level);
 		modelMap.addAttribute("surface", surface);
@@ -330,41 +330,41 @@ public class PlayerProfileController extends PageController {
 
 	@GetMapping("/playerPerformance")
 	public ModelAndView playerPerformance(
-		@RequestParam(name = "playerId") int playerId,
-		@RequestParam(name = "season", required = false) Integer season,
-		@RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
-		@RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "result", required = false) String result,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId,
-		@RequestParam(name = "opponent", required = false) String opponent,
-		@RequestParam(name = "countryId", required = false) String countryId,
-		@RequestParam(name = "advFilter", defaultValue = F) boolean advFilter,
-		@RequestParam(name = "rawData", defaultValue = F) boolean rawData
+            @RequestParam(name = "playerId") int playerId,
+            @RequestParam(name = "season", required = false) Integer season,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "result", required = false) String result,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId,
+            @RequestParam(name = "opponent", required = false) String opponent,
+            @RequestParam(name = "countryId", required = false) String countryId,
+            @RequestParam(name = "advFilter", defaultValue = F) boolean advFilter,
+            @RequestParam(name = "rawData", defaultValue = F) boolean rawData
 	) {
-		Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
+        Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
 		Range<LocalDate> dateRange = RangeUtil.toRange(fromDate, toDate);
 		OpponentFilter opponentFilter = OpponentFilter.forStats(opponent, matchesService.getSameCountryIds(countryId));
-		PlayerPerformanceEx perf = performanceService.getPlayerPerformanceEx(playerId, new PerfStatsFilter(season, dateRange, level, bestOf, surface, indoor, speedRange, round, result, tournamentId, opponentFilter));
+        PlayerPerformanceEx perf = performanceService.getPlayerPerformanceEx(playerId, new PerfStatsFilter(season, dateRange, level, bestOf, surface, indoor, speedRange, round, result, tournamentId, opponentFilter));
 
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("playerId", playerId);
-		modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
+        modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
 		modelMap.addAttribute("levels", TournamentLevel.ALL_TOURNAMENT_LEVELS);
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.ALL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("rounds", Round.values());
 		modelMap.addAttribute("results", EventResult.values());
-		modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
+        modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
 		modelMap.addAttribute("opponentCategories", Opponent.categories());
-		modelMap.addAttribute("countries", matchesService.getOpponentCountries(playerId));
+        modelMap.addAttribute("countries", matchesService.getOpponentCountries(playerId));
 		modelMap.addAttribute("season", season);
 		modelMap.addAttribute("fromDate", fromDate);
 		modelMap.addAttribute("toDate", toDate);
@@ -372,7 +372,7 @@ public class PlayerProfileController extends PageController {
 		modelMap.addAttribute("bestOf", bestOf);
 		modelMap.addAttribute("surface", surface);
 		modelMap.addAttribute("indoor", indoor);
-		modelMap.addAttribute("speed", speed);
+        modelMap.addAttribute("speed", speed);
 		modelMap.addAttribute("round", round);
 		modelMap.addAttribute("result", result);
 		modelMap.addAttribute("tournamentId", tournamentId);
@@ -399,46 +399,46 @@ public class PlayerProfileController extends PageController {
 
 	@GetMapping("/playerStatsTab")
 	public ModelAndView playerStatsTab(
-		@RequestParam(name = "playerId") int playerId,
-		@RequestParam(name = "season", required = false) Integer season,
-		@RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
-		@RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "result", required = false) String result,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId,
-		@RequestParam(name = "opponent", required = false) String opponent,
-		@RequestParam(name = "countryId", required = false) String countryId,
-		@RequestParam(name = "advFilter", defaultValue = F) boolean advFilter,
-		@RequestParam(name = "tab", required = false) String tab,
-		@RequestParam(name = "rawData", defaultValue = F) boolean rawData,
-		@RequestParam(name = "compare", defaultValue = F) boolean compare,
-		@RequestParam(name = "compareSeason", required = false) Integer compareSeason,
-		@RequestParam(name = "compareLevel", required = false) String compareLevel,
-		@RequestParam(name = "compareSurface", required = false) String compareSurface
+            @RequestParam(name = "playerId") int playerId,
+            @RequestParam(name = "season", required = false) Integer season,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "result", required = false) String result,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId,
+            @RequestParam(name = "opponent", required = false) String opponent,
+            @RequestParam(name = "countryId", required = false) String countryId,
+            @RequestParam(name = "advFilter", defaultValue = F) boolean advFilter,
+            @RequestParam(name = "tab", required = false) String tab,
+            @RequestParam(name = "rawData", defaultValue = F) boolean rawData,
+            @RequestParam(name = "compare", defaultValue = F) boolean compare,
+            @RequestParam(name = "compareSeason", required = false) Integer compareSeason,
+            @RequestParam(name = "compareLevel", required = false) String compareLevel,
+            @RequestParam(name = "compareSurface", required = false) String compareSurface
 	) {
 		Range<LocalDate> dateRange = RangeUtil.toRange(fromDate, toDate);
-		Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
+        Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
 		OpponentFilter opponentFilter = OpponentFilter.forStats(opponent, matchesService.getSameCountryIds(countryId));
-		PlayerStats stats = statisticsService.getPlayerStats(playerId, MatchFilter.forStats(season, dateRange, level, bestOf, surface, indoor, speedRange, round, result, tournamentId, opponentFilter));
+        PlayerStats stats = statisticsService.getPlayerStats(playerId, MatchFilter.forStats(season, dateRange, level, bestOf, surface, indoor, speedRange, round, result, tournamentId, opponentFilter));
 
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("playerId", playerId);
-		modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
+        modelMap.addAttribute("seasons", playerService.getPlayerSeasons(playerId));
 		modelMap.addAttribute("levels", TournamentLevel.ALL_TOURNAMENT_LEVELS);
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.ALL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("rounds", Round.values());
 		modelMap.addAttribute("results", EventResult.values());
-		modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
+        modelMap.addAttribute("tournaments", tournamentService.getPlayerTournamentItems(playerId));
 		modelMap.addAttribute("opponentCategories", Opponent.categories());
-		modelMap.addAttribute("countries", matchesService.getOpponentCountries(playerId));
+        modelMap.addAttribute("countries", matchesService.getOpponentCountries(playerId));
 		modelMap.addAttribute("season", season);
 		modelMap.addAttribute("fromDate", fromDate);
 		modelMap.addAttribute("toDate", toDate);
@@ -446,7 +446,7 @@ public class PlayerProfileController extends PageController {
 		modelMap.addAttribute("bestOf", bestOf);
 		modelMap.addAttribute("surface", surface);
 		modelMap.addAttribute("indoor", indoor);
-		modelMap.addAttribute("speed", speed);
+        modelMap.addAttribute("speed", speed);
 		modelMap.addAttribute("round", round);
 		modelMap.addAttribute("result", result);
 		modelMap.addAttribute("tournamentId", tournamentId);
@@ -504,7 +504,7 @@ public class PlayerProfileController extends PageController {
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.INDIVIDUAL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("results", EventResult.values());
 		modelMap.addAttribute("level", level);
 		modelMap.addAttribute("surface", surface);

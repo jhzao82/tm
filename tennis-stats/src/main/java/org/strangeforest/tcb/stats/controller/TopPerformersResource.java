@@ -34,31 +34,31 @@ public class TopPerformersResource {
 
 	@GetMapping("/topPerformersTable")
 	public BootgridTable<TopPerformerRow> topPerformersTable(
-		@RequestParam(name = "category") String category,
-		@RequestParam(name = "season", required = false) Integer season,
-		@RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
-		@RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "result", required = false) String result,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId,
-		@RequestParam(name = "opponent", required = false) String opponent,
-		@RequestParam(name = "countryId", required = false) String countryId,
-		@RequestParam(name = "minEntries", required = false) Integer minEntries,
-		@RequestParam(name = "active", required = false) Boolean active,
-		@RequestParam(name = "current", defaultValue = "1") int current,
-		@RequestParam(name = "rowCount", defaultValue = "20") int rowCount,
-		@RequestParam(name = "searchPhrase", defaultValue="") String searchPhrase,
-		@RequestParam Map<String, String> requestParams
+            @RequestParam(name = "category") String category,
+            @RequestParam(name = "season", required = false) Integer season,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "result", required = false) String result,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId,
+            @RequestParam(name = "opponent", required = false) String opponent,
+            @RequestParam(name = "countryId", required = false) String countryId,
+            @RequestParam(name = "minEntries", required = false) Integer minEntries,
+            @RequestParam(name = "active", required = false) Boolean active,
+            @RequestParam(name = "current", defaultValue = "1") int current,
+            @RequestParam(name = "rowCount", defaultValue = "20") int rowCount,
+            @RequestParam(name = "searchPhrase", defaultValue = "") String searchPhrase,
+            @RequestParam Map<String, String> requestParams
 	) {
 		Range<LocalDate> dateRange = RangeUtil.toRange(fromDate, toDate);
-		Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
+        Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
 		OpponentFilter opponentFilter = OpponentFilter.forStats(opponent, matchesService.getSameCountryIds(countryId));
-		PerfStatsFilter filter = new PerfStatsFilter(active, searchPhrase, season, dateRange, level, bestOf, surface, indoor, speedRange, round, result, tournamentId, null, opponentFilter);
+        PerfStatsFilter filter = new PerfStatsFilter(active, searchPhrase, season, dateRange, level, bestOf, surface, indoor, speedRange, round, result, tournamentId, null, opponentFilter);
 		TopPerformersView view = new TopPerformersView(category, filter).optimize();
 		int playerCount = topPerformersService.getPlayerCount(view.getCategory(), view.getFilter(), minEntries);
 
@@ -69,26 +69,26 @@ public class TopPerformersResource {
 
 	@GetMapping("/topPerformersMinEntries")
 	public String topPerformersMinEntries(
-		@RequestParam(name = "category") String category,
-		@RequestParam(name = "season", required = false) Integer season,
-		@RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
-		@RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "result", required = false) String result,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId,
-		@RequestParam(name = "opponent", required = false) String opponent,
-		@RequestParam(name = "countryId", required = false) String countryId,
-		@RequestParam(name = "minEntries", required = false) Integer minEntries
+            @RequestParam(name = "category") String category,
+            @RequestParam(name = "season", required = false) Integer season,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) LocalDate toDate,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "result", required = false) String result,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId,
+            @RequestParam(name = "opponent", required = false) String opponent,
+            @RequestParam(name = "countryId", required = false) String countryId,
+            @RequestParam(name = "minEntries", required = false) Integer minEntries
 	) {
 		Range<LocalDate> dateRange = RangeUtil.toRange(fromDate, toDate);
-		Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
+        Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
 		OpponentFilter opponentFilter = OpponentFilter.forStats(opponent, matchesService.getSameCountryIds(countryId));
-		PerfStatsFilter filter = new PerfStatsFilter(season, dateRange, level, bestOf, surface, indoor, speedRange, round, result, tournamentId, opponentFilter);
+        PerfStatsFilter filter = new PerfStatsFilter(season, dateRange, level, bestOf, surface, indoor, speedRange, round, result, tournamentId, opponentFilter);
 		TopPerformersView view = new TopPerformersView(category, filter).optimize();
 		return topPerformersService.getTopPerformersMinEntries(view.getCategory(), view.getFilter(), minEntries);
 	}

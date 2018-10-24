@@ -17,8 +17,8 @@ public class RivalryPlayerListFilter extends PlayerListFilter {
 		this.rivalryFilter = rivalryFilter;
 	}
 
-	public RivalryFilter getRivalryFilter() {
-		return rivalryFilter;
+    public RivalryFilter getRivalryFilter() {
+        return rivalryFilter;
 	}
 
 	@Override protected void appendCriteria(StringBuilder criteria) {

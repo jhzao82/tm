@@ -25,7 +25,7 @@ public class GreatestMatchesResource {
 		.put("date", "date")
 		.put("tournament", "tournament")
 		.put("surface", "surface")
-		.put("speed", "court_speed NULLS LAST")
+            .put("speed", "court_speed NULLS LAST")
 		.put("round", "round")
 		.put("bestOf", "best_of")
 		.put("matchScore", "match_score")
@@ -34,24 +34,24 @@ public class GreatestMatchesResource {
 
 	@GetMapping("/greatestMatchesTable")
 	public BootgridTable<Match> greatestMatchesTable(
-		@RequestParam(name = "fromSeason", required = false) Integer fromSeason,
-		@RequestParam(name = "toSeason", required = false) Integer toSeason,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId,
-		@RequestParam(name = "bestRank", required = false) Integer bestRank,
-		@RequestParam(name = "current", defaultValue = "1") int current,
-		@RequestParam(name = "rowCount", defaultValue = "20") int rowCount,
-		@RequestParam(name = "searchPhrase", defaultValue="") String searchPhrase,
-		@RequestParam Map<String, String> requestParams
+            @RequestParam(name = "fromSeason", required = false) Integer fromSeason,
+            @RequestParam(name = "toSeason", required = false) Integer toSeason,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId,
+            @RequestParam(name = "bestRank", required = false) Integer bestRank,
+            @RequestParam(name = "current", defaultValue = "1") int current,
+            @RequestParam(name = "rowCount", defaultValue = "20") int rowCount,
+            @RequestParam(name = "searchPhrase", defaultValue = "") String searchPhrase,
+            @RequestParam Map<String, String> requestParams
 	) {
 		Range<LocalDate> dateRange = DateUtil.toDateRange(fromSeason, toSeason);
-		Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
-		MatchFilter filter = MatchFilter.forMatches(dateRange, level, bestOf, surface, indoor, speedRange, tournamentId, round, searchPhrase);
+        Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
+        MatchFilter filter = MatchFilter.forMatches(dateRange, level, bestOf, surface, indoor, speedRange, tournamentId, round, searchPhrase);
 
 		String orderBy = BootgridUtil.getOrderBy(requestParams, ORDER_MAP, DEFAULT_ORDER);
 		int pageSize = rowCount > 0 ? rowCount : MAX_MATCHES;

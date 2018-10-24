@@ -123,20 +123,20 @@ public class TimelinesController extends PageController {
 
 	@GetMapping("/statsTimeline")
 	public ModelAndView statsTimeline(
-		@RequestParam(name = "fromSeason", required = false) Integer fromSeason,
-		@RequestParam(name = "toSeason", required = false) Integer toSeason,
-		@RequestParam(name = "level", required = false) String level,
-		@RequestParam(name = "bestOf", required = false) Integer bestOf,
-		@RequestParam(name = "surface", required = false) String surface,
-		@RequestParam(name = "indoor", required = false) Boolean indoor,
-		@RequestParam(name = "speed", required = false) Integer speed,
-		@RequestParam(name = "round", required = false) String round,
-		@RequestParam(name = "tournamentId", required = false) Integer tournamentId,
-		@RequestParam(name = "rawData", defaultValue = F) boolean rawData
+            @RequestParam(name = "fromSeason", required = false) Integer fromSeason,
+            @RequestParam(name = "toSeason", required = false) Integer toSeason,
+            @RequestParam(name = "level", required = false) String level,
+            @RequestParam(name = "bestOf", required = false) Integer bestOf,
+            @RequestParam(name = "surface", required = false) String surface,
+            @RequestParam(name = "indoor", required = false) Boolean indoor,
+            @RequestParam(name = "speed", required = false) Integer speed,
+            @RequestParam(name = "round", required = false) String round,
+            @RequestParam(name = "tournamentId", required = false) Integer tournamentId,
+            @RequestParam(name = "rawData", defaultValue = F) boolean rawData
 	) {
-		Range<LocalDate> dateRange = DateUtil.toDateRange(fromSeason, toSeason);
-		Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
-		PerfStatsFilter filter = new PerfStatsFilter(null, dateRange, level, bestOf, surface, indoor, speedRange, round, null, tournamentId, null);
+        Range<LocalDate> dateRange = DateUtil.toDateRange(fromSeason, toSeason);
+        Range<Integer> speedRange = CourtSpeed.toSpeedRange(speed);
+        PerfStatsFilter filter = new PerfStatsFilter(null, dateRange, level, bestOf, surface, indoor, speedRange, round, null, tournamentId, null);
 		Map<Integer, PlayerStats> seasonsStats = statisticsService.getStatisticsTimeline(filter);
 
 		ModelMap modelMap = new ModelMap();
@@ -145,7 +145,7 @@ public class TimelinesController extends PageController {
 		modelMap.addAttribute("levelGroups", TournamentLevelGroup.ALL_LEVEL_GROUPS);
 		modelMap.addAttribute("surfaces", Surface.values());
 		modelMap.addAttribute("surfaceGroups", SurfaceGroup.values());
-		modelMap.addAttribute("speeds", CourtSpeed.values());
+        modelMap.addAttribute("speeds", CourtSpeed.values());
 		modelMap.addAttribute("rounds", Round.values());
 		modelMap.addAttribute("tournaments", tournamentService.getTournaments());
 		modelMap.addAttribute("fromSeason", fromSeason);
@@ -154,7 +154,7 @@ public class TimelinesController extends PageController {
 		modelMap.addAttribute("bestOf", bestOf);
 		modelMap.addAttribute("surface", surface);
 		modelMap.addAttribute("indoor", indoor);
-		modelMap.addAttribute("speed", speed);
+        modelMap.addAttribute("speed", speed);
 		modelMap.addAttribute("round", round);
 		modelMap.addAttribute("tournamentId", tournamentId);
 		modelMap.addAttribute("rawData", rawData);

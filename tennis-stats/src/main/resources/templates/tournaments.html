@@ -144,41 +144,57 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<div class="row">
-		<div class="col-md-4">
-			<h3 class="text-nowrap" style="display: inline"><i class="fa fa-calendar-o"></i> Tournaments</h3>
-		</div>
-		<div class="col-md-2">
-			<select id="level" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Filter by tournament level">
-				<option value="">All levels</option>
-				<option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|" value="G" class="bg-level-G" th:text="${aLevel.text}" th:selected="${aLevel.code == level}">Grand Slam</option>
-				<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO" th:text="${levelGroup.text}" th:selected="${levelGroup.codes == level}">Big Tournaments</option>
-			</select>
-		</div>
-		<div class="col-md-2">
-			<select id="surface" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Filter by surface">
-				<option value="">All surfaces</option>
-				<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}">Hard</option>
-				<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP" th:text="${surfaceGroup.text}">Fast (H, G, Cp)</option>
-			</select>
-		</div>
-		<div class="col-md-2">
-			<select id="indoor" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-				<option value="">Outdoor / Indoor</option>
-				<option value="false">Outdoor</option>
-				<option value="true">Indoor</option>
-			</select>
-		</div>
-		<div class="col-md-2">
-			<select id="speed" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Filter by court speed">
-				<option value="">All speeds</option>
-				<option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|" style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium</option>
-			</select>
-		</div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="text-nowrap" style="display: inline"><i class="fa fa-calendar-o"></i> Tournaments</h3>
+        </div>
+        <div class="col-md-2">
+            <select id="level" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
+                    data-placement="top" title="Filter by tournament level">
+                <option value="">All levels</option>
+                <option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|"
+                        value="G" class="bg-level-G" th:text="${aLevel.text}" th:selected="${aLevel.code == level}">
+                    Grand Slam
+                </option>
+                <option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO"
+                        th:text="${levelGroup.text}" th:selected="${levelGroup.codes == level}">Big Tournaments
+                </option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select id="surface" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
+                    data-placement="top" title="Filter by surface">
+                <option value="">All surfaces</option>
+                <option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+                        th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
+                        th:text="${aSurface.text}">Hard
+                </option>
+                <option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
+                        th:text="${surfaceGroup.text}">Fast (H, G, Cp)
+                </option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select id="indoor" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
+                    data-placement="top" title="Filter by outdoor / indoor">
+                <option value="">Outdoor / Indoor</option>
+                <option value="false">Outdoor</option>
+                <option value="true">Indoor</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select id="speed" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
+                    data-placement="top" title="Filter by court speed">
+                <option value="">All speeds</option>
+                <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
+                        style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium
+                </option>
+            </select>
+        </div>
 	</div>
 	<div id="clearDiv" class="btn-group margin-right">
 		<button type="button" class="btn btn-default" onclick="clearTournamentsFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-			<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+            <i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
 		</button>
 	</div>
 	<table id="tournamentsTable" class="table table-condensed table-hover table-striped">
@@ -187,7 +203,7 @@
 			<th data-column-id="name" data-formatter="tournament" data-width="200">Name</th>
 			<th data-column-id="levels" data-formatter="levels" data-width="140">Level</th>
 			<th data-column-id="surfaces" data-formatter="surfaces" data-width="110">Surface</th>
-			<th data-column-id="speeds" data-formatter="speeds" data-width="70">Speed</th>
+            <th data-column-id="speeds" data-formatter="speeds" data-width="70">Speed</th>
 			<th data-column-id="eventCount" data-formatter="eventCount" data-width="75">Events</th>
 			<th data-column-id="seasons" data-formatter="seasons" data-width="180" data-sortable="false">Seasons</th>
 			<th data-column-id="playerCount" data-type="numeric" data-visible="false" data-width="55" data-align="right" data-header-align="right">Pls.</th>

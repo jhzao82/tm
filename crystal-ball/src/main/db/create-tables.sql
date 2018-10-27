@@ -3,6 +3,7 @@
 CREATE TABLE tournament (
 	tournament_id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
+	chinese_name TEXT,
 	country_id TEXT,
 	city TEXT,
 	level tournament_level NOT NULL,
@@ -34,6 +35,7 @@ CREATE TABLE tournament_event (
 	season SMALLINT NOT NULL,
 	date DATE NOT NULL,
 	name TEXT NOT NULL,
+	chinese_name TEXT,
 	city TEXT,
 	level tournament_level NOT NULL,
 	surface surface,

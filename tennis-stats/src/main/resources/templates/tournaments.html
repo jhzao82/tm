@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="level" type="java.lang.String"*/-->
+<!--/*@thymesVar id="seasons" type="java.util.List<java.lang.Integer>"*/-->
 <!--/*@thymesVar id="levels" type="java.util.Set<org.strangeforest.tcb.stats.model.core.TournamentLevel>"*/-->
 <!--/*@thymesVar id="levelGroups" type="java.util.Set<org.strangeforest.tcb.stats.model.core.TournamentLevelGroup>"*/-->
 <!--/*@thymesVar id="surfaces" type="org.strangeforest.tcb.stats.model.core.Surface[]"*/-->
@@ -25,6 +26,8 @@
 				},
 				url: "/tournamentsTable",
 				requestHandler: function(request) {
+					request.fromSeason = $("#fromSeason").val();
+					request.toSeason = $("#toSeason").val();
 					request.level = $("#level").val();
 					request.surface = $("#surface").val();
 					request.indoor = $("#indoor").val();
@@ -93,6 +96,7 @@
 			});
 			var $tournamentsTableHeader = $("#tournamentsTable-header");
 			var $search = $tournamentsTableHeader.find("div.search");
+			$search.before($("#seasonRangeDiv").remove());
 			$search.after($("#clearDiv").remove());
 			setBootgridTitles($tournamentsTable, [
 				{id: "speeds", title: "[[#{event.courtSpeed.title}]]"},
@@ -108,6 +112,10 @@
 		}
 		function filterParams(skipLevel, skipSurface) {
 			var url = "";
+			var fromSeason = $("#fromSeason").val();
+			if (fromSeason) url += "&fromDate=01-01-" + fromSeason;
+			var toSeason = $("#toSeason").val();
+			if (toSeason) url += "&toDate=31-12-" + toSeason;
 			if (!skipLevel) {
 				var level = $("#level").val();
 				if (level) url += "&level=" + level;
@@ -123,6 +131,8 @@
 			return url;
 		}
 		function clearTournamentsFilter() {
+			$("#fromSeason").val("");
+			$("#toSeason").val("");
 			$("#level").val("");
 			$("#surface").val("");
 			$("#indoor").val("");
@@ -191,6 +201,20 @@
                 </option>
             </select>
         </div>
+	</div>
+	<div id="seasonRangeDiv" class="btn-group margin-right no-margin-left" style="width: 350px">
+		<div class="input-group">
+			<label for="fromSeason" class="input-group-addon">From:</label>
+			<select id="fromSeason" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Select from season">
+				<option value="">All seasons</option>
+				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
+			</select>
+			<label for="toSeason" class="input-group-addon">To:</label>
+			<select id="toSeason" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Select to season">
+				<option value="">All seasons</option>
+				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
+			</select>
+		</div>
 	</div>
 	<div id="clearDiv" class="btn-group margin-right">
 		<button type="button" class="btn btn-default" onclick="clearTournamentsFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">

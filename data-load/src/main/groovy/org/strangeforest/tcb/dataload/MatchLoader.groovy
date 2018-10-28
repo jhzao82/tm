@@ -170,13 +170,15 @@ class MatchLoader extends BaseCSVLoader {
 				case 'Us Open': return 'US Open'
 				default: return name
 			}
-			case 'F': return season == 2016 ? 'Tour Finals' : name
+			case 'F': return season >= 2016 ? 'Tour Finals' : name
 			case 'M': return season >= 1990 && !name.endsWith(' Masters') ? name + ' Masters' : name
 			case 'O': return season == 2016 ? 'Rio Olympics' : name
 			case 'D': return dcInfo.name
 			default:
 				if (name.equals('Santiago') && season in 2012..2013)
 					return 'Vina del Mar'
+				else if (name.equals('Cabo San Lucas') && season == 2018)
+					return 'Los Cabos'
 				else
 					return name
 		}
@@ -316,7 +318,8 @@ class MatchLoader extends BaseCSVLoader {
 				name.startsWith('Basel') ||
 				name.startsWith('Vienna') ||
 				name.startsWith('Paris Masters') ||
-				name.startsWith('Tour Finals')
+				name.startsWith('Tour Finals') ||
+				name.startsWith('Milan')
 			)
 			default: return false
 		}

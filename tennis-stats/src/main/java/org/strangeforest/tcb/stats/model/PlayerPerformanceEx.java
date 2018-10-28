@@ -12,24 +12,24 @@ public class PlayerPerformanceEx extends PlayerPerformance {
 
 	private final Map<Surface, WonLost> surfaceMatches;
 	private final Map<Boolean, WonLost> outdoorIndoorMatches;
-    private final Map<CourtSpeed, WonLost> speedMatches;
+	private final Map<CourtSpeed, WonLost> speedMatches;
 	private final Map<TournamentLevel, WonLost> levelMatches;
 	private final Map<Integer, WonLost> bestOfMatches;
 	private final Map<Opponent, WonLost> oppositionMatches;
 	private final Map<PerfMatchScore, WonLost> scoreCounts;
-    private final Map<Round, WonLost> roundMatches;
+	private final Map<Round, WonLost> roundMatches;
 	private final Map<EventResult, WonLost> resultCounts;
 
 	public PlayerPerformanceEx(PlayerPerformance perf) {
 		super(perf);
 		surfaceMatches = new LinkedHashMap<>();
 		outdoorIndoorMatches = new LinkedHashMap<>();
-        speedMatches = new LinkedHashMap<>();
+		speedMatches = new LinkedHashMap<>();
 		levelMatches = new LinkedHashMap<>();
 		bestOfMatches = new LinkedHashMap<>();
 		oppositionMatches = new LinkedHashMap<>();
 		scoreCounts = new LinkedHashMap<>();
-        roundMatches = new LinkedHashMap<>();
+		roundMatches = new LinkedHashMap<>();
 		resultCounts = new LinkedHashMap<>();
 		addLevelMatches(TournamentLevel.GRAND_SLAM, perf.getGrandSlamMatches());
 		addLevelMatches(TournamentLevel.TOUR_FINALS, perf.getTourFinalsMatches());
@@ -68,14 +68,14 @@ public class PlayerPerformanceEx extends PlayerPerformance {
 			outdoorIndoorMatches.put(indoor, wonLost);
 	}
 
-    public Map<CourtSpeed, WonLost> getSpeedMatches() {
-        return speedMatches;
-    }
+	public Map<CourtSpeed, WonLost> getSpeedMatches() {
+		return speedMatches;
+	}
 
-    public void addSpeedMatches(CourtSpeed speed, WonLost wonLost) {
-        if (!wonLost.isEmpty())
-            speedMatches.put(speed, wonLost);
-    }
+	public void addSpeedMatches(CourtSpeed speed, WonLost wonLost) {
+		if (!wonLost.isEmpty())
+			speedMatches.compute(speed, (k, v) -> v == null ? wonLost : v.add(wonLost));
+	}
 
 	public Map<TournamentLevel, WonLost> getLevelMatches() {
 		return levelMatches;
@@ -121,14 +121,14 @@ public class PlayerPerformanceEx extends PlayerPerformance {
 		}
 	}
 
-    public Map<Round, WonLost> getRoundMatches() {
-        return roundMatches;
-    }
+	public Map<Round, WonLost> getRoundMatches() {
+		return roundMatches;
+	}
 
-    public void addRoundMatches(Round round, WonLost wonLost) {
-        if (!wonLost.isEmpty())
-            roundMatches.put(round, wonLost);
-    }
+	public void addRoundMatches(Round round, WonLost wonLost) {
+		if (!wonLost.isEmpty())
+			roundMatches.put(round, wonLost);
+	}
 
 	public Map<EventResult, WonLost> getResultCounts() {
 		return resultCounts;

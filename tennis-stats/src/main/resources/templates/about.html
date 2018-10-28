@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--/*@thymesVar id="goatTopN" type="java.util.List<org.strangeforest.tcb.stats.model.PlayerRanking>"*/-->
 <head th:replace="fragments/head :: commonHead(#{introduction.title}, false, ~{::template})">
 	<title>About</title>
 	<template>
@@ -19,8 +18,5 @@
 	</div>
 	<th:block th:include="fragments/deviceDetector :: deviceDetectors"/>
 	<footer th:include="fragments/footer :: copy"></footer>
-	<div th:include="fragments/aboutElo :: aboutEloFormula"></div>
-	<div th:include="fragments/aboutForecast :: aboutTournamentForecast"></div>
-	<div th:include="fragments/aboutForecast :: aboutPrediction"></div>
 </body>
 </html>

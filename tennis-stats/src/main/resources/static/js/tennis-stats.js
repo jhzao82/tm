@@ -331,7 +331,7 @@ function formatSurface(surface, indoor) {
 }
 
 function indoorMark(surface, indoor) {
-	return indoor && surface !== 'P' ? " <span title='Indoor'>(i)</span>" : "";
+	return indoor && surface !== 'P' ? " <span title='" + messageIndoor + "'>(" + messageI + ")</span>" : "";
 }
 
 function surfaceClassSuffix(surface) {

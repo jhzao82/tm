@@ -76,7 +76,7 @@
 					"final": finalFormatter,
 					"finalEx": finalExFormatter,
 					"winner": function(column, row) {
-						return row.winner ? "<a href='" + language + "/playerProfile?playerId=" + row.winner.id + "' title='Show profile'><strong>" + row.winner.name + "</strong></a>" : "";
+						return row.winner.chineseName ? "<a href='" + language + "/playerProfile?playerId=" + row.winner.id + "' title='Show profile'><strong>" + row.winner.chineseName + "</strong></a>" : "";
 					}
 				},
 				labels: {

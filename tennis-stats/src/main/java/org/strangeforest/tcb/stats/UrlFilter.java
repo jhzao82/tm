@@ -2,8 +2,11 @@ package org.strangeforest.tcb.stats;
 
 import java.io.*;
 import java.net.*;
+import java.util.Locale;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import org.springframework.context.i18n.*;
 
 public class UrlFilter implements Filter {
 
@@ -20,6 +23,7 @@ public class UrlFilter implements Filter {
         for (String alanguage : listOfLanguages) {
             String urlPrefix = '/' + alanguage + '/';
             if (url.toLowerCase().startsWith(urlPrefix)) {
+                LocaleContextHolder.setLocale(new Locale(alanguage));
                 String filtered = url.substring(3);
                 filtered = appendUri(filtered, "language=" + alanguage).toString();
                 RequestDispatcher dispatcher = wrapper.getRequestDispatcher(filtered);

@@ -372,8 +372,11 @@
 	</h3>
 	<div id="surfaceDiv" class="btn-group margin-right">
 		<select id="surface" class="form-control" onchange="surfaceChanged(); reloadGOATListTableAndLegend()" data-toggle="tooltip" data-placement="top" title="Select overall or GOAT List by surface">
-			<option value="">Overall</option>
-			<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:selected="${aSurface.code == surface}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}">Hard</option>
+            <option value="">[[#{overall}]]</option>
+            <option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+                    th:selected="${aSurface.code == surface}" th:class="|bg-surface-${aSurface.code}|" value="H"
+                    class="bg-surface-H" th:text="#{'enum'+${aSurface.text}}">Hard
+            </option>
 		</select>
 	</div>
 	<div id="activeDiv" class="btn-group margin-right">

@@ -157,7 +157,11 @@
 	<div id="rankTypeDiv" class="btn-group pull-left no-margin-left margin-right">
 		<select id="rankType" class="form-control" onchange="rankTypeChanged(); reloadRankings()" data-toggle="tooltip" data-placement="top" title="Select ranking type">
 			<optgroup th:each="rankCategory : ${rankCategories}" th:if="${rankCategory.name() != 'GOAT'}" th:label="${rankCategory.text}" label="ATP">
-				<option th:each="aRankType : ${rankCategory.rankTypes}" th:unless="${aRankType.points}" th:value="${aRankType}" value="RANK" th:selected="${aRankType == rankType}" th:class="${aRankType.surface != null ? 'bg-surface-' + aRankType.surface.code : _}" th:text="${aRankType.text}">ATP Ranking</option>
+				<option th:each="aRankType : ${rankCategory.rankTypes}" th:unless="${aRankType.points}"
+						th:value="${aRankType}" value="RANK" th:selected="${aRankType == rankType}"
+						th:class="${aRankType.surface != null ? 'bg-surface-' + aRankType.surface.code : _}"
+						th:text="#{'enum'+${aRankType}}">ATP Ranking
+				</option>
 			</optgroup>
 		</select>
 	</div>

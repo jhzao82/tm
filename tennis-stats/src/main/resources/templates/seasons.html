@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: commonHead(#{seasons.title}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titleSeasons}, true, ~{::template})">
 	<title>Seasons</title>
 	<template>
 	<meta name="description" content="Tennis Open Era seasons on the glance"/>
@@ -104,7 +104,7 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3 id="seasonsTable-title" class="grid-title"><i class="fa fa-clone"></i> [[#{seasons.title}]]</h3>
+	<h3 id="seasonsTable-title" class="grid-title"><i class="fa fa-clone"></i> [[#{titleSeasons}]]</h3>
 	<table id="seasonsTable" class="table table-condensed table-hover table-striped">
 		<thead>
 		<tr>

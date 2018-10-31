@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="surfaces" type="org.strangeforest.tcb.stats.model.core.Surface[]"*/-->
 <!--/*@thymesVar id="minSeasonGOATPoints" type="java.lang.Integer"*/-->
-<head th:replace="fragments/head :: commonHead(#{bestSeasons.title}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titleBestSeasons}, true, ~{::template})">
 	<title>Best Seasons</title>
 	<template>
 	<meta name="description" content="Most successful Open Era tennis seasons by all-time greats"/>
@@ -131,12 +131,15 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3 id="bestSeasonsTable-title" class="grid-title"><i class="fa fa-check-square-o"></i> [[#{bestSeasons.title}]]
+	<h3 id="bestSeasonsTable-title" class="grid-title"><i class="fa fa-check-square-o"></i> [[#{titleBestSeasons}]]
 	</h3>
 	<div id="surfaceDiv" class="btn-group margin-right">
 		<select id="surface" class="form-control" onchange="surfaceChanged()" data-toggle="tooltip" data-placement="top" title="Select overall or Best Seasons by surface">
-			<option value="">Overall</option>
-			<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}">Hard</option>
+			<option value="">[[#{overall}]]</option>
+			<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+					th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
+					th:text="#{'enum'+${aSurface}}">Hard
+			</option>
 		</select>
 	</div>
 	<table id="bestSeasonsTable" class="table table-condensed table-hover table-striped">

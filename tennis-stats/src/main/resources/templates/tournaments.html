@@ -6,7 +6,7 @@
 <!--/*@thymesVar id="levelGroups" type="java.util.Set<org.strangeforest.tcb.stats.model.core.TournamentLevelGroup>"*/-->
 <!--/*@thymesVar id="surfaces" type="org.strangeforest.tcb.stats.model.core.Surface[]"*/-->
 <!--/*@thymesVar id="surfaceGroups" type="org.strangeforest.tcb.stats.model.core.SurfaceGroup[]"*/-->
-<head th:replace="fragments/head :: commonHead(#{tournaments.title}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titleTournaments}, true, ~{::template})">
 	<title>Tournaments</title>
 	<template>
 	<meta name="description" content="Tennis tournaments aggregated figures"/>
@@ -156,18 +156,21 @@
 	<header th:include="fragments/header :: title"></header>
     <div class="row">
         <div class="col-md-4">
-            <h3 class="text-nowrap" style="display: inline"><i class="fa fa-calendar-o"></i> Tournaments</h3>
+			<h3 class="text-nowrap" style="display: inline"><i class="fa fa-calendar-o"></i> [[#{titleTournaments}]]
+			</h3>
         </div>
         <div class="col-md-2">
             <select id="level" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
                     data-placement="top" title="Filter by tournament level">
-                <option value="">All levels</option>
+				<option value="">[[#{allLevels}]]</option>
                 <option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|"
-                        value="G" class="bg-level-G" th:text="${aLevel.text}" th:selected="${aLevel.code == level}">
+						value="G" class="bg-level-G" th:text="#{'enum'+${aLevel}}"
+						th:selected="${aLevel.code == level}">
                     Grand Slam
                 </option>
                 <option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO"
-                        th:text="${levelGroup.text}" th:selected="${levelGroup.codes == level}">Big Tournaments
+						th:text="#{'enumLevelGroup'+${levelGroup}}" th:selected="${levelGroup.codes == level}">Big
+					Tournaments
                 </option>
             </select>
         </div>
@@ -180,38 +183,38 @@
 						th:text="#{'enum'+${aSurface}}">Hard
                 </option>
                 <option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
-                        th:text="${surfaceGroup.text}">Fast (H, G, Cp)
+						th:text="#{'enum'+${surfaceGroup}}">Fast (H, G, Cp)
                 </option>
             </select>
         </div>
         <div class="col-md-2">
             <select id="indoor" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
                     data-placement="top" title="Filter by outdoor / indoor">
-                <option value="">Outdoor / Indoor</option>
-                <option value="false">Outdoor</option>
-                <option value="true">Indoor</option>
+				<option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+				<option value="false">[[#{outdoor}]]</option>
+				<option value="true">[[#{indoor}]]</option>
             </select>
         </div>
         <div class="col-md-2">
             <select id="speed" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
                     data-placement="top" title="Filter by court speed">
-                <option value="">All speeds</option>
+				<option value="">[[#{allSpeeds}]]</option>
                 <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                        style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium
+						style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}">Medium
                 </option>
             </select>
         </div>
 	</div>
 	<div id="seasonRangeDiv" class="btn-group margin-right no-margin-left" style="width: 350px">
 		<div class="input-group">
-			<label for="fromSeason" class="input-group-addon">From:</label>
+			<label for="fromSeason" class="input-group-addon">[[#{from}]]:</label>
 			<select id="fromSeason" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Select from season">
-				<option value="">All seasons</option>
+				<option value="">[[#{allSeasons}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
-			<label for="toSeason" class="input-group-addon">To:</label>
+			<label for="toSeason" class="input-group-addon">[[#{to}]]:</label>
 			<select id="toSeason" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip" data-placement="top" title="Select to season">
-				<option value="">All seasons</option>
+				<option value="">[[#{allSeasons}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
 		</div>

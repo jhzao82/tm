@@ -174,9 +174,13 @@
 		</div>
 		<div class="col-md-2">
 			<select id="level" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by tournament level">
-				<option value="">All levels</option>
-				<option th:each="level : ${levels}" th:value="${level.code}" th:class="|bg-level-${level.code}|" value="G" class="bg-level-G" th:text="${level.text}">Grand Slam</option>
-				<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO" th:text="${levelGroup.text}">Big Tournaments</option>
+				<option value="">[[#{allLevels}]]</option>
+				<option th:each="level : ${levels}" th:value="${level.code}" th:class="|bg-level-${level.code}|"
+						value="G" class="bg-level-G" th:text="#{'enum'+${level}}">Grand Slam
+				</option>
+				<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO"
+						th:text="#{'enumLevelGroup'+${levelGroup}}">Big Tournaments
+				</option>
 			</select>
 		</div>
 		<div class="col-md-2">
@@ -219,17 +223,17 @@
 		<div class="row margin-top">
 			<div class="col-md-4">
 				<div id="dateRange" class="input-group">
-					<label for="fromDate" class="input-group-addon">From:</label>
+					<label for="fromDate" class="input-group-addon">[[#{from}]]:</label>
 					<input id="fromDate" type="text" maxlength="10" class="form-control" onchange="dateFilterChanged(); reloadStatsLeaders()"/>
-					<label for="toDate" class="input-group-addon">To:</label>
+					<label for="toDate" class="input-group-addon">[[#{to}]]:</label>
 					<input id="toDate" type="text" maxlength="10" class="form-control" onchange="dateFilterChanged(); reloadStatsLeaders()"/>
 				</div>
 			</div>
 			<div class="col-md-2">
 				<select id="indoor" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-					<option value="">Outdoor / Indoor</option>
-					<option value="false">Outdoor</option>
-					<option value="true">Indoor</option>
+					<option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+					<option value="false">[[#{outdoor}]]</option>
+					<option value="true">[[#{indoor}]]</option>
 				</select>
 			</div>
 			<div class="col-md-2">
@@ -256,9 +260,9 @@
             <div class="col-md-2">
                 <select id="speed" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip"
                         data-placement="top" title="Filter by court speed">
-                    <option value="">All speeds</option>
+					<option value="">[[#{allSpeeds}]]</option>
                     <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                            style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium
+							style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}">Medium
                     </option>
                 </select>
             </div>

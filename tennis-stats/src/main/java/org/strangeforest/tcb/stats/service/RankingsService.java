@@ -84,20 +84,20 @@ public class RankingsService {
 		"  FROM player_best_elo_rating\n" +
 		"  WHERE %1$s IS NOT NULL\n" +
 		"), best_elo_rating_ordered AS (\n" +
-		"  SELECT r.rank, player_id, p.name, p.country_id, p.active, r.best_elo_rating, r.best_elo_rating_date\n" +
+				"  SELECT r.rank, player_id, p.name, p.chinese_name, p.country_id, p.active, r.best_elo_rating, r.best_elo_rating_date\n" +
 		"  FROM best_elo_rating_ranked r\n" +
 		"  INNER JOIN player_v p USING (player_id)%2$s\n" +
 		"  ORDER BY rank OFFSET :offset LIMIT :limit\n" +
 		"), best_elo_rating_ordered2 AS (\n" +
-		"  SELECT r.rank, r.player_id, r.name, r.country_id, r.active, r.best_elo_rating, r.best_elo_rating_date,\n" +
+				"  SELECT r.rank, r.player_id, r.name, r.chinese_name, r.country_id, r.active, r.best_elo_rating, r.best_elo_rating_date,\n" +
 		"  CASE WHEN r.best_elo_rating_date IS NOT NULL THEN (\n" +
 		"    SELECT tournament_event_id FROM player_tournament_event_result er INNER JOIN tournament_event e USING (tournament_event_id)\n" +
 		"    WHERE er.player_id = r.player_id AND e.date < r.best_elo_rating_date - INTERVAL '2 day' ORDER BY e.date DESC LIMIT 1\n" +
 		"  ) ELSE NULL END AS best_elo_rating_event_id\n" +
 		"  FROM best_elo_rating_ordered r\n" +
 		")\n" +
-		"SELECT r.rank, player_id, r.name, r.country_id, r.active, r.best_elo_rating AS points, r.best_elo_rating_date AS points_date, k.%3$s AS best_rank, k.%4$s AS best_rank_date,\n" +
-		"  e.tournament_event_id, e.name AS tournament, e.season, e.level\n" +
+				"SELECT r.rank, player_id, r.name, r.chinese_name, r.country_id, r.active, r.best_elo_rating AS points, r.best_elo_rating_date AS points_date, k.%3$s AS best_rank, k.%4$s AS best_rank_date,\n" +
+				"  e.tournament_event_id, e.name AS tournament, e.chinese_name AS chinese_tournament, e.season, e.level\n" +
 		"FROM best_elo_rating_ordered2 r\n" +
 		"LEFT JOIN player_best_elo_rank k USING (player_id)\n" +
 		"LEFT JOIN tournament_event e ON e.tournament_event_id = r.best_elo_rating_event_id\n" +
@@ -301,7 +301,7 @@ public class RankingsService {
 				int rank = rs.getInt("rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("name");
-                String chineseName = rs.getString("name");
+				String chineseName = rs.getString("chinese_name");
 				String countryId = getInternedString(rs, "country_id");
 				Boolean active = !filter.hasActive() ? rs.getBoolean("active") : null;
 				int points = rs.getInt("points");
@@ -443,6 +443,7 @@ public class RankingsService {
 		return new TournamentEventItem(
 			tournamentEventId,
 			rs.getString("tournament"),
+				rs.getString("chinese_tournament"),
 			rs.getInt("season"),
 			getInternedString(rs, "level")
 		);

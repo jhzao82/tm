@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: commonHead(#{inProgressEventsForecasts.title}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titleInProgressEventsForecasts}, true, ~{::template})">
 	<title>Tournament Event Forecasts</title>
 	<template>
 	<meta name="description" content="Accurate tennis tournament forecasts based on Tennis Crystal Ball machine learning match prediction algorithm"/>
@@ -64,7 +64,7 @@
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
 	<h3 id="inProgressEventsTable-title" class="grid-title">
-        <i class="fa fa-eye"></i> [[#{inProgressEventsForecasts.title}]]
+		<i class="fa fa-eye"></i> [[#{titleInProgressEventsForecasts}]]
 		<footer style="margin-top: -10px"><i class="text-muted" style="font-size: x-small">Powered by <th:block th:include="fragments/promotion :: tcb"/></i></footer>
 	</h3>
 	<table id="inProgressEventsTable" class="table table-condensed table-hover table-striped">

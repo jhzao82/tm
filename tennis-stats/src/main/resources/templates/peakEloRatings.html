@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="rankTypes" type="java.util.List<org.strangeforest.tcb.stats.model.core.RankType>"*/-->
 <!--/*@thymesVar id="rankType" type="org.strangeforest.tcb.stats.model.core.RankType"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titlePeakEloRatings}, true, ~{::template})">
 	<title>Peak Elo Ratings</title>
 	<template>
 	<meta name="description" content="Peak Elo Ratings compare peak player strengths across Eras, overall, by surface, by in/out or by set/game/tie-break"/>
@@ -46,7 +46,8 @@
 					},
 					"tournamentEvent": function(column, row) {
 						var event = row.tournamentEvent;
-						return event ? formatTournamentEvent(event.id, event.level, event.name + " " + event.season) : "";
+						var eventName = isChinese ? event.chineseName : event.name;
+						return event ? formatTournamentEvent(event.id, event.level, eventName + " " + event.season) : "";
 					},
 					"points": function(column, row) {
 						return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "&tab=ranking&rankType=" + $("#rankType").val() + "' title='Show Elo Rating chart'>" + row.points + "</a>";
@@ -76,10 +77,14 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3 id="rankingsTable-title" class="grid-title"><i class="fa fa-tachometer"></i> Peak Elo Ratings</h3>
+	<h3 id="rankingsTable-title" class="grid-title"><i class="fa fa-tachometer"></i> [[#{titlePeakEloRatings}]]</h3>
 	<div id="rankTypeDiv" class="btn-group margin-right">
 		<select id="rankType" class="form-control" onchange="reloadRankings()" data-toggle="tooltip" data-placement="top" title="Select Elo rating type">
-			<option th:each="aRankType : ${rankTypes}" th:if="${aRankType.points}" th:value="${aRankType}" value="ELO_RATING" th:selected="${aRankType == rankType}" th:class="${aRankType.surface != null ? 'bg-surface-' + aRankType.surface.code : _}" th:text="${aRankType.shortText}">Overall</option>
+			<option th:each="aRankType : ${rankTypes}" th:if="${aRankType.points}" th:value="${aRankType}"
+					value="ELO_RATING" th:selected="${aRankType == rankType}"
+					th:class="${aRankType.surface != null ? 'bg-surface-' + aRankType.surface.code : _}"
+					th:text="#{'enum'+${aRankType}}">Overall
+			</option>
 		</select>
 	</div>
 	<div id="activeDiv" class="btn-group margin-right">

@@ -647,9 +647,10 @@ public class TournamentService {
 	private TournamentEventItem tournamentEventItemMapper(ResultSet rs, int rowNum) throws SQLException {
 		int tournamentEventId = rs.getInt("tournament_event_id");
 		String name = rs.getString("name");
+		String chineseName = rs.getString("chinese_name");
 		int season = rs.getInt("season");
 		String level = getInternedString(rs, "level");
-		return new TournamentEventItem(tournamentEventId, name, season, level);
+		return new TournamentEventItem(tournamentEventId, name, chineseName, season, level);
 	}
 
 	public Map<EventResult, List<PlayerTournamentEvent>> getPlayerSeasonHighlights(int playerId, int season, int maxResults) {

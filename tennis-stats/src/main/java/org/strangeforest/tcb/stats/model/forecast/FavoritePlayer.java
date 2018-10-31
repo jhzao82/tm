@@ -10,13 +10,13 @@ public class FavoritePlayer extends PlayerRow {
 	private final double probability;
 	private String price;
 
-	public FavoritePlayer(int favorite, int playerId, String name, String countryId, double probability) {
-		super(favorite, playerId, name, countryId, null);
+    public FavoritePlayer(int favorite, int playerId, String name, String chineseName, String countryId, double probability) {
+        super(favorite, playerId, name, chineseName, countryId, null);
 		this.probability = probability;
 	}
 
-	public FavoritePlayer(int favorite, int playerId, String name, String countryId, double probability, PriceFormat priceFormat) {
-		this(favorite, playerId, name, countryId, probability);
+    public FavoritePlayer(int favorite, int playerId, String name, String chineseName, String countryId, double probability, PriceFormat priceFormat) {
+        this(favorite, playerId, name, chineseName, countryId, probability);
 		price = priceFormat != null ? priceFormat.format(toPrice(probability)) : null;
 	}
 

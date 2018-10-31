@@ -62,7 +62,7 @@ public class RankingsService {
 		"  WHERE r.rank_date BETWEEN (SELECT pd.prev_rank_date FROM prev_date pd) AND :date\n" +
 		"  WINDOW pr AS (PARTITION BY player_id ORDER BY rank_date)\n" +
 		")\n" +
-		"SELECT r.rank, player_id, p.name, p.country_id, r.points, r.rank_diff, r.points_diff, %4$s AS best_rank, %5$s AS best_rank_date, %6$s AS best_points\n" +
+                "SELECT r.rank, player_id, p.name, p.chinese_name, p.country_id, r.points, r.rank_diff, r.points_diff, %4$s AS best_rank, %5$s AS best_rank_date, %6$s AS best_points\n" +
 		"FROM ranking_ex r\n" +
 		"INNER JOIN player_v p USING (player_id)%7$s\n" +
 		"WHERE r.rank_date = :date%8$s\n" +
@@ -224,9 +224,10 @@ public class RankingsService {
 				int goatRank = rs.getInt("rank");
 				int playerId = rs.getInt("player_id");
 				String name = shortenName(rs.getString("last_name"));
+                String chineseName = shortenName(rs.getString("last_name"));
 				String countryId = getInternedString(rs, "country_id");
 				int goatPoints = rs.getInt("points");
-				return new PlayerRanking(goatRank, playerId, name, countryId, null, goatPoints);
+                return new PlayerRanking(goatRank, playerId, name, chineseName, countryId, null, goatPoints);
 			}
 		);
 	}
@@ -254,6 +255,7 @@ public class RankingsService {
 					return;
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("name");
+                String chineseName = rs.getString("chinese_name");
 				String countryId = getInternedString(rs, "country_id");
 				int points = rs.getInt("points");
 				int bestRank = rs.getInt("best_rank");
@@ -263,7 +265,7 @@ public class RankingsService {
 				if (pointsDiff != null && pointsDiff == points)
 					pointsDiff = null;
 				int bestPoints = rs.getInt("best_points");
-				table.addRow(new PlayerDiffRankingsRow(rank, playerId, name, countryId, points, bestRank, bestRankDate, rankDiff, pointsDiff, bestPoints));
+                table.addRow(new PlayerDiffRankingsRow(rank, playerId, name, chineseName, countryId, points, bestRank, bestRankDate, rankDiff, pointsDiff, bestPoints));
 			}
 		);
 		table.setTotal(offset + players.get());
@@ -299,6 +301,7 @@ public class RankingsService {
 				int rank = rs.getInt("rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("name");
+                String chineseName = rs.getString("name");
 				String countryId = getInternedString(rs, "country_id");
 				Boolean active = !filter.hasActive() ? rs.getBoolean("active") : null;
 				int points = rs.getInt("points");
@@ -306,7 +309,7 @@ public class RankingsService {
 				LocalDate bestRankDate = getLocalDate(rs, "best_rank_date");
 				LocalDate pointsDate = getLocalDate(rs, "points_date");
 				TournamentEventItem tournamentEvent = mapTournamentEvent(rs);
-				table.addRow(new PlayerPeakEloRankingsRow(rank, playerId, name, countryId, active, points, pointsDate, bestRank, bestRankDate, tournamentEvent));
+                table.addRow(new PlayerPeakEloRankingsRow(rank, playerId, name, chineseName, countryId, active, points, pointsDate, bestRank, bestRankDate, tournamentEvent));
 			}
 		);
 		return table;
@@ -552,7 +555,8 @@ public class RankingsService {
 					timeline.addSeasonTopPlayer(season, new TopRankingsPlayer(
 						rs.getInt("year_end_rank"),
 						rs.getInt("player_id"),
-						rs.getString("short_name"),
+                            rs.getString("short_name"),
+                            rs.getString("short_name"),
 						getInternedString(rs, "country_id"),
 						rs.getBoolean("active")
 					));

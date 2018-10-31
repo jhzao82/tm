@@ -9,8 +9,8 @@ public class PlayerPeakEloRankingsRow extends PlayerRankingsRow {
 	private final LocalDate pointsDate;
 	private final TournamentEventItem tournamentEvent;
 
-	public PlayerPeakEloRankingsRow(int rank, int playerId, String name, String countryId, Boolean active, int points, LocalDate pointsDate, int bestRank, LocalDate bestRankDate, TournamentEventItem tournamentEvent) {
-		super(rank, playerId, name, countryId, active, points, bestRank, bestRankDate);
+    public PlayerPeakEloRankingsRow(int rank, int playerId, String name, String chineseName, String countryId, Boolean active, int points, LocalDate pointsDate, int bestRank, LocalDate bestRankDate, TournamentEventItem tournamentEvent) {
+        super(rank, playerId, name, chineseName, countryId, active, points, bestRank, bestRankDate);
 		this.pointsDate = pointsDate;
 		this.tournamentEvent = tournamentEvent;
 	}

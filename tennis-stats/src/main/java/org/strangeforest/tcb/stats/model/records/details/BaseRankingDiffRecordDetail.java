@@ -8,9 +8,9 @@ public abstract class BaseRankingDiffRecordDetail<T> extends SimpleRecordDetail<
 	private final int value1;
 	private final int value2;
 
-	protected BaseRankingDiffRecordDetail(T value, int playerId2, String name2, String countryId2, Boolean active2, int value1, int value2) {
+    protected BaseRankingDiffRecordDetail(T value, int playerId2, String name2, String chineseName2, String countryId2, Boolean active2, int value1, int value2) {
 		super(value);
-		player2 = new PlayerRow(2, playerId2, name2, countryId2, active2);
+        player2 = new PlayerRow(2, playerId2, name2, chineseName2, countryId2, active2);
 		this.value1 = value1;
 		this.value2 = value2;
 	}

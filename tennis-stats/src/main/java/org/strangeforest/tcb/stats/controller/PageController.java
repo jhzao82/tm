@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import org.strangeforest.tcb.stats.model.price.*;
 import org.strangeforest.tcb.stats.service.*;
 
+import java.util.Locale;
+
+import org.springframework.context.i18n.LocaleContextHolder;
+
 public abstract class PageController extends BaseController {
 
 	@Autowired protected DataService dataService;
@@ -31,5 +35,11 @@ public abstract class PageController extends BaseController {
         }
 
         return "";
+    }
+
+    @ModelAttribute("isChinese")
+    public boolean isChinese() {
+        Locale locale = LocaleContextHolder.getLocale();
+        return locale.toString().equals("zh");
     }
 }

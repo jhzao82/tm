@@ -174,10 +174,10 @@
         <div class="col-md-2">
             <select id="surface" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
                     data-placement="top" title="Filter by surface">
-                <option value="">All surfaces</option>
+				<option value="">[[#{allSurfaces}]]</option>
                 <option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
-                        th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
-                        th:text="${aSurface.text}">Hard
+						th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
+						th:text="#{'enum'+${aSurface}}">Hard
                 </option>
                 <option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
                         th:text="${surfaceGroup.text}">Fast (H, G, Cp)

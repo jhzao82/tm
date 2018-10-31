@@ -10,6 +10,7 @@ public class PlayerTournamentEvent {
 	private final int season;
 	private final LocalDate date;
 	private final String name;
+    private final String chineseName;
 	private final String level;
 	private final String surface;
 	private final boolean indoor;
@@ -21,11 +22,12 @@ public class PlayerTournamentEvent {
 	private int averageEloRating;
 	private final String result;
 
-	public PlayerTournamentEvent(int tournamentEventId, int season, LocalDate date, String name, String level, String surface, boolean indoor, Integer speed, String drawType, Integer drawSize, double participation, int strength, int averageEloRating, String result) {
+    public PlayerTournamentEvent(int tournamentEventId, int season, LocalDate date, String name, String chineseName, String level, String surface, boolean indoor, Integer speed, String drawType, Integer drawSize, double participation, int strength, int averageEloRating, String result) {
 		this.tournamentEventId = tournamentEventId;
 		this.season = season;
 		this.date = date;
 		this.name = name;
+        this.chineseName = chineseName;
 		this.level = level;
 		this.surface = surface;
 		this.indoor = indoor;
@@ -53,6 +55,10 @@ public class PlayerTournamentEvent {
 	public String getName() {
 		return name;
 	}
+
+    public String getChineseName() {
+        return chineseName;
+    }
 
 	public String getLevel() {
 		return level;

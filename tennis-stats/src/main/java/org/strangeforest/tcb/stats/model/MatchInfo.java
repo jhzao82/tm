@@ -9,12 +9,13 @@ public class MatchInfo {
 	private final boolean indoor;
 	private final int tournamentEventId;
 	private final String tournament;
+    private final String chineseTournament;
 	private final String round;
 	private final int winnerId;
 	private final int loserId;
 	private final String score;
 
-	public MatchInfo(long id, int season, String level, String surface, boolean indoor, int tournamentEventId, String tournament, String round, int winnerId, int loserId, String score) {
+    public MatchInfo(long id, int season, String level, String surface, boolean indoor, int tournamentEventId, String tournament, String chineseTournament, String round, int winnerId, int loserId, String score) {
 		this.id = id;
 		this.season = season;
 		this.level = level;
@@ -22,6 +23,7 @@ public class MatchInfo {
 		this.indoor = indoor;
 		this.tournamentEventId = tournamentEventId;
 		this.tournament = tournament;
+        this.chineseTournament = chineseTournament;
 		this.round = round;
 		this.winnerId = winnerId;
 		this.loserId = loserId;
@@ -55,6 +57,10 @@ public class MatchInfo {
 	public String getTournament() {
 		return tournament;
 	}
+
+    public String getChineseTournament() {
+        return chineseTournament;
+    }
 
 	public String getRound() {
 		return round;

@@ -78,7 +78,7 @@ public class SeasonsService {
 		"  GROUP BY g.season\n" +
 		")\n" +
 		"SELECT t.*, m.match_count, m.hard_match_count, m.clay_match_count, m.grass_match_count, m.carpet_match_count, m.court_speed,\n" +
-		"  p.player_id, p.name player_name, p.country_id, p.active, e.dominant_age\n" +
+                "  p.player_id, p.name player_name, p.chinese_name, p.country_id, p.active, e.dominant_age\n" +
 		"FROM season_tournament_count t\n" +
 		"LEFT JOIN season_match_count m USING (season)\n" +
 		"INNER JOIN player_season_ranked ps ON ps.season = t.season AND ps.rank = 1\n" +
@@ -95,7 +95,7 @@ public class SeasonsService {
 		"  WHERE e.season = :season AND r.result >= :result::tournament_event_result AND e.level NOT IN ('D', 'T')\n" +
 		"  GROUP BY player_id\n" +
 		")\n" +
-		"SELECT r.rank, player_id, p.name, p.country_id, p.active, r.value\n" +
+                "SELECT r.rank, player_id, p.name, p.chinese_name, p.country_id, p.active, r.value\n" +
 		"FROM record_results r\n" +
 		"INNER JOIN player_v p USING (player_id)\n" +
 		"WHERE r.rank <= coalesce((SELECT max(r2.rank) FROM record_results r2 WHERE r2.order = :maxPlayers), :maxPlayers)\n" +
@@ -150,7 +150,7 @@ public class SeasonsService {
 		"     grand_slam_titles, grand_slam_finals, grand_slam_semi_finals, tour_finals_titles, tour_finals_finals, masters_titles, masters_finals, olympics_titles, titles\n" +
 		"  FROM player_season\n" +
 		")\n" +
-		"SELECT season_rank, player_id, p.name, rank() OVER (PARTITION BY player_id ORDER BY season_rank) player_season_rank,\n" +
+                "SELECT season_rank, player_id, p.name, p.chinese_name, rank() OVER (PARTITION BY player_id ORDER BY season_rank) player_season_rank,\n" +
 		"  p.country_id, s.season, s.goat_points, s.tournament_goat_points%1$s,\n" +
 		"  s.grand_slam_titles, s.grand_slam_finals, s.grand_slam_semi_finals, s.tour_finals_titles, s.tour_finals_finals, s.masters_titles, s.masters_finals, s.olympics_titles, s.titles,\n" +
 		"  sp.%5$smatches_won matches_won, sp.%5$smatches_lost matches_lost, sp.%5$smatches_won::REAL / (sp.%5$smatches_won + sp.%5$smatches_lost) matches_won_pct, y.%5$syear_end_rank year_end_rank, e.%5$sbest_elo_rating best_elo_rating\n" +
@@ -197,6 +197,7 @@ public class SeasonsService {
 							1,
 							rs.getInt("player_id"),
 							rs.getString("player_name"),
+                                rs.getString("chinese_name"),
 							getInternedString(rs, "country_id"),
 							rs.getBoolean("active")
 						),
@@ -224,6 +225,7 @@ public class SeasonsService {
 			rs.getInt("rank"),
 			rs.getInt("player_id"),
 			rs.getString("name"),
+                rs.getString("chinese_name"),
 			getInternedString(rs, "country_id"),
 			null,
 			new IntegerRecordDetail(rs.getInt("value")),
@@ -253,6 +255,7 @@ public class SeasonsService {
 			rs.getInt("rank"),
 			rs.getInt("player_id"),
 			rs.getString("name"),
+                rs.getString("chinese_name"),
 			getInternedString(rs, "country_id"),
 			null,
 			new IntegerRecordDetail(rs.getInt("value")), (playerId, recordDetail) -> {
@@ -311,13 +314,14 @@ public class SeasonsService {
 				int seasonRank = rs.getInt("season_rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("name");
+                String chineseName = rs.getString("chinese_name");
 				int playerSeasonRank = rs.getInt("player_season_rank");
 				if (playerSeasonRank > 1)
 					name += " (" + playerSeasonRank + ')';
 				String countryId = getInternedString(rs, "country_id");
 				int season = rs.getInt("season");
 				int goatPoints = rs.getInt("goat_points");
-				BestSeasonRow row = new BestSeasonRow(seasonRank, playerId, name, countryId, season, season == currentSeason, goatPoints);
+                BestSeasonRow row = new BestSeasonRow(seasonRank, playerId, name, chineseName, countryId, season, season == currentSeason, goatPoints);
 				// GOAT points items
 				row.setTournamentGoatPoints(rs.getInt("tournament_goat_points"));
 				if (overall) {

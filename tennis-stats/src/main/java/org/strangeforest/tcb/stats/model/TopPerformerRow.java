@@ -6,8 +6,8 @@ public class TopPerformerRow extends PlayerRow {
 
 	private final WonLost wonLost;
 
-	public TopPerformerRow(int rank, int playerId, String name, String countryId, Boolean active, WonLost wonLost) {
-		super(rank, playerId, name, countryId, active);
+    public TopPerformerRow(int rank, int playerId, String name, String chineseName, String countryId, Boolean active, WonLost wonLost) {
+        super(rank, playerId, name, chineseName, countryId, active);
 		this.wonLost = wonLost;
 	}
 

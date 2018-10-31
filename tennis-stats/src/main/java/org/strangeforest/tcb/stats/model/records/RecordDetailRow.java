@@ -11,8 +11,8 @@ public class RecordDetailRow<D extends RecordDetail> extends PlayerRow {
 	private final D detail;
 	private final BiFunction<Integer, D, String> detailUrlFormatter;
 
-	public RecordDetailRow(int rank, int playerId, String name, String countryId, Boolean active, D detail, BiFunction<Integer, D, String> detailUrlFormatter) {
-		super(rank, playerId, name, countryId, active);
+    public RecordDetailRow(int rank, int playerId, String name, String chineseName, String countryId, Boolean active, D detail, BiFunction<Integer, D, String> detailUrlFormatter) {
+        super(rank, playerId, name, chineseName, countryId, active);
 		this.detail = detail;
 		this.detailUrlFormatter = detailUrlFormatter;
 	}

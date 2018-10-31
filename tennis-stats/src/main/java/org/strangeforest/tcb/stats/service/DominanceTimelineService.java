@@ -144,12 +144,13 @@ public class DominanceTimelineService {
 	private PlayerDominanceTimeline mapPlayer(Surface surface, AtomicInteger rank, ResultSet rs) throws SQLException {
 		int playerId = rs.getInt("player_id");
 		String name = rs.getString("name");
+        String chineseName = rs.getString("name");
 		String lastName = rs.getString("last_name");
 		String countryId = getInternedString(rs, "country_id");
 		boolean active = rs.getBoolean("active");
 		LocalDate dob = getLocalDate(rs, "dob");
 		int goatPoints = rs.getInt("goat_points");
-		return new PlayerDominanceTimeline(rank.incrementAndGet(), playerId, name, lastName, countryId, active, dob, surface, goatPoints);
+        return new PlayerDominanceTimeline(rank.incrementAndGet(), playerId, name, chineseName, lastName, countryId, active, dob, surface, goatPoints);
 	}
 
 	private SeasonPoints mapSeasonPoints(Surface surface, String seasonPoints) {

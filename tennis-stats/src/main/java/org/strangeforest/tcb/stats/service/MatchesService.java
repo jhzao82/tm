@@ -31,8 +31,8 @@ public class MatchesService {
 
 	private static final String TOURNAMENT_EVENT_MATCHES_QUERY =
 		"SELECT m.match_id, m.match_num, m.round,\n" +
-		"  m.winner_id, pw.short_name AS winner_name, m.winner_seed, m.winner_entry, m.winner_country_id,\n" +
-		"  m.loser_id, pl.short_name AS loser_name, m.loser_seed, m.loser_entry, m.loser_country_id,\n" +
+				"  m.winner_id, pw.short_name AS winner_name, pw.chinese_name AS winner_chinese_name, m.winner_seed, m.winner_entry, m.winner_country_id,\n" +
+				"  m.loser_id, pl.short_name AS loser_name, pl.chinese_name AS loser_chinese_name, m.loser_seed, m.loser_entry, m.loser_country_id,\n" +
 		"  array(SELECT ROW(w_games, l_games, w_tb_pt, l_tb_pt) FROM set_score s WHERE s.match_id = m.match_id) AS set_scores, m.outcome, m.has_stats\n" +
 		"FROM match m\n" +
 		"INNER JOIN player_v pw ON pw.player_id = m.winner_id\n" +
@@ -41,9 +41,9 @@ public class MatchesService {
 		"ORDER BY match_num";
 
 	private static final String PLAYER_MATCHES_QUERY = //language=SQL
-            "SELECT m.match_id, m.date, m.tournament_event_id, e.name AS tournament, e.level, m.best_of, m.surface, m.indoor, es.court_speed, m.round,\n" +
-		"  m.winner_id, pw.name AS winner_name, m.winner_seed, m.winner_entry, m.winner_country_id, m.winner_rank, m.winner_elo_rating, m.winner_next_elo_rating,\n" +
-		"  m.loser_id, pl.name AS loser_name, m.loser_seed, m.loser_entry, m.loser_country_id, m.loser_rank, m.loser_elo_rating, m.loser_next_elo_rating,\n" +
+			"SELECT m.match_id, m.date, m.tournament_event_id, e.name AS tournament, e.chinese_name AS chinese_tournament, e.level, m.best_of, m.surface, m.indoor, es.court_speed, m.round,\n" +
+					"  m.winner_id, pw.name AS winner_name, pw.chinese_name AS winner_chinese_name, m.winner_seed, m.winner_entry, m.winner_country_id, m.winner_rank, m.winner_elo_rating, m.winner_next_elo_rating,\n" +
+					"  m.loser_id, pl.name AS loser_name, pl.chinese_name AS loser_chinese_name, m.loser_seed, m.loser_entry, m.loser_country_id, m.loser_rank, m.loser_elo_rating, m.loser_next_elo_rating,\n" +
 		"  m.score, m.outcome, m.has_stats%1$s%2$s\n" +
 		"FROM match m\n" +
 		"INNER JOIN tournament_event e USING (tournament_event_id)\n" +
@@ -72,9 +72,9 @@ public class MatchesService {
 
 	private static final String GREATEST_MATCHES_QUERY = //language=SQL
 		"WITH greatest_matches AS (\n" +
-                "  SELECT m.match_id, m.date, m.tournament_event_id, e.name AS tournament, e.level, m.best_of, m.surface, m.indoor, es.court_speed, m.round,\n" +
-		"    m.winner_id, pw.name AS winner_name, m.winner_seed, m.winner_entry, m.winner_country_id, m.winner_rank, m.winner_elo_rating, m.winner_next_elo_rating,\n" +
-		"    m.loser_id, pl.name AS loser_name, m.loser_seed, m.loser_entry, m.loser_country_id, m.loser_rank, m.loser_elo_rating, m.loser_next_elo_rating,\n" +
+				"  SELECT m.match_id, m.date, m.tournament_event_id, e.name AS tournament, e.chinese_name AS chinese_tournament, e.level, m.best_of, m.surface, m.indoor, es.court_speed, m.round,\n" +
+				"    m.winner_id, pw.name AS winner_name, pw.chinese_name AS winner_chinese_name, m.winner_seed, m.winner_entry, m.winner_country_id, m.winner_rank, m.winner_elo_rating, m.winner_next_elo_rating,\n" +
+				"    m.loser_id, pl.name AS loser_name, pl.chinese_name AS loser_chinese_name, m.loser_seed, m.loser_entry, m.loser_country_id, m.loser_rank, m.loser_elo_rating, m.loser_next_elo_rating,\n" +
 		"    m.score, m.outcome, m.has_stats, round(\n" +
 		"      coalesce(mf.match_factor, 0.5) * (coalesce(wrf.rank_factor, 0.5) + coalesce(lrf.rank_factor, 0.5) + coalesce(wbrf.rank_factor, 0.5) + coalesce(lbrf.rank_factor, 0.5)):: REAL / 4\n" +
 		"      * (coalesce(m.winner_elo_rating, 1500) + coalesce(m.loser_elo_rating, 1500) - 3000)::REAL / 800\n" +
@@ -259,6 +259,7 @@ public class MatchesService {
 			getLocalDate(rs, "date"),
 			rs.getInt("tournament_event_id"),
 			rs.getString("tournament"),
+				rs.getString("chinese_tournament"),
 			getInternedString(rs, "level"),
 			rs.getInt("best_of"),
 			getInternedString(rs, "surface"),
@@ -278,7 +279,8 @@ public class MatchesService {
 		if (!rs.wasNull()) {
 			return new MatchPlayer(
 				playerId,
-				rs.getString(prefix + "name"),
+					rs.getString(prefix + "name"),
+					rs.getString(prefix + "chinese_name"),
 				getInteger(rs, prefix + "seed"),
 				getInternedString(rs, prefix + "entry"),
 				getInternedString(rs, prefix + "country_id")
@@ -293,7 +295,8 @@ public class MatchesService {
 		if (!rs.wasNull()) {
 			return new MatchPlayerEx(
 				playerId,
-				rs.getString(prefix + "name"),
+					rs.getString(prefix + "name"),
+					rs.getString(prefix + "chinese_name"),
 				getInteger(rs, prefix + "seed"),
 				getInternedString(rs, prefix + "entry"),
 				getInternedString(rs, prefix + "country_id"),
@@ -319,6 +322,7 @@ public class MatchesService {
 				rs.getBoolean("indoor"),
 				rs.getInt("event_id"),
 				rs.getString("tournament"),
+					rs.getString("chinese_tournament"),
 				getInternedString(rs, "round"),
 				rs.getInt("player1_id"),
 				rs.getInt("player2_id"),

@@ -279,7 +279,13 @@ function formatCountry(row) {
 
 // Player Formatter
 function playerFormatter(column, row) {
-	return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "' title='Show " + row.name + "&apos;s profile'>" + row.name + "</a>" +
+    displayName = row.name;
+    if (isChinese) {
+        if (row.chineseName != undefined && row.chineseName != 'null') {
+            displayName = row.chineseName;
+        }
+    }
+	return "<a href='" + language + "/playerProfile?playerId=" + row.playerId + "' title='Show " + row.name + "&apos;s profile'>" + displayName + "</a>" +
 		(row.active ? " <img src='/images/active.png' title='Active' width='12' height='12' style='vertical-align: 0'/>" : "");
 }
 
@@ -423,16 +429,38 @@ function decorateSpeed(selector) {
 
 // Tournament Formatter
 function tournamentFormatter(column, row) {
-	return "<a href='" + language + "/tournament?tournamentId=" + row.id + "' title='Show tournament" + (row.extId ? " - " +  row.extId : "") + "'>" + row.name + "</a>";
+    displayName = row.name;
+    if (isChinese) {
+        if (row.chineseName != undefined) {
+            displayName = row.chineseName;
+        }
+    }
+	return "<a href='" + language + "/tournament?tournamentId=" + row.id + "' title='Show tournament" + (row.extId ? " - " +  row.extId : "") + "'>" + displayName + "</a>";
 }
 
 // Tournament Event Formatter
 function tournamentEventFormatter(column, row) {
-	return formatTournamentEvent(row.tournamentEventId, row.level, row.tournament ? row.tournament : row.name);
+    displayName = row.name;
+    tournamentName = row.tournament;
+    if (isChinese) {
+        if (row.chineseName != undefined) {
+            displayName = row.chineseName;
+        }
+        if (row.chineseTournament != undefined) {
+            tournamentName = row.chineseTournament;
+        }
+    }
+	return formatTournamentEvent(row.tournamentEventId, row.level, tournamentName ? tournamentName : displayName);
 }
 
 function tournamentEventFormatterExtId(column, row) {
-	return formatTournamentEvent(row.id, row.level, row.name, row.tournamentExtId);
+    displayName = row.name;
+    if (isChinese) {
+        if (row.chineseName != undefined) {
+            displayName = row.chineseName;
+        }
+    }
+	return formatTournamentEvent(row.id, row.level, displayName, row.tournamentExtId);
 }
 
 function startTournamentEventFormatter(column, row) {
@@ -482,7 +510,13 @@ function finalExFormatter(column, row) {
 }
 
 function formatMatchPlayer(player, winner, playerId) {
-	var name = (winner ? "<strong>" : "") + player.name + (winner ? "</strong>" : "") + formatSeedEntry(player.seed, player.entry);
+    displayName = player.name;
+    if (isChinese) {
+        if (player.chineseName != undefined) {
+            displayName = player.chineseName;
+        }
+    }
+	var name = (winner ? "<strong>" : "") + displayName + (winner ? "</strong>" : "") + formatSeedEntry(player.seed, player.entry);
 	return player.id === playerId ? name : "<a href='" + language + "/playerProfile?playerId=" + player.id + "' title='Show profile'>" + name + "</a>";
 }
 

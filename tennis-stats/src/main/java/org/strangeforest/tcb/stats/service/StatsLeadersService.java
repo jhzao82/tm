@@ -36,7 +36,7 @@ public class StatsLeadersService {
 		"  FROM stats_leaders\n" +
 		"  WHERE value IS NOT NULL\n" +
 		")\n" +
-		"SELECT rank, player_id, name, country_id, active, value\n" +
+                "SELECT rank, player_id, name, chinese_name, country_id, active, value\n" +
 		"FROM stats_leaders_ranked\n" +
 		"INNER JOIN player_v p USING (player_id)%5$s\n" +
 		"ORDER BY %6$s NULLS LAST OFFSET :offset LIMIT :limit";
@@ -65,7 +65,7 @@ public class StatsLeadersService {
 		"  FROM stats_leaders\n" +
 		"  WHERE value IS NOT NULL\n" +
 		")\n" +
-		"SELECT rank, player_id, name, country_id, active, value\n" +
+                "SELECT rank, player_id, name, chinese_name, country_id, active, value\n" +
 		"FROM stats_leaders_ranked\n" +
 		"INNER JOIN player_v p USING (player_id)%6$s\n" +
 		"ORDER BY %7$s NULLS LAST OFFSET :offset LIMIT :limit";
@@ -117,10 +117,11 @@ public class StatsLeadersService {
 				int rank = rs.getInt("rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("name");
+                String chineseName = rs.getString("chinese_name");
 				String countryId = getInternedString(rs, "country_id");
 				Boolean active = !filter.hasActive() && !filter.isTimeLocalized() ? rs.getBoolean("active") : null;
 				double value = rs.getDouble("value");
-				table.addRow(new StatsLeaderRow(rank, playerId, name, countryId, active, value, statsCategory.getType()));
+                table.addRow(new StatsLeaderRow(rank, playerId, name, chineseName, countryId, active, value, statsCategory.getType()));
 			}
 		);
 		return table;

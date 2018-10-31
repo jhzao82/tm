@@ -42,7 +42,7 @@ public class TopPerformersService {
 		"  SELECT rank() OVER (ORDER BY won_lost_pct DESC) AS rank, player_id, won_lost_pct, won, lost, played\n" +
 		"  FROM top_performers\n" +
 		")\n" +
-		"SELECT rank, player_id, name, country_id, active, won, lost\n" +
+                "SELECT rank, player_id, name, chinese_name, country_id, active, won, lost\n" +
 		"FROM top_performers_ranked\n" +
 		"INNER JOIN player_v USING (player_id)%4$s\n" +
 		"ORDER BY %5$s OFFSET :offset LIMIT :limit";
@@ -96,10 +96,11 @@ public class TopPerformersService {
 				int rank = rs.getInt("rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("name");
+                String chineseName = rs.getString("chinese_name");
 				String countryId = getInternedString(rs, "country_id");
 				Boolean active = !filter.hasActive() && !filter.isTimeLocalized() ? rs.getBoolean("active") : null;
 				WonLost wonLost = mapWonLost(rs);
-				table.addRow(new TopPerformerRow(rank, playerId, name, countryId, active, wonLost));
+                table.addRow(new TopPerformerRow(rank, playerId, name, chineseName, countryId, active, wonLost));
 			}
 		);
 		return table;

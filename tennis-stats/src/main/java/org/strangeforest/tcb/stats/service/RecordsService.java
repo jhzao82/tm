@@ -152,11 +152,12 @@ public class RecordsService {
 		String recordId = rs.getString("record_id");
 		int playerId = rs.getInt("player_id");
 		String name = rs.getString("name");
+        String chineseName = rs.getString("name");
 		String countryId = getInternedString(rs, "country_id");
 		boolean active = rs.getBoolean("active");
 		Record record = Records.getRecord(recordId);
 		RecordDetail detail = getDetail(record, rs.getString("detail"));
-		RecordHolderRow recordHolder = new RecordHolderRow<RecordDetail>(playerId, name, countryId, active, detail, record.getDetailURLFormatter());
+        RecordHolderRow recordHolder = new RecordHolderRow<RecordDetail>(playerId, name, chineseName, countryId, active, detail, record.getDetailURLFormatter());
 		Optional<RecordRow> recordRowOptional = findRecordRow((List)recordRows, recordId);
 		RecordRow recordRow = recordRowOptional.orElseThrow(() -> new IllegalStateException("Cannot find record: " + recordId));
 		recordRow.addRecordHolder(recordHolder);
@@ -184,10 +185,11 @@ public class RecordsService {
 					int rank = rs.getInt("rank");
 					int playerId = rs.getInt("player_id");
 					String name = rs.getString("name");
+                    String chineseName = rs.getString("name");
 					String countryId = getInternedString(rs, "country_id");
 					Boolean active = !activePlayers ? rs.getBoolean("active") : null;
 					RecordDetail detail = getDetail(record, rs.getString("detail"));
-					table.addRow(new RecordDetailRow<RecordDetail>(rank, playerId, name, countryId, active, detail, record.getDetailURLFormatter()));
+                    table.addRow(new RecordDetailRow<RecordDetail>(rank, playerId, name, chineseName, countryId, active, detail, record.getDetailURLFormatter()));
 				}
 			}
 		);

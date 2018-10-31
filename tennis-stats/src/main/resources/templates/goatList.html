@@ -210,7 +210,7 @@
 			bindPopovers("body");
 			$("[data-toggle='collapse']").click(collapseClick);
 			$("[data-toggle='tooltip']").tooltip();
-			loadCollapse($("#goatLegendButton"), goatLegendUrl(), true);
+			//loadCollapse($("#goatLegendButton"), goatLegendUrl(), true);
 		});
 		function areaPointsFormatter(attr) {
 			return function(column, row) {
@@ -231,7 +231,7 @@
 		}
 		function reloadGOATListTableAndLegend() {
 			reloadGOATListTable();
-			loadCollapse($("#goatLegendButton"), goatLegendUrl());
+			//loadCollapse($("#goatLegendButton"), goatLegendUrl());
 		}
 		function surfaceChanged() {
 			surface = $("#surface").val();
@@ -374,8 +374,8 @@
 		<select id="surface" class="form-control" onchange="surfaceChanged(); reloadGOATListTableAndLegend()" data-toggle="tooltip" data-placement="top" title="Select overall or GOAT List by surface">
             <option value="">[[#{overall}]]</option>
             <option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
-                    th:selected="${aSurface.code == surface}" th:class="|bg-surface-${aSurface.code}|" value="H"
-                    class="bg-surface-H" th:text="#{'enum'+${aSurface.text}}">Hard
+					th:selected="${aSurface.code == surface}" th:class="|bg-surface-${aSurface.code}|" value="H"
+					class="bg-surface-H" th:text="#{'enum'+${aSurface}}">Hard
             </option>
 		</select>
 	</div>

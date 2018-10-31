@@ -57,7 +57,7 @@ public class GOATListService {
 		"  FROM %12$sgoat_list\n" +
 		"  WHERE goat_points > 0\n" +
 		")\n" +
-		"SELECT g.*, p.name, p.country_id, p.active, p.dob, coalesce(pt.%13$sgrand_slams, 0) grand_slams, coalesce(pt.%13$stour_finals, 0) tour_finals, coalesce(pt.%13$salt_finals, 0) alt_finals, coalesce(pt.%13$smasters, 0) masters, coalesce(pt.%13$solympics, 0) olympics, coalesce(pt.%13$sbig_titles, 0) big_titles, coalesce(pt.%13$stitles, 0) titles,\n" +
+                "SELECT g.*, p.name, p.chinese_name, p.country_id, p.active, p.dob, coalesce(pt.%13$sgrand_slams, 0) grand_slams, coalesce(pt.%13$stour_finals, 0) tour_finals, coalesce(pt.%13$salt_finals, 0) alt_finals, coalesce(pt.%13$smasters, 0) masters, coalesce(pt.%13$solympics, 0) olympics, coalesce(pt.%13$sbig_titles, 0) big_titles, coalesce(pt.%13$stitles, 0) titles,\n" +
 		"  coalesce(%14$s, 0) weeks_at_no1, pf.%13$smatches_won matches_won, pf.%13$smatches_lost matches_lost, pf.%13$smatches_won::REAL / (pf.%13$smatches_won + pf.%13$smatches_lost) matches_won_pct, coalesce(%15$s, 1500) best_elo_rating, %15$s_date best_elo_rating_date\n" +
 		"FROM goat_list_ranked g\n" +
 		"INNER JOIN player_v p USING (player_id)\n" +
@@ -132,10 +132,11 @@ public class GOATListService {
 				int goatRank = rs.getInt("goat_rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("last_name");
+                String chineseName = rs.getString("last_name");
 				String countryId = getInternedString(rs, "country_id");
 				boolean active = rs.getBoolean("active");
 				int goatPoints = rs.getInt("goat_points");
-				return new PlayerRanking(goatRank, playerId, name, countryId, active, goatPoints);
+                return new PlayerRanking(goatRank, playerId, name, chineseName, countryId, active, goatPoints);
 			}
 		);
 	}
@@ -178,6 +179,7 @@ public class GOATListService {
 				int goatRank = rs.getInt("goat_rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("name");
+                String chineseName = rs.getString("chinese_name");
 				String countryId = getInternedString(rs, "country_id");
 				Boolean active = !filter.hasActive() ? rs.getBoolean("active") : null;
 				LocalDate dob = getLocalDate(rs, "dob");
@@ -185,7 +187,7 @@ public class GOATListService {
 				int tournamentGoatPoints = rs.getInt("tournament_goat_points");
 				int rankingGoatPoints = rs.getInt("ranking_goat_points");
 				int achievementsGoatPoints = rs.getInt("achievements_goat_points");
-				GOATListRow row = new GOATListRow(goatRank, playerId, name, countryId, active, dob, goatPoints, tournamentGoatPoints, rankingGoatPoints, achievementsGoatPoints);
+                GOATListRow row = new GOATListRow(goatRank, playerId, name, chineseName, countryId, active, dob, goatPoints, tournamentGoatPoints, rankingGoatPoints, achievementsGoatPoints);
 				// GOAT points items
 				row.settGPoints(rs.getInt("tournament_g_goat_points"));
 				row.settFLPoints(rs.getInt("tournament_fl_goat_points"));

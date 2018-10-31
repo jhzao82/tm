@@ -16,8 +16,8 @@ public class FavoritePlayerEx extends FavoritePlayer {
 	private final Integer last52WeeksTitles;
 	private final Integer age;
 
-	public FavoritePlayerEx(int favorite, int playerId, String name, String countryId, double probability, Integer currentRank, Integer bestRank, Integer eloRating, Integer last52WeeksTitles, Integer age) {
-		super(favorite, playerId, name, countryId, probability);
+    public FavoritePlayerEx(int favorite, int playerId, String name, String chineseName, String countryId, double probability, Integer currentRank, Integer bestRank, Integer eloRating, Integer last52WeeksTitles, Integer age) {
+        super(favorite, playerId, name, chineseName, countryId, probability);
 		this.currentRank = currentRank;
 		this.bestRank = bestRank;
 		this.eloRating = eloRating;

@@ -147,7 +147,7 @@ public class RivalriesService {
 		"  GROUP BY player_id, opponent_id\n" +
 		"  ORDER BY matches DESC, won DESC\n" +
 		")\n" +
-		"SELECT r.player_id, r.opponent_id, o.name, o.country_id, o.active, o.best_rank, r.matches, r.won, r.lost,\n" +
+                "SELECT r.player_id, r.opponent_id, o.name, o.chinese_name, o.country_id, o.active, o.best_rank, r.matches, r.won, r.lost,\n" +
 		"%3$s\n" +
 		"FROM rivalries_2 r\n" +
 		"INNER JOIN player_v o ON o.player_id = r.opponent_id%4$s%5$s\n" +
@@ -217,8 +217,8 @@ public class RivalriesService {
 		"    PARTITION BY CASE WHEN coalesce(g1.goat_points, 0) > coalesce(g2.goat_points, 0) OR (coalesce(g1.goat_points, 0) = coalesce(g2.goat_points, 0) AND player_id_1 < player_id_2) THEN player_id_1 || '-' || player_id_2 ELSE player_id_2 || '-' || player_id_1 END ORDER BY coalesce(g1.goat_points, 0) DESC, player_id_1\n" +
 		"  )\n" +
 		")\n" +
-		"SELECT rank() OVER (ORDER BY r.matches DESC, (r.won + r.lost) DESC, r.rivalry_score DESC) AS rivalry_rank, r.player_id_1, p1.name name_1, p1.country_id country_id_1, p1.active active_1, p1.goat_points goat_points_1,\n" +
-		"  r.player_id_2, p2.name name_2, p2.country_id country_id_2, p2.active active_2, p2.goat_points goat_points_2, r.matches, r.won, r.lost, r.rivalry_score,\n" +
+                "SELECT rank() OVER (ORDER BY r.matches DESC, (r.won + r.lost) DESC, r.rivalry_score DESC) AS rivalry_rank, r.player_id_1, p1.name name_1, p1.chinese_name chinese_name_1, p1.country_id country_id_1, p1.active active_1, p1.goat_points goat_points_1,\n" +
+                "  r.player_id_2, p2.name name_2, p2.chinese_name chinese_name_2, p2.country_id country_id_2, p2.active active_2, p2.goat_points goat_points_2, r.matches, r.won, r.lost, r.rivalry_score,\n" +
 		"%3$s\n" +
 		"FROM rivalries_3 r\n" +
 		"INNER JOIN player_v p1 ON p1.player_id = r.player_id_1\n" +
@@ -238,12 +238,12 @@ public class RivalriesService {
 		" AND rw.best_rank <= :bestRank AND rl.best_rank <= :bestRank";
 
 	private static final String LAST_MATCH_LATERAL = //language=SQL
-		"  lm.match_id, lm.season, lm.level, lm.surface, lm.indoor, lm.tournament_event_id, lm.tournament, lm.round, lm.winner_id, lm.loser_id, lm.score";
+            "  lm.match_id, lm.season, lm.level, lm.surface, lm.indoor, lm.tournament_event_id, lm.tournament, lm.chinese_tournament, lm.round, lm.winner_id, lm.loser_id, lm.score";
 
 	private static final String LAST_MATCH_JOIN_LATERAL = //language=SQL
 		",\n" +
 		"LATERAL (\n" +
-		"  SELECT m.match_id, e.season, m.date, e.level, m.surface, m.indoor, e.tournament_event_id, e.name AS tournament, m.round, m.winner_id, m.loser_id, m.score\n" +
+                "  SELECT m.match_id, e.season, m.date, e.level, m.surface, m.indoor, e.tournament_event_id, e.name AS tournament, e.chinese_name AS chinese_tournament, m.round, m.winner_id, m.loser_id, m.score\n" +
 		"  FROM match m\n" +
 		"  INNER JOIN tournament_event e USING (tournament_event_id)%1$s\n" +
 		"  WHERE ((m.winner_id = r.%2$s AND m.loser_id = r.%3$s) OR (m.winner_id = r.%3$s AND m.loser_id = r.%2$s))%4$s\n" +
@@ -289,9 +289,10 @@ public class RivalriesService {
 					int bestRank = rs.getInt("best_rank");
 					int opponentId = rs.getInt("opponent_id");
 					String name = rs.getString("name");
+                    String chineseName = rs.getString("chinese_name");
 					String countryId = getInternedString(rs, "country_id");
 					boolean active = rs.getBoolean("active");
-					PlayerRivalryRow row = new PlayerRivalryRow(bestRank, opponentId, name, countryId, active);
+                    PlayerRivalryRow row = new PlayerRivalryRow(bestRank, opponentId, name, chineseName, countryId, active);
 					row.setWonLost(mapWonLost(rs));
 					row.setLastMatch(mapLastMatch(rs));
 					table.addRow(row);
@@ -447,6 +448,7 @@ public class RivalriesService {
 		return new RivalryPlayer(
 			rs.getInt("player_id" + suffix),
 			rs.getString("name" + suffix),
+                rs.getString("chinese_name" + suffix),
 			getInternedString(rs, "country_id" + suffix),
 			rs.getBoolean("active" + suffix),
 			rs.getInt("goat_points" + suffix)
@@ -462,6 +464,7 @@ public class RivalriesService {
 			rs.getBoolean("indoor"),
 			rs.getInt("tournament_event_id"),
 			rs.getString("tournament"),
+                rs.getString("chinese_tournament"),
 			getInternedString(rs, "round"),
 			rs.getInt("winner_id"),
 			rs.getInt("loser_id"),

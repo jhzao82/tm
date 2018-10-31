@@ -18,8 +18,8 @@ public class PlayerDominanceTimeline extends PlayerRow {
 	private final Map<Integer, SeasonPoints> seasons = new HashMap<>(); // <Season, SeasonPoints>
 	private DominanceTimeline timeline;
 
-	public PlayerDominanceTimeline(int rank, int playerId, String name, String lastName, String countryId, boolean active, LocalDate dob, Surface surface, int goatPoints) {
-		super(rank, playerId, name, countryId, active);
+    public PlayerDominanceTimeline(int rank, int playerId, String name, String chineseName, String lastName, String countryId, boolean active, LocalDate dob, Surface surface, int goatPoints) {
+        super(rank, playerId, name, chineseName, countryId, active);
 		this.lastName = lastName;
 		this.dob = dob;
 		this.surface = surface;

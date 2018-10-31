@@ -81,7 +81,8 @@ public class TournamentLevelService {
 	private TournamentLevelTimelinePlayer mapPlayer(ResultSet rs, String prefix, int rank) throws SQLException {
 		TournamentLevelTimelinePlayer player = new TournamentLevelTimelinePlayer(rank,
 			rs.getInt(prefix + "id"),
-			rs.getString(prefix + "name"),
+                rs.getString(prefix + "name"),
+                rs.getString(prefix + "name"),
 			getInternedString(rs, prefix + "country_id"),
 			rs.getBoolean(prefix + "active")
 		);

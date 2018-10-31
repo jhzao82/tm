@@ -75,11 +75,11 @@
 				<tr>
 					<th>Surface</th>
 					<td id="tournamentSurfaces">
-						<th:block th:each="surface : ${tournament.surfaces}"
-								  th:with="speed=${tournament.speeds.get(surface)}">
-							<div class="label tournament-surface" th:data-surface="${surface}" th:text="${surfaces.get(surface)}">Hard</div>
-							<div th:if="${speed}" class="label tournament-court-speed" th:data-surface="${surface}" th:data-court-speed="${speed}" th:text="${speed}">50</div>
-						</th:block>
+                        <!--th:block th:each="surface : ${tournament.surfaces}"
+                                  th:with="speed=${tournament.speeds.get(surface)}">
+                            <div class="label tournament-surface" th:data-surface="${surface}" th:text="${surfaces.get(surface)}">Hard</div>
+                            <div th:if="${speed}" class="label tournament-court-speed" th:data-surface="${surface}" th:data-court-speed="${speed}" th:text="${speed}">50</div>
+                        </th:block-->
 					</td>
 				</tr>
 				<tr>

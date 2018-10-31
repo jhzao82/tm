@@ -6,8 +6,8 @@ public class TournamentLevelTimelinePlayer extends PlayerRow {
 	private Integer seed;
 	private String entry;
 
-	public TournamentLevelTimelinePlayer(int rank, int playerId, String name, String countryId, Boolean active) {
-		super(rank, playerId, name, countryId, active);
+    public TournamentLevelTimelinePlayer(int rank, int playerId, String name, String chineseName, String countryId, Boolean active) {
+        super(rank, playerId, name, chineseName, countryId, active);
 	}
 
 	public String getFullName() {

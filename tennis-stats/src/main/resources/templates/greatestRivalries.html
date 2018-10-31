@@ -8,7 +8,7 @@
 <!--/*@thymesVar id="speeds" type="org.strangeforest.tcb.stats.model.core.CourtSpeed[]"*/-->
 <!--/*@thymesVar id="rounds" type="org.strangeforest.tcb.stats.model.core.Round[]"*/-->
 <!--/*@thymesVar id="tournaments" type="java.util.Map<org.strangeforest.tcb.stats.model.core.TournamentLevel, List<org.strangeforest.tcb.stats.model.core.TournamentItem>>"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titleGreatestRivalries}, true, ~{::template})">
 	<title>Greatest Rivalries</title>
 	<template>
 	<meta name="description" content="Greatest Open Era tennis rivalries"/>

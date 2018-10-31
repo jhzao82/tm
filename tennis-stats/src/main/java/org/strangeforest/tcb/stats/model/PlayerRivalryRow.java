@@ -7,8 +7,8 @@ public class PlayerRivalryRow extends PlayerRow {
 	private WonLost wonLost;
 	private MatchInfo lastMatch;
 
-	public PlayerRivalryRow(int rank, int playerId, String name, String countryId, boolean active) {
-		super(rank, playerId, name, countryId, active);
+    public PlayerRivalryRow(int rank, int playerId, String name, String chineseName, String countryId, boolean active) {
+        super(rank, playerId, name, chineseName, countryId, active);
 	}
 
 	public int getBestRank() {

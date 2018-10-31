@@ -9,7 +9,7 @@
 <!--/*@thymesVar id="rounds" type="org.strangeforest.tcb.stats.model.core.Round[]"*/-->
 <!--/*@thymesVar id="tournaments" type="java.util.Map<org.strangeforest.tcb.stats.model.core.TournamentLevel, List<org.strangeforest.tcb.stats.model.core.TournamentItem>>"*/-->
 <!--/*@thymesVar id="minMatchScore" type="java.lang.Integer"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titleGreatestMatches}, true, ~{::template})">
 	<title>Greatest Matches</title>
 	<template>
 	<meta name="description" content="Greatest Open Era tennis matches"/>

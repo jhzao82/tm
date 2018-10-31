@@ -8,6 +8,7 @@ public class PlayerTournament {
 
 	private final int id;
 	private final String name;
+    private final String chineseName;
 	private final List<String> levels;
 	private final List<String> surfaces;
 	private final Map<String, Integer> speeds;
@@ -19,9 +20,10 @@ public class PlayerTournament {
 	private final WonLost wonLost;
 	private final int titles;
 
-	public PlayerTournament(int id, String name, List<String> levels, List<String> surfaces, Map<String, Integer> speeds, int eventCount, String seasons, String bestResult, String lastResult, int lastTournamentEventId, WonLost wonLost, int titles) {
+    public PlayerTournament(int id, String name, String chineseName, List<String> levels, List<String> surfaces, Map<String, Integer> speeds, int eventCount, String seasons, String bestResult, String lastResult, int lastTournamentEventId, WonLost wonLost, int titles) {
 		this.id = id;
 		this.name = name;
+        this.chineseName = chineseName;
 		this.levels = levels;
 		this.surfaces = surfaces;
 		this.speeds = speeds;
@@ -41,6 +43,10 @@ public class PlayerTournament {
 	public String getName() {
 		return name;
 	}
+
+    public String getChineseName() {
+        return chineseName;
+    }
 
 	public List<String> getLevels() {
 		return levels;

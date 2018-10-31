@@ -237,7 +237,8 @@ public class TournamentForecastService {
 		if (id == 0)
 			id = -emptyCount.incrementAndGet();
 		return new PlayerForecast(id,
-			rs.getString(prefix + "name"),
+                rs.getString(prefix + "name"),
+                rs.getString(prefix + "chinese_name"),
 			getInteger(rs, prefix + "seed"),
 			getInternedString(rs, prefix + "entry"),
 			getInternedString(rs, prefix + "country_id"),
@@ -466,7 +467,8 @@ public class TournamentForecastService {
 		return new FavoritePlayerEx(
 			rowNum + 1,
 			rs.getInt("player_id"),
-			rs.getString("name"),
+                rs.getString("name"),
+                rs.getString("chinese_name"),
 			getInternedString(rs, "country_id"),
 			rs.getDouble("probability"),
 			getInteger(rs, "current_rank"),
@@ -487,7 +489,8 @@ public class TournamentForecastService {
 		return new FavoritePlayer(
 			rowNum + 1,
 			rs.getInt("player_id"),
-			rs.getString("name"),
+                rs.getString("name"),
+                rs.getString("chinese_name"),
 			getInternedString(rs, "country_id"),
 			rs.getDouble("probability"),
 			priceFormat

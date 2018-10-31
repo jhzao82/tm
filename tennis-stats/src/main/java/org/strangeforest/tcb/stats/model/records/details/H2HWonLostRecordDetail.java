@@ -8,9 +8,9 @@ public abstract class H2HWonLostRecordDetail extends WonLostRecordDetail {
 
 	private final PlayerRow player2;
 
-	protected H2HWonLostRecordDetail(int won, int lost, int playerId2, String name2, String countryId2, Boolean active2) {
+    protected H2HWonLostRecordDetail(int won, int lost, int playerId2, String name2, String chineseName2, String countryId2, Boolean active2) {
 		super(won, lost);
-		player2 = new PlayerRow(2, playerId2, name2, countryId2, active2);
+        player2 = new PlayerRow(2, playerId2, name2, chineseName2, countryId2, active2);
 	}
 
 	public PlayerRow getPlayer2() {

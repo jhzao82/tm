@@ -8,13 +8,15 @@ public class MatchPlayer {
 
 	private final int id;
 	private final String name;
+    private final String chineseName;
 	private final Integer seed;
 	private final String entry;
 	private final Country country;
 
-	public MatchPlayer(int id, String name, Integer seed, String entry, String countryId) {
+    public MatchPlayer(int id, String name, String chineseName, Integer seed, String entry, String countryId) {
 		this.id = id;
 		this.name = name;
+        this.chineseName = chineseName;
 		this.seed = seed;
 		this.entry = entry;
 		country = countryId != null ? new Country(countryId) : Country.UNKNOWN;
@@ -23,6 +25,7 @@ public class MatchPlayer {
 	public MatchPlayer(MatchPlayer player) {
 		id = player.id;
 		name = player.name;
+        chineseName = player.chineseName;
 		seed = player.seed;
 		entry = player.entry;
 		country = player.country;
@@ -35,6 +38,10 @@ public class MatchPlayer {
 	public String getName() {
 		return name;
 	}
+
+    public String getChineseName() {
+        return chineseName;
+    }
 
 	public Integer getSeed() {
 		return seed;

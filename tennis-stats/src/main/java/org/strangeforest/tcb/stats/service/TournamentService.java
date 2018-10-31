@@ -38,10 +38,10 @@ public class TournamentService {
 	@Autowired private NamedParameterJdbcTemplate jdbcTemplate;
 
 	private static final String TOURNAMENT_ITEMS_QUERY = //language=SQL
-		"SELECT tournament_id, name, level FROM tournament WHERE NOT linked ORDER BY name";
+			"SELECT tournament_id, name, chinese_name, level FROM tournament WHERE NOT linked ORDER BY name";
 
 	private static final String SEASON_TOURNAMENT_ITEMS_QUERY = //language=SQL
-		"SELECT tournament_id, name, level FROM tournament_event WHERE season = :season ORDER BY name";
+			"SELECT tournament_id, name, chinese_name, level FROM tournament_event WHERE season = :season ORDER BY name";
 
 	private static final String TOURNAMENTS_QUERY = //language=SQL
 		"WITH player_tournament_titles AS (\n" +
@@ -65,7 +65,7 @@ public class TournamentService {
 		"    ORDER BY season\n" +
 		"  ) AS event)) AS events,\n" +
 		"  array_to_json(array(SELECT row_to_json(top_player) FROM (\n" +
-		"    SELECT p.player_id, p.name, p.country_id, p.active, pt.titles\n" +
+				"    SELECT p.player_id, p.name, p.chinese_name, p.country_id, p.active, pt.titles\n" +
 		"    FROM player_tournament_titles_ranked pt\n" +
 		"    INNER JOIN player_v p USING (player_id)\n" +
 		"    WHERE pt.tournament_id = t.tournament_id AND pt.titles_rank <= 1\n" +
@@ -96,7 +96,7 @@ public class TournamentService {
 		"    ORDER BY season\n" +
 		"  ) AS event)) AS events,\n" +
 		"  array_to_json(array(SELECT row_to_json(top_player) FROM (\n" +
-		"    SELECT p.player_id, p.name, p.country_id, p.active, pt.titles\n" +
+				"    SELECT p.player_id, p.name, p.chinese_name, p.country_id, p.active, pt.titles\n" +
 		"    FROM player_tournament_titles_ranked pt\n" +
 		"    INNER JOIN player_v p USING (player_id)\n" +
 		"    WHERE pt.rank <= 4\n" +
@@ -117,8 +117,8 @@ public class TournamentService {
 	private static final String TOURNAMENT_EVENT_SELECT = //language=SQL
             "SELECT e.tournament_event_id, e.tournament_id, mp.ext_tournament_id, e.season, e.date, e.name, e.chinese_name, e.level, e.surface, e.indoor, e.draw_type, e.draw_size,\n" +
                     "  p.player_count, p.participation, p.strength, p.average_elo_rating, es.court_speed,\n" +
-		"  m.winner_id, pw.name winner_name, m.winner_seed, m.winner_entry, m.winner_country_id,\n" +
-		"  m.loser_id runner_up_id, pl.name runner_up_name, m.loser_seed runner_up_seed, m.loser_entry runner_up_entry, m.loser_country_id runner_up_country_id,\n" +
+					"  m.winner_id, pw.name winner_name, pw.chinese_name winner_chinese_name, m.winner_seed, m.winner_entry, m.winner_country_id,\n" +
+					"  m.loser_id runner_up_id, pl.name runner_up_name, pl.chinese_name runner_up_chinese_name, m.loser_seed runner_up_seed, m.loser_entry runner_up_entry, m.loser_country_id runner_up_country_id,\n" +
 		"  m.score, m.outcome, e.map_properties%1$s\n" +
 		"FROM tournament_event e\n" +
 		"LEFT JOIN tournament_mapping mp USING (tournament_id)\n" +
@@ -154,7 +154,7 @@ public class TournamentService {
 		"  WHERE e.tournament_id = :tournamentId AND r.result >= :result::tournament_event_result\n" +
 		"  GROUP BY player_id\n" +
 		")\n" +
-		"SELECT r.rank, player_id, p.name, p.country_id, p.active, r.count\n" +
+				"SELECT r.rank, player_id, p.name, p.chinese_name, p.country_id, p.active, r.count\n" +
 		"FROM record_results r\n" +
 		"INNER JOIN player_v p USING (player_id)\n" +
 		"WHERE r.rank <= coalesce((SELECT max(r2.rank) FROM record_results r2 WHERE r2.order = :maxPlayers), :maxPlayers)\n" +
@@ -186,7 +186,7 @@ public class TournamentService {
 		"ORDER BY name, season";
 
 	private static final String PLAYER_TOURNAMENT_EVENTS_QUERY = //language=SQL
-            "SELECT r.tournament_event_id, e.season, e.date, e.name, e.level, e.surface, e.indoor, e.draw_type, e.draw_size, p.participation, p.strength, p.average_elo_rating, es.court_speed, r.result\n" +
+			"SELECT r.tournament_event_id, e.season, e.date, e.name, e.chinese_name, e.level, e.surface, e.indoor, e.draw_type, e.draw_size, p.participation, p.strength, p.average_elo_rating, es.court_speed, r.result\n" +
 		"FROM player_tournament_event_result r\n" +
 		"INNER JOIN tournament_event e USING (tournament_event_id)\n" +
 		"LEFT JOIN event_participation p USING (tournament_event_id)\n" +
@@ -197,15 +197,15 @@ public class TournamentService {
 
 	private static final String PLAYER_TOURNAMENTS_QUERY = //language=SQL
 		"WITH player_tournaments AS (\n" +
-		"  SELECT DISTINCT e.tournament_id, t.name, sum(m.p_matches) p_matches, sum(m.o_matches) o_matches\n" +
+				"  SELECT DISTINCT e.tournament_id, t.name, t.chinese_name, sum(m.p_matches) p_matches, sum(m.o_matches) o_matches\n" +
 		"  FROM player_tournament_event_result r\n" +
 		"  INNER JOIN tournament_event e USING (tournament_event_id)\n" +
 		"  INNER JOIN tournament t USING (tournament_id)\n" +
                 "  INNER JOIN player_match_for_stats_v m ON m.player_id = :playerId AND m.tournament_event_id = r.tournament_event_id%1$s\n" +
                 "  WHERE e.level NOT IN ('D', 'T') AND r.player_id = :playerId%2$s\n" +
-		"  GROUP BY e.tournament_id, t.name\n" +
+				"  GROUP BY e.tournament_id, t.name, t.chinese_name\n" +
 		")\n" +
-		"SELECT tournament_id, name, p_matches, o_matches,\n" +
+				"SELECT tournament_id, name, chinese_name, p_matches, o_matches,\n" +
 		"  array_to_json(array(SELECT row_to_json(event) FROM (\n" +
                 "    SELECT r.tournament_event_id, e.level, e.surface, e.season, e.date, es.court_speed, r.result\n" +
 		"    FROM player_tournament_event_result r\n" +
@@ -316,6 +316,7 @@ public class TournamentService {
 					topPlayer.get("titles").asInt(),
 					topPlayer.get("player_id").asInt(),
 					topPlayer.get("name").asText(),
+						topPlayer.get("chinese_name").asText(),
 					topPlayer.get("country_id").asText(),
 					topPlayer.get("active").asBoolean()
 				));
@@ -446,7 +447,7 @@ public class TournamentService {
 			rs.getInt("season"),
 			getLocalDate(rs, "date"),
 			rs.getString("name"),
-                rs.getString("chinese_name"),
+				rs.getString("chinese_name"),
 			getInternedString(rs, "level"),
 			getInternedString(rs, "surface"),
 			rs.getBoolean("indoor")
@@ -470,7 +471,7 @@ public class TournamentService {
 	}
 
 	private MatchPlayer countryParticipant(String countryId) {
-		return new MatchPlayer(0, new Country(countryId).getName(), null, null, countryId);
+		return new MatchPlayer(0, new Country(countryId).getName(), new Country(countryId).getName(), null, null, countryId);
 	}
 
 
@@ -483,7 +484,8 @@ public class TournamentService {
 			(rs, rowNum) -> new RecordDetailRow<RecordDetail>(
 				rs.getInt("rank"),
 				rs.getInt("player_id"),
-				rs.getString("name"),
+					rs.getString("name"),
+					rs.getString("chinese_name"),
 				getInternedString(rs, "country_id"),
 				rs.getBoolean("active"),
 				new IntegerRecordDetail(rs.getInt("count")),
@@ -584,6 +586,7 @@ public class TournamentService {
 				return new PlayerTournament(
 					rs.getInt("tournament_id"),
 					rs.getString("name"),
+						rs.getString("chinese_name"),
 					sortKeysByValuesDesc(levels, comparing(TournamentLevel::decode)),
 					sortKeysByValuesDesc(surfaces, comparing(Surface::decode)),
                         avgSpeeds,
@@ -615,6 +618,7 @@ public class TournamentService {
 						rs.getInt("season"),
 						getLocalDate(rs, "date"),
 						rs.getString("name"),
+							rs.getString("chinese_name"),
 						getInternedString(rs, "level"),
 						getInternedString(rs, "surface"),
 						rs.getBoolean("indoor"),

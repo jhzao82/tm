@@ -9,8 +9,8 @@ public class RecordHolderRow<D extends RecordDetail> extends PlayerRow {
 	private final D detail;
 	private final BiFunction<Integer, D, String> detailUrlFormatter;
 
-	public RecordHolderRow(int playerId, String name, String countryId, Boolean active, D detail, BiFunction<Integer, D, String> detailUrlFormatter) {
-		super(1, playerId, name, countryId, active);
+    public RecordHolderRow(int playerId, String name, String chineseName, String countryId, Boolean active, D detail, BiFunction<Integer, D, String> detailUrlFormatter) {
+        super(1, playerId, name, chineseName, countryId, active);
 		this.detail = detail;
 		this.detailUrlFormatter = detailUrlFormatter;
 	}

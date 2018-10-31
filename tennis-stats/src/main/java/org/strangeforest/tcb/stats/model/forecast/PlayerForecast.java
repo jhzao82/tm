@@ -19,8 +19,8 @@ public class PlayerForecast extends MatchPlayerEx {
 	private final EloRatingDelta inOutEloRatingDelta;
 	private final EloRatingDelta setEloRatingDelta;
 
-	public PlayerForecast(int playerId, String name, Integer seed, String entry, String countryId, Integer rank, Integer eloRating, Integer recentEloRating, Integer surfaceEloRating, Integer inOutEloRating, Integer setEloRating) {
-		super(playerId, name, seed, entry, countryId, rank, eloRating, null);
+    public PlayerForecast(int playerId, String name, String chineseName, Integer seed, String entry, String countryId, Integer rank, Integer eloRating, Integer recentEloRating, Integer surfaceEloRating, Integer inOutEloRating, Integer setEloRating) {
+        super(playerId, name, chineseName, seed, entry, countryId, rank, eloRating, null);
 		recentEloRatingDelta = new EloRatingDelta(recentEloRating, null);
 		surfaceEloRatingDelta = new EloRatingDelta(surfaceEloRating, null);
 		inOutEloRatingDelta = new EloRatingDelta(inOutEloRating, null);

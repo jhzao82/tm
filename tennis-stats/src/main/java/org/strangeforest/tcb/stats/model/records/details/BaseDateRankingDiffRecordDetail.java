@@ -8,8 +8,8 @@ public abstract class BaseDateRankingDiffRecordDetail<T> extends BaseRankingDiff
 
 	private final LocalDate date;
 
-	protected BaseDateRankingDiffRecordDetail(T value, int playerId2, String name2, String countryId2, Boolean active2, int value1, int value2, LocalDate date) {
-		super(value, playerId2, name2, countryId2, active2, value1, value2);
+    protected BaseDateRankingDiffRecordDetail(T value, int playerId2, String name2, String chineseName2, String countryId2, Boolean active2, int value1, int value2, LocalDate date) {
+        super(value, playerId2, name2, chineseName2, countryId2, active2, value1, value2);
 		this.date = date;
 	}
 

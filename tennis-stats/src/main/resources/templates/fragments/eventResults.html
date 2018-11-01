@@ -81,7 +81,9 @@
 		<th colspan="2" style="text-align: right"><button th:id="'roundRight' + ${id}" type="button" class="btn btn-info btn-xs" onclick="roundRight()"></button></th>
 	</tr>
 	<tr>
-		<th th:each="round : ${results.rounds}" th:text="${round.text}" th:data-round-index="${roundStat.index}">Final</th>
+		<th th:each="round : ${results.rounds}" th:text="#{'round'+${roundStat.index}}"
+			th:data-round-index="${roundStat.index}">Final
+		</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -94,7 +96,9 @@
 					</td>
 					<td th:unless="${forecast && winner.qualifier}" class="player">
 						<img th:if="${winner.country.id}" th:src="@{/images/flags/{code}.png(code=${winner.country.code})}" src="/images/flags/ch.png'" th:title="${winner.country.id}" title="SUI" width="24" height="20"/>
-						<strong><a th:href="@{/playerProfile(playerId=${winner.id})}" th:text="${winner.name}" style="vertical-align: middle" title="Show profile">Roger Federer</a></strong>
+						<strong><a th:href="@{/playerProfile(playerId=${winner.id})}"
+								   th:text="__${#locale}__ == 'zh' ? ${winner.chineseName} : ${winner.name}"
+								   style="vertical-align: middle" title="Show profile">Roger Federer</a></strong>
 					</td>
 					<td th:if="${forecast && winner.qualifier}" class="player">Qualifier</td>
 					<td th:each="score : ${match.score}" class="score"><th:block th:text="${score.wGames}">6</th:block><sup th:if="${score.wTBPoints}" th:text="|(${score.wTBPoints})|"></sup></td>
@@ -112,7 +116,9 @@
 					</td>
 					<td th:unless="${forecast && loser.qualifier}"  class="player">
 						<img th:if="${loser.country.id}" th:src="@{/images/flags/{code}.png(code=${loser.country.code})}" src="/images/flags/ch.png'" th:title="${loser.country.id}" title="ESP" width="24" height="20"/>
-						<a th:href="@{/playerProfile(playerId=${loser.id})}" th:text="${loser.name}" style="vertical-align: middle" title="Show profile">Rafael Nadal</a>
+						<a th:href="@{/playerProfile(playerId=${loser.id})}"
+						   th:text="__${#locale}__ == 'zh' ? ${loser.chineseName} : ${loser.name}"
+						   style="vertical-align: middle" title="Show profile">Rafael Nadal</a>
 					</td>
 					<td th:if="${forecast && loser.qualifier}" class="player">Qualifier</td>
 					<td th:each="score : ${match.score}" class="score"><th:block th:text="${score.lGames}">3</th:block><sup th:if="${score.lTBPoints}" th:text="|(${score.lTBPoints})|"></sup></td>

@@ -53,7 +53,7 @@ public class TournamentForecastService {
 		"WHERE in_progress_event_id = :inProgressEventId";
 
 	private static final String FIND_FAVORITES_QUERY = //language=SQL
-		"SELECT player_id, p.name, p.country_id, r.probability%1$s\n" +
+			"SELECT player_id, p.name, p.chinese_name, p.country_id, r.probability%1$s\n" +
 		"FROM player_in_progress_result r\n" +
 		"INNER JOIN player_v p USING (player_id)\n" +
 		"WHERE r.in_progress_event_id = :inProgressEventId\n" +
@@ -71,8 +71,8 @@ public class TournamentForecastService {
 		"WITH entry_round AS (\n" +
 		"  SELECT min(round) AS entry_round FROM in_progress_match WHERE in_progress_event_id = :inProgressEventId\n" +
 		")\n" +
-		"SELECT m.player1_id, m.player1_seed, m.player1_entry, p1.name player1_name, p1.country_id player1_country_id, m.player1_rank, m.player1_elo_rating, m.player1_recent_elo_rating, m.player1_surface_elo_rating, m.player1_in_out_elo_rating, m.player1_set_elo_rating,\n" +
-		"  m.player2_id, m.player2_seed, m.player2_entry, p2.name player2_name, p2.country_id player2_country_id, m.player2_rank, m.player2_elo_rating, m.player2_recent_elo_rating, m.player2_surface_elo_rating, m.player2_in_out_elo_rating, m.player2_set_elo_rating\n" +
+				"SELECT m.player1_id, m.player1_seed, m.player1_entry, p1.name player1_name, p1.chinese_name player1_chinese_name, p1.country_id player1_country_id, m.player1_rank, m.player1_elo_rating, m.player1_recent_elo_rating, m.player1_surface_elo_rating, m.player1_in_out_elo_rating, m.player1_set_elo_rating,\n" +
+				"  m.player2_id, m.player2_seed, m.player2_entry, p2.name player2_name, p2.chinese_name player2_chinese_name, p2.country_id player2_country_id, m.player2_rank, m.player2_elo_rating, m.player2_recent_elo_rating, m.player2_surface_elo_rating, m.player2_in_out_elo_rating, m.player2_set_elo_rating\n" +
 		"FROM in_progress_match m\n" +
 		"LEFT JOIN player_v p1 ON p1.player_id = player1_id\n" +
 		"LEFT JOIN player_v p2 ON p2.player_id = player2_id\n" +

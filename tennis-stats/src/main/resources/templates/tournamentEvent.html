@@ -4,7 +4,7 @@
 <!--/*@thymesVar id="results" type="org.strangeforest.tcb.stats.model.TournamentEventResults"*/-->
 <!--/*@thymesVar id="levels" type="java.util.Map"*/-->
 <!--/*@thymesVar id="surfaces" type="java.util.Map"*/-->
-<head th:replace="fragments/head :: commonHead(${tournamentEvent.chineseName + ' ' + tournamentEvent.season}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh' ? ${tournamentEvent.chineseName} + ' ' + ${tournamentEvent.season} : ${tournamentEvent.name} + ' ' + ${tournamentEvent.season}, true, ~{::template})">
 	<template>
 	<meta name="description" th:content="${tournamentEvent.name + ' ' + tournamentEvent.season} + ' at Ultimate Tennis Statistics'"/>
 	<script type="text/javascript">
@@ -34,16 +34,17 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3 th:text="${tournamentEvent.name} + ' ' + ${tournamentEvent.season}">Australian Open 2016</h3>
+	<h3 th:text="__${#locale}__ == 'zh' ? ${tournamentEvent.chineseName} + ' ' + ${tournamentEvent.season} : ${tournamentEvent.name} + ' ' + ${tournamentEvent.season}">
+		Australian Open 2016</h3>
 	<div class="row" th:with="isTeam=${tournamentEvent.level == 'D' || tournamentEvent.level == 'T'}">
 		<div class="col-md-3">
 			<table class="table table-condensed text-nowrap">
 				<tr>
-					<th>Level</th>
+					<th>[[#{level}]]</th>
 					<td><span class="label label-" th:attrappend="class=${tournamentEvent.level}" th:text="${levels[tournamentEvent.level]}">Grand Slam</span></td>
 				</tr>
 				<tr th:unless="${isTeam}">
-					<th>Surface</th>
+					<th>[[#{surface}]]</th>
 					<td>
 						<span id="eventSurface" th:if="${tournamentEvent.surface}" class="label" th:data-surface="${tournamentEvent.surface}">[(${surfaces[tournamentEvent.surface]})]<span th:if="${tournamentEvent.indoor && tournamentEvent.surface != 'P'}" title="Indoor"> (i)</span></span>
                         <span id="eventSpeed" th:if="${tournamentEvent.speed}" class="label"
@@ -53,11 +54,11 @@
 					</td>
 				</tr>
 				<tr th:unless="${isTeam}">
-					<th>Date</th>
+					<th>[[#{date}]]</th>
 					<td th:text="${#temporals.format(tournamentEvent.date, 'dd-MM-yyyy')}">1-1-1990</td>
 				</tr>
 				<tr>
-					<th>Draw</th>
+					<th>[[#{draw}]]</th>
 					<td th:text="${tournamentEvent.draw}">KO 128</td>
 				</tr>
 			</table>
@@ -65,19 +66,19 @@
 		<div class="col-md-3" th:unless="${isTeam}">
 			<table class="table table-condensed text-nowrap">
 				<tr>
-					<th>Players</th>
+					<th>[[#{players}]]</th>
 					<td th:text="${tournamentEvent.playerCount}">128</td>
 				</tr>
 				<tr th:title="#{event.participation.title}">
-					<th>Participation</th>
+					<th>[[#{participation}]]</th>
 					<td th:text="${#numbers.formatDecimal(100 * tournamentEvent.participation, 1, 1) + '%'}">67.3%</td>
 				</tr>
 				<tr th:title="#{event.strength.title}">
-					<th>Strength</th>
+					<th>[[#{strength}]]</th>
 					<td th:text="${tournamentEvent.strength}">1232</td>
 				</tr>
 				<tr th:title="#{event.averageEloRating.title}">
-					<th>Average Elo Rating</th>
+					<th>[[#{averageEloRating}]]</th>
 					<td th:text="${tournamentEvent.averageEloRating}">1954</td>
 				</tr>
 			</table>
@@ -85,28 +86,34 @@
 		<div class="col-md-4">
 			<table class="table table-condensed text-nowrap">
 				<tr th:if="${tournamentEvent.winner}">
-					<th>Winner</th>
+					<th>[[#{winner}]]</th>
 					<td th:with="player=${tournamentEvent.winner}">
 						<th:block th:unless="${tournamentEvent.outcome == 'ABD'}">
 							<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/ch.png'" th:title="${player.country.id}" title="SUI" width="24" height="20"/>
-							<strong><a th:href="@{/playerProfile(playerId=${player.id})}" th:text="${player.name}" title="Show profile">Roger Federer</a>[(${player.formattedSeedAndEntry()})]</strong>
+							<strong><a th:href="@{/playerProfile(playerId=${player.id})}"
+									   th:text="__${#locale}__ == 'zh' ? ${player.chineseName} : ${player.name}"
+									   title="Show profile">Roger
+								Federer</a>[(${player.formattedSeedAndEntry()})]</strong>
 						</th:block>
 						<th:block th:if="${tournamentEvent.outcome == 'ABD'}">ABD</th:block>
 					</td>
 				</tr>
 				<tr th:if="${tournamentEvent.runnerUp != null && tournamentEvent.outcome != 'ABD'}">
-					<th>Runner-up</th>
+					<th>[[#{runnerup}]]</th>
 					<td th:with="player=${tournamentEvent.runnerUp}">
 						<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/es.png'" th:title="${player.country.id}" title="ESP" width="24" height="20"/>
-						<a th:href="@{/playerProfile(playerId=${player.id})}" th:text="${player.name}" title="Show profile">Rafael Nadal</a>[(${player.formattedSeedAndEntry()})]
+						<a th:href="@{/playerProfile(playerId=${player.id})}"
+						   th:text="__${#locale}__ == 'zh' ? ${player.chineseName} : ${player.name}"
+						   title="Show profile">Rafael Nadal</a>[(${player.formattedSeedAndEntry()})]
 					</td>
 				</tr>
 				<tr th:if="${tournamentEvent.score}">
-					<th>Final Score</th>
+					<th>[[#{finalScore}]]</th>
 					<td th:utext="${tournamentEvent.scoreFormatted()}">6-4 6-3</td>
 				</tr>
 				<tr th:if="${tournamentEvent.titleDifficulty}">
-					<th th:title="#{event.titleDifficulty.title}">Title Difficulty<sup class="new-feature"></sup></th>
+					<th th:title="#{event.titleDifficulty.title}">[[#{titleDifficulty}]]<sup class="new-feature"></sup>
+					</th>
 					<td th:utext="${#numbers.formatDecimal(tournamentEvent.titleDifficulty, 1, 3)}">1.23</td>
 				</tr>
 			</table>
@@ -116,7 +123,7 @@
 				<tr>
 					<th>
 						<a role="button" th:href="${!isTeam ? ('/tournament?tournamentId=' + tournamentEvent.tournamentId) : ('/teamTournamentLevelTimeline?level=' + tournamentEvent.level)}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Tournament history">
-							<i class="fa fa-calendar"></i>&nbsp;&nbsp;History
+							<i class="fa fa-calendar"></i>&nbsp;&nbsp;[[#{history}]]
 						</a>
 					</th>
 				</tr>
@@ -124,9 +131,13 @@
 		</div>
 	</div>
 	<ul id="tournamentEventPills" class="nav nav-pills">
-		<li class="active"><a data-toggle="pill" href="#results">Results</a></li>
-		<li><a data-toggle="pill" href="#statistics" th:data-url="'/tournamentEventStats?tournamentEventId=' + ${tournamentEvent.id}">Statistics</a></li>
-		<li th:if="${tournamentEvent.mapProperties}"><a data-toggle="pill" href="#map" th:data-url="'/tournamentEventMap?tournamentEventId=' + ${tournamentEvent.id}">Map<sup class="cool-feature"></sup></a></li>
+		<li class="active"><a data-toggle="pill" href="#results">[[#{results}]]</a></li>
+		<li><a data-toggle="pill" href="#statistics"
+			   th:data-url="'/tournamentEventStats?tournamentEventId=' + ${tournamentEvent.id}">[[#{statistics}]]</a>
+		</li>
+		<li th:if="${tournamentEvent.mapProperties}"><a data-toggle="pill" href="#map"
+														th:data-url="'/tournamentEventMap?tournamentEventId=' + ${tournamentEvent.id}">[[#{map}]]<sup
+				class="cool-feature"></sup></a></li>
 	</ul>
 	<div class="tab-content">
 		<div id="results" class="tab-pane fade in active">

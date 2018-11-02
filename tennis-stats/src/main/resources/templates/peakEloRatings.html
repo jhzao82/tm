@@ -97,13 +97,16 @@
 	<table id="rankingsTable" class="table table-condensed table-hover table-striped">
 		<thead>
 		<tr>
-			<th data-column-id="rank" data-type="numeric" data-width="65">Rank</th>
-			<th data-column-id="bestRank" data-formatter="bestRank" data-width="100">Best Rank</th>
-			<th data-column-id="country" data-formatter="country" data-width="85">Country</th>
-			<th data-column-id="name" data-formatter="player" data-width="250">Name</th>
-			<th data-column-id="pointsDate" data-formatter="date" data-width="85">Date</th>
-			<th data-column-id="tournamentEvent" data-formatter="tournamentEvent" data-width="200">Tournament</th>
-			<th data-column-id="points" data-formatter="points" data-width="100" data-align="right" data-header-align="right">Elo Rating</th>
+			<th data-column-id="rank" data-type="numeric" data-width="65">[[#{rank}]]</th>
+			<th data-column-id="bestRank" data-formatter="bestRank" data-width="100">[[#{bestRank}]]</th>
+			<th data-column-id="country" data-formatter="country" data-width="85">[[#{country}]]</th>
+			<th data-column-id="name" data-formatter="player" data-width="250">[[#{name}]]</th>
+			<th data-column-id="pointsDate" data-formatter="date" data-width="85">[[#{date}]]</th>
+			<th data-column-id="tournamentEvent" data-formatter="tournamentEvent" data-width="200">[[#{tournament}]]
+			</th>
+			<th data-column-id="points" data-formatter="points" data-width="100" data-align="right"
+				data-header-align="right">[[#{eloRating}]]
+			</th>
 		</tr>
 		</thead>
 	</table>

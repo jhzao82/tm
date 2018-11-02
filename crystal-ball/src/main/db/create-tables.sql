@@ -298,6 +298,7 @@ CREATE TABLE in_progress_event (
 	tournament_id INTEGER NOT NULL REFERENCES tournament (tournament_id) ON DELETE CASCADE,
 	date DATE NOT NULL,
 	name TEXT NOT NULL,
+	chinese_name TEXT NOT NULL,
 	level tournament_level NOT NULL,
 	surface surface,
 	indoor BOOLEAN NOT NULL,

@@ -108,7 +108,7 @@
 	<table id="seasonsTable" class="table table-condensed table-hover table-striped">
 		<thead>
 		<tr>
-			<th data-column-id="season" data-formatter="season" data-order="desc" data-width="80">Season</th>
+			<th data-column-id="season" data-formatter="season" data-order="desc" data-width="80">[[#{season}]]</th>
 			<th data-column-id="tournamentCount" data-formatter="tournamentCount" data-width="50" data-align="right" data-header-align="right">T</th>
 			<th data-column-id="grandSlamCount" data-formatter="grandSlamCount" data-width="50" data-align="right" data-header-align="right">GS</th>
 			<th data-column-id="tourFinalsCount" data-formatter="tourFinalsCount" data-width="50" data-align="right" data-header-align="right">TF</th>
@@ -122,13 +122,21 @@
 			<th data-column-id="carpetCount" data-formatter="carpetCount" data-width="50" data-align="right" data-header-align="right" data-header-css-class="bg-surface-P">P</th>
 			<th data-column-id="outdoorCount" data-formatter="outdoorCount" data-width="55" data-align="right" data-header-align="right" data-visible="false">Out</th>
 			<th data-column-id="indoorCount" data-formatter="indoorCount" data-width="55" data-align="right" data-header-align="right" data-visible="false">In</th>
-			<th data-column-id="matchCount" data-type="numeric" data-width="90" data-align="right" data-header-align="right">Matches</th>
-			<th data-column-id="surfaces" data-formatter="surfaces" data-sortable="false" data-width="200" data-align="center" data-header-align="center">Surfaces</th>
+			<th data-column-id="matchCount" data-type="numeric" data-width="90" data-align="right"
+				data-header-align="right">[[#{matches}]]
+			</th>
+			<th data-column-id="surfaces" data-formatter="surfaces" data-sortable="false" data-width="200"
+				data-align="center" data-header-align="center">[[#{surfaces}]]
+			</th>
             <th data-column-id="speed" data-formatter="speed" data-width="70" data-align="center"
                 data-header-align="center">Speed
             </th>
-			<th data-column-id="bestPlayer" data-formatter="player" data-sortable="false" data-width="150">Best Player</th>
-			<th data-column-id="dominantAge" data-formatter="dominantAge" data-sortable="false" data-width="55" data-align="right" data-header-align="right">Age</th>
+			<th data-column-id="bestPlayer" data-formatter="player" data-sortable="false" data-width="150">
+				[[#{bestPlayer}]]
+			</th>
+			<th data-column-id="dominantAge" data-formatter="dominantAge" data-sortable="false" data-width="55"
+				data-align="right" data-header-align="right">[[#{age}]]
+			</th>
 		</tr>
 		</thead>
 	</table>

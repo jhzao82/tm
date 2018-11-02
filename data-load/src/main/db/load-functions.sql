@@ -1,3 +1,17 @@
+-- chinese tournament
+
+CREATE OR REPLACE FUNCTION chinese_tournament(
+	p_tournament_id INTEGER
+) RETURNS TEXT AS $$
+DECLARE
+	l_name TEXT;
+BEGIN
+	SELECT chinese_name INTO l_name FROM tournament
+	WHERE tournament_id = p_tournament_id;
+	RETURN l_name;
+END;
+$$ LANGUAGE plpgsql;
+
 -- map_ext_player
 
 CREATE OR REPLACE FUNCTION map_ext_player(
@@ -234,17 +248,19 @@ CREATE OR REPLACE FUNCTION merge_tournament_event(
 DECLARE
 	l_tournament_id INTEGER;
 	l_tournament_event_id INTEGER;
+	l_tournament_chinese TEXT;
 BEGIN
 	l_tournament_id := merge_tournament(p_ext_tournament_id, p_tournament_name, p_level, p_surface, p_indoor);
+	l_tournament_chinese := chinese_tournament(l_tournament_id);
 	UPDATE tournament_event
-	SET date = p_date, name = p_name, level = p_level::tournament_level, surface = p_surface::surface, indoor = p_indoor, draw_type = p_draw_type::draw_type, draw_size = p_draw_size, rank_points = p_rank_points
+	SET date = p_date, name = p_name, chinese_name = l_tournament_chinese, level = p_level::tournament_level, surface = p_surface::surface, indoor = p_indoor, draw_type = p_draw_type::draw_type, draw_size = p_draw_size, rank_points = p_rank_points
 	WHERE original_tournament_id = l_tournament_id AND season = p_season
 	RETURNING tournament_event_id INTO l_tournament_event_id;
 	IF l_tournament_event_id IS NULL THEN
 		INSERT INTO tournament_event
-		(tournament_id, original_tournament_id, season, date, name, level, surface, indoor, draw_type, draw_size, rank_points)
+		(tournament_id, original_tournament_id, season, date, name, chinese_name, level, surface, indoor, draw_type, draw_size, rank_points)
 		VALUES
-		(l_tournament_id, l_tournament_id, p_season, p_date, p_name, p_level::tournament_level, p_surface::surface, p_indoor, p_draw_type::draw_type, p_draw_size, p_rank_points)
+		(l_tournament_id, l_tournament_id, p_season, p_date, p_name, l_tournament_chinese, p_level::tournament_level, p_surface::surface, p_indoor, p_draw_type::draw_type, p_draw_size, p_rank_points)
 		RETURNING tournament_event_id INTO l_tournament_event_id;
 	END IF;
 	RETURN l_tournament_event_id;
@@ -548,17 +564,19 @@ CREATE OR REPLACE FUNCTION load_in_progress_event(
 DECLARE
 	l_tournament_id INTEGER;
 	l_in_progress_event_id INTEGER;
+	l_tournament_chinese TEXT;
 BEGIN
 	l_tournament_id := merge_tournament(p_ext_tournament_id, p_name, p_level, p_surface, p_indoor);
+	l_tournament_chinese := chinese_tournament(l_tournament_id);
 	UPDATE in_progress_event
-	SET date = p_date, name = p_name, level = p_level::tournament_level, surface = p_surface::surface, indoor = p_indoor, draw_type = p_draw_type::draw_type, draw_size = p_draw_size, completed = FALSE
+	SET date = p_date, name = p_name, chinese_name = l_tournament_chinese, level = p_level::tournament_level, surface = p_surface::surface, indoor = p_indoor, draw_type = p_draw_type::draw_type, draw_size = p_draw_size, completed = FALSE
 	WHERE tournament_id = l_tournament_id
 	RETURNING in_progress_event_id INTO l_in_progress_event_id;
 	IF l_in_progress_event_id IS NULL THEN
 		INSERT INTO in_progress_event
-		(tournament_id, date, name, level, surface, indoor, draw_type, draw_size)
+		(tournament_id, date, name, chinese_name, level, surface, indoor, draw_type, draw_size)
 		VALUES
-		(l_tournament_id, p_date, p_name, p_level::tournament_level, p_surface::surface, p_indoor, p_draw_type::draw_type, p_draw_size);
+		(l_tournament_id, p_date, p_name, l_tournament_chinese, p_level::tournament_level, p_surface::surface, p_indoor, p_draw_type::draw_type, p_draw_size);
 	END IF;
 END;
 $$ LANGUAGE plpgsql;

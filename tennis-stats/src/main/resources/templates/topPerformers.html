@@ -198,8 +198,8 @@
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="season" class="form-control" onchange="dateFilterChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Select career or filter by season">
-				<option value="">Career</option>
-				<option value="-1">Last 52 weeks</option>
+				<option value="">[[#{career}]]</option>
+				<option value="-1">[[#{last52weeks}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
 		</div>
@@ -331,13 +331,22 @@
 	<table id="topPerformersTable" class="table table-condensed table-hover table-striped">
 		<thead>
 		<tr>
-			<th data-column-id="rank" data-type="numeric" data-sortable="false" data-width="65">Rank</th>
-			<th data-column-id="country" data-formatter="country" data-sortable="false" data-width="85">Country</th>
-			<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="250">Name</th>
-			<th data-column-id="wonLostPct" data-order="desc" data-width="190" data-align="right" data-header-align="right">Pct.</th>
-			<th data-column-id="won" data-formatter="won" data-width="70" data-align="right" data-header-align="right">Won</th>
-			<th data-column-id="lost" data-formatter="lost" data-width="70" data-align="right" data-header-align="right">Lost</th>
-			<th data-column-id="played" data-formatter="played" data-width="75" data-align="right" data-header-align="right">Played</th>
+			<th data-column-id="rank" data-type="numeric" data-sortable="false" data-width="65">[[#{rank}]]</th>
+			<th data-column-id="country" data-formatter="country" data-sortable="false" data-width="85">[[#{country}]]
+			</th>
+			<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="250">[[#{name}]]</th>
+			<th data-column-id="wonLostPct" data-order="desc" data-width="190" data-align="right"
+				data-header-align="right">[[#{pct}]]
+			</th>
+			<th data-column-id="won" data-formatter="won" data-width="70" data-align="right" data-header-align="right">
+				[[#{won}]]
+			</th>
+			<th data-column-id="lost" data-formatter="lost" data-width="70" data-align="right"
+				data-header-align="right">[[#{lost}]]
+			</th>
+			<th data-column-id="played" data-formatter="played" data-width="75" data-align="right"
+				data-header-align="right">[[#{played}]]
+			</th>
 		</tr>
 		</thead>
 	</table>

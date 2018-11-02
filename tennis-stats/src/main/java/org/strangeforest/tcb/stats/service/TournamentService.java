@@ -178,7 +178,7 @@ public class TournamentService {
 		"ORDER BY name";
 
 	private static final String PLAYER_TOURNAMENT_EVENT_ITEMS_QUERY =
-		"SELECT tournament_event_id, t.name, e.season, e.level\n" +
+            "SELECT tournament_event_id, t.name, t.chinese_name, e.season, e.level\n" +
 		"FROM player_tournament_event_result r\n" +
 		"INNER JOIN tournament_event e USING (tournament_event_id)\n" +
 		"INNER JOIN tournament t USING (tournament_id)\n" +

@@ -26,7 +26,7 @@
 <!--/*@thymesVar id="infamous" type="java.lang.Boolean"*/-->
 <!--/*@thymesVar id="searchPhrase" type="java.lang.String"*/-->
 <!--/*@thymesVar id="params" type="org.strangeforest.tcb.stats.controller.ParamsUtil"*/-->
-<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh' ? ${player.chineseName} : ${player.name}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh' and ${player.chineseName} != null ? ${player.chineseName} : ${player.name}, true, ~{::template})">
 	<title>Player Profile</title>
 	<template>
 		<meta name="description"
@@ -101,7 +101,10 @@
 	<header th:include="fragments/header :: title"></header>
 	<h3>
 		<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/ch.png'" style="float: left; margin-top: 2px; margin-right: 8px" th:title="${player.country.id}" title="SUI" width="24" height="20"/>
-		<th:block th:text="__${#locale}__ == 'zh' ? ${player.chineseName} : ${player.name}">Roger Federer</th:block>
+		<th:block
+				th:text="__${#locale}__ == 'zh' and ${player.chineseName} != null ? ${player.chineseName} : ${player.name}">
+			Roger Federer
+		</th:block>
 		<a th:href="@{/playerProfile(name=${player.name})}" th:title="|Permalink to ${player.name} profile|"><h4
 				style="margin: 0" class="glyphicon glyphicon-link"></h4></a>
 	</h3>

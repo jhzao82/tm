@@ -43,7 +43,7 @@ public class RankingsService {
 		"ORDER BY rank_date DESC";
 
 	private static final String RANKING_TOP_N_QUERY = //language=SQL
-		"SELECT player_id, r.%1$s AS rank, p.last_name, p.country_id, r.%2$s AS points\n" +
+			"SELECT player_id, r.%1$s AS rank, p.last_name, p.chinese_name, p.country_id, r.%2$s AS points\n" +
 		"FROM %3$s r\n" +
 		"INNER JOIN player_v p USING (player_id)\n" +
 		"WHERE r.rank_date = :date\n" +
@@ -224,7 +224,7 @@ public class RankingsService {
 				int goatRank = rs.getInt("rank");
 				int playerId = rs.getInt("player_id");
 				String name = shortenName(rs.getString("last_name"));
-                String chineseName = shortenName(rs.getString("last_name"));
+				String chineseName = shortenChineseName(rs.getString("chinese_name"));
 				String countryId = getInternedString(rs, "country_id");
 				int goatPoints = rs.getInt("points");
                 return new PlayerRanking(goatRank, playerId, name, chineseName, countryId, null, goatPoints);

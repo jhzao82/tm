@@ -76,7 +76,8 @@
 					"final": finalFormatter,
 					"finalEx": finalExFormatter,
 					"winner": function(column, row) {
-						return row.winner.chineseName ? "<a href='" + language + "/playerProfile?playerId=" + row.winner.id + "' title='Show profile'><strong>" + row.winner.chineseName + "</strong></a>" : "";
+						if (row.winner != undefined)
+							return row.winner.chineseName ? "<a href='" + language + "/playerProfile?playerId=" + row.winner.id + "' title='Show profile'><strong>" + row.winner.chineseName + "</strong></a>" : "";
 					}
 				},
 				labels: {

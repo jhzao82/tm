@@ -3,7 +3,7 @@
 <!--/*@thymesVar id="tournament" type="org.strangeforest.tcb.stats.model.Tournament"*/-->
 <!--/*@thymesVar id="levels" type="java.util.Map"*/-->
 <!--/*@thymesVar id="surfaces" type="java.util.Map"*/-->
-<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh' ? ${tournament.chineseName} : ${tournament.name}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}, true, ~{::template})">
 	<template>
 	<meta name="description" th:content="${tournament.name} + ' at Ultimate Tennis Statistics'"/>
 	<script type="text/javascript">
@@ -62,7 +62,8 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3 th:text="${tournament.name}">Australian Open</h3>
+	<h3 th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}">
+		Australian Open</h3>
 	<div class="row">
 		<div class="col-md-6">
 			<table class="table table-condensed text-nowrap">

@@ -18,6 +18,16 @@ public abstract class NameUtil {
 		return sb.toString();
 	}
 
+	public static String shortenChineseName(String name) {
+		StringBuilder sb = new StringBuilder(name.length());
+		String[] words = name.split("·");
+		for (int i = 0; i < words.length; i++) {
+			if (i >= words.length - 1)
+				sb.append(words[i]);
+		}
+		return sb.toString();
+	}
+
 	private static void appendInitial(StringBuilder sb, String name) {
 		sb.append(toUpperCase(name.charAt(0)));
 		sb.append('.');

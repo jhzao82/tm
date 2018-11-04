@@ -21,6 +21,7 @@ import static java.util.stream.Collectors.*;
 import static org.strangeforest.tcb.stats.service.FilterUtil.*;
 import static org.strangeforest.tcb.stats.service.ParamsUtil.*;
 import static org.strangeforest.tcb.stats.service.ResultSetUtil.*;
+import static org.strangeforest.tcb.stats.util.NameUtil.shortenChineseName;
 
 @Service
 public class GOATListService {
@@ -31,7 +32,7 @@ public class GOATListService {
 	private static final List<List<String>> LEVEL_AREAS = asList(asList("G"), asList("F", "L"), asList("M"), asList("O"), asList("A", "B"), asList("D", "T"));
 
 	private static final String GOAT_TOP_N_QUERY = //language=SQL
-		"SELECT player_id, goat_rank, last_name, country_id, active, goat_points\n" +
+			"SELECT player_id, goat_rank, last_name, chinese_name, country_id, active, goat_points\n" +
 		"FROM player_v\n" +
 		"ORDER BY goat_rank, goat_points DESC, grand_slams DESC, tour_finals DESC, masters DESC, titles DESC, last_name LIMIT :playerCount";
 
@@ -132,7 +133,7 @@ public class GOATListService {
 				int goatRank = rs.getInt("goat_rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("last_name");
-                String chineseName = rs.getString("last_name");
+				String chineseName = shortenChineseName(rs.getString("chinese_name"));
 				String countryId = getInternedString(rs, "country_id");
 				boolean active = rs.getBoolean("active");
 				int goatPoints = rs.getInt("goat_points");

@@ -4,7 +4,7 @@
 <!--/*@thymesVar id="results" type="org.strangeforest.tcb.stats.model.TournamentEventResults"*/-->
 <!--/*@thymesVar id="levels" type="java.util.Map"*/-->
 <!--/*@thymesVar id="surfaces" type="java.util.Map"*/-->
-<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh' ? ${tournamentEvent.chineseName} + ' ' + ${tournamentEvent.season} : ${tournamentEvent.name} + ' ' + ${tournamentEvent.season}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(__${#locale}__ == 'zh' and ${tournamentEvent.chineseName} != null ? ${tournamentEvent.chineseName} + ' ' + ${tournamentEvent.season} : ${tournamentEvent.name} + ' ' + ${tournamentEvent.season}, true, ~{::template})">
 	<template>
 	<meta name="description" th:content="${tournamentEvent.name + ' ' + tournamentEvent.season} + ' at Ultimate Tennis Statistics'"/>
 	<script type="text/javascript">
@@ -34,7 +34,7 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3 th:text="__${#locale}__ == 'zh' ? ${tournamentEvent.chineseName} + ' ' + ${tournamentEvent.season} : ${tournamentEvent.name} + ' ' + ${tournamentEvent.season}">
+	<h3 th:text="__${#locale}__ == 'zh' and ${tournamentEvent.chineseName} != null ? ${tournamentEvent.chineseName} + ' ' + ${tournamentEvent.season} : ${tournamentEvent.name} + ' ' + ${tournamentEvent.season}">
 		Australian Open 2016</h3>
 	<div class="row" th:with="isTeam=${tournamentEvent.level == 'D' || tournamentEvent.level == 'T'}">
 		<div class="col-md-3">

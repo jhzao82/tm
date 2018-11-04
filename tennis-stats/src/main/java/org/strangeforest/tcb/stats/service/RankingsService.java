@@ -443,7 +443,7 @@ public class RankingsService {
 		return new TournamentEventItem(
 			tournamentEventId,
 			rs.getString("tournament"),
-				rs.getString("chinese_tournament"),
+                rs.getString("chinese_tournament"),
 			rs.getInt("season"),
 			getInternedString(rs, "level")
 		);

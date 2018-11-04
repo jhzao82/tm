@@ -191,14 +191,16 @@
 					value="H" class="bg-surface-H" th:text="#{'enum'+${surface}}">Hard
 			</option>
 			<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
-					th:text="#{'enum'+${surfaceGroup}}">Fast (H, G, Cp)
+                    th:text="#{'enumSurfaceGroup'+${surfaceGroup}}">Fast (H, G, Cp)
 			</option>
 		</select>
 	</div>
 	<div id="roundDiv" class="btn-group pull-left margin-right">
 		<select id="round" class="form-control" onchange="reloadGreatestMatches()" data-toggle="tooltip" data-placement="top" title="Filter by round">
-			<option value="">All rounds</option>
-			<option th:each="round : ${rounds}" th:value="${round.code}" th:class="|bg-result-${round.baseCode}|" value="F" class="bg-result-F" th:text="${round.text}">Final</option>
+            <option value="">[[#{allRounds}]]</option>
+            <option th:each="round : ${rounds}" th:value="${round.code}" th:class="|bg-result-${round.baseCode}|"
+                    value="F" class="bg-result-F" th:text="#{'enum'+${round}}">Final
+            </option>
 		</select>
 	</div>
 	<div id="clearDiv" class="btn-group margin-right">

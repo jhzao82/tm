@@ -107,7 +107,7 @@ public class SeasonsService {
 		"  FROM %2$s\n" +
 		"  WHERE season = :season AND %1$sgoat_points > 0%3$s\n" +
 		")\n" +
-		"SELECT g.rank, player_id, p.name, p.country_id, g.value\n" +
+                "SELECT g.rank, player_id, p.name, p.chinese_name, p.country_id, g.value\n" +
 		"FROM goat_points g\n" +
 		"INNER JOIN player_v p USING (player_id)\n" +
 		"WHERE g.rank <= :maxPlayers\n" +

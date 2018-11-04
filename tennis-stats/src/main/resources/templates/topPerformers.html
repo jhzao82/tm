@@ -222,7 +222,7 @@
                         th:text="#{'enum'+${surface}}">Hard
                 </option>
                 <option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
-                        th:text="#{'enum'+${surfaceGroup}}">Fast (H, G, Cp)
+                        th:text="#{'enumSurfaceGroup'+${surfaceGroup}}">Fast (H, G, Cp)
                 </option>
 			</select>
 		</div>

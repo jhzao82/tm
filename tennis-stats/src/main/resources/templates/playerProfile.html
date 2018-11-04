@@ -110,49 +110,49 @@
 	</h3>
 	<ul id="playerPills" class="nav nav-pills tab-param">
 		<li><a id="profilePill" data-toggle="pill" href="#profile"
-			   th:data-url="'/playerProfileTab?playerId=' + ${player.id}">[[#{profileTab.profile}]]</a></li>
-		<li><a id="seasonPill" data-toggle="pill" href="#season" th:data-url="'/playerSeason?playerId=' + ${player.id}">[[#{profileTab.season}]]</a>
+               th:data-url="'/playerProfileTab?playerId=' + ${player.id}">[[#{profileTabProfile}]]</a></li>
+        <li><a id="seasonPill" data-toggle="pill" href="#season" th:data-url="'/playerSeason?playerId=' + ${player.id}">[[#{profileTabSeason}]]</a>
 		</li>
-		<li><a id="eventsPill" data-toggle="pill" href="#events" th:data-url="'/playerEvents?playerId=' + ${player.id}">[[#{profileTab.events}]]</a>
+        <li><a id="eventsPill" data-toggle="pill" href="#events" th:data-url="'/playerEvents?playerId=' + ${player.id}">[[#{profileTabEvents}]]</a>
 		</li>
 		<li><a id="matchesPill" data-toggle="pill" href="#matches"
-			   th:data-url="'/playerMatches?playerId=' + ${player.id}">[[#{profileTab.matches}]]</a></li>
+               th:data-url="'/playerMatches?playerId=' + ${player.id}">[[#{profileTabMatches}]]</a></li>
 		<li><a id="timelinePill" data-toggle="pill" href="#timeline"
-			   th:data-url="'/playerTimeline?playerId=' + ${player.id}">[[#{profileTab.timeline}]]</a></li>
+               th:data-url="'/playerTimeline?playerId=' + ${player.id}">[[#{profileTabTimeline}]]</a></li>
 		<li><a id="rivalriesPill" data-toggle="pill" href="#rivalries"
-			   th:data-url="'/playerRivalries?playerId=' + ${player.id}">[[#{profileTab.rivalries}]]</a></li>
+               th:data-url="'/playerRivalries?playerId=' + ${player.id}">[[#{profileTabRivalries}]]</a></li>
 		<li><a id="rankingPill" data-toggle="pill" href="#ranking"
-			   th:data-url="'/playerRankings?playerId=' + ${player.id}">[[#{profileTab.ranking}]]</a></li>
+               th:data-url="'/playerRankings?playerId=' + ${player.id}">[[#{profileTabRanking}]]</a></li>
 		<li class="dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#">[[#{profileTab.performance}]]<span
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">[[#{profileTabPerformance}]]<span
 					class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><a id="performancePill" data-toggle="pill" href="#performance"
-					   th:data-url="'/playerPerformance?playerId=' + ${player.id}">[[#{profileTab.performance}]]</a>
+                       th:data-url="'/playerPerformance?playerId=' + ${player.id}">[[#{profileTabPerformance}]]</a>
 				</li>
 				<li><a id="performanceChartPill" data-toggle="pill" href="#performanceChart"
-					   th:data-url="'/playerPerformanceChart?playerId=' + ${player.id}">[[#{profileTab.performanceChart}]]</a>
+                       th:data-url="'/playerPerformanceChart?playerId=' + ${player.id}">[[#{profileTabPerformanceChart}]]</a>
 				</li>
 			</ul>
 		</li>
 		<li class="dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#">[[#{profileTab.statistics}]]<span
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">[[#{profileTabStatistics}]]<span
 					class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><a id="statisticsPill" data-toggle="pill" href="#statistics"
-					   th:data-url="'/playerStatsTab?playerId=' + ${player.id}">[[#{profileTab.statistics}]]</a></li>
+                       th:data-url="'/playerStatsTab?playerId=' + ${player.id}">[[#{profileTabStatistics}]]</a></li>
 				<li><a id="statisticsChartPill" data-toggle="pill" href="#statisticsChart"
-					   th:data-url="'/playerStatsChart?playerId=' + ${player.id}">[[#{profileTab.statisticsChart}]]</a>
+                       th:data-url="'/playerStatsChart?playerId=' + ${player.id}">[[#{profileTabStatisticsChart}]]</a>
 				</li>
 			</ul>
 		</li>
 		<li><a id="tournamentsPill" data-toggle="pill" href="#tournaments"
-			   th:data-url="'/playerTournaments?playerId=' + ${player.id}">[[#{profileTab.tournaments}]]</a></li>
+               th:data-url="'/playerTournaments?playerId=' + ${player.id}">[[#{profileTabTournaments}]]</a></li>
 		<li><a id="goatPointsPill" data-toggle="pill" href="#goatPoints"
-			   th:data-url="'/playerGOATPoints?playerId=' + ${player.id}" title="GOAT Points Breakdown">[[#{profileTab.goatPoints}]]</a>
+               th:data-url="'/playerGOATPoints?playerId=' + ${player.id}" title="GOAT Points Breakdown">[[#{profileTabGOATPoints}]]</a>
 		</li>
 		<li><a id="recordsPill" data-toggle="pill" href="#records"
-			   th:data-url="'/playerRecords?playerId=' + ${player.id}">[[#{profileTab.records}]]</a></li>
+               th:data-url="'/playerRecords?playerId=' + ${player.id}">[[#{profileTabRecords}]]</a></li>
 	</ul>
 	<div class="tab-content">
 		<div id="profile" class="tab-pane fade"><div class="loading"></div></div>

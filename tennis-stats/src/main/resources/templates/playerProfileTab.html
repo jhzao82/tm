@@ -33,68 +33,68 @@
 		<table class="table table-condensed text-nowrap">
 			<!--/* General */-->
 			<tr th:if="${player.dob}">
-				<th>[[#{profile.age}]]</th>
+                <th>[[#{age}]]</th>
 				<td th:text="|${player.age} (${#temporals.format(player.dob, 'dd-MM-yyyy')})|">25 (1-1-1990)</td>
 			</tr>
 			<tr>
-				<th>[[#{profile.country}]]</th>
+                <th>[[#{country}]]</th>
 				<td><img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/us.png"
 						 th:title="${player.country.id}" title="USA" width="24" height="20"/> <span
 						th:text="__${#locale}__ == 'zh' ? ${player.country.chineseName} : ${player.country.name}">United States</span>
 				</td>
 			</tr>
 			<tr th:if="${player.birthplace}">
-				<th>[[#{profile.birthplace}]]</th>
+                <th>[[#{birthplace}]]</th>
 				<td th:text="${player.birthplace}">New York</td>
 			</tr>
 			<tr th:if="${player.residence}">
-				<th>[[#{profile.residence}]]</th>
+                <th>[[#{residence}]]</th>
 				<td th:text="${player.residence}">New York</td>
 			</tr>
 			<tr th:if="${player.height > 0}">
-				<th>[[#{profile.height}]]</th>
+                <th>[[#{height}]]</th>
 				<td th:text="|${player.height} cm|">180 cm</td>
 			</tr>
 			<tr th:if="${player.weight > 0}">
-				<th>[[#{profile.weight}]]</th>
+                <th>[[#{weight}]]</th>
 				<td th:text="|${player.weight} kg|">80 kg</td>
 			</tr>
 			<!--/* Tennis */-->
 			<tr th:if="${player.hand}">
-				<th>[[#{profile.plays}]]</th>
+                <th>[[#{plays}]]</th>
 				<td th:text="${player.handName}">Right-handed</td>
 			</tr>
 			<tr th:if="${player.backhand}">
-				<th>[[#{profile.backhand}]]</th>
+                <th>[[#{backhand}]]</th>
 				<td th:text="${player.backhandName}">Two-handed</td>
 			</tr>
 			<tr th:if="${!favoriteSurface.empty}">
-				<th>[[#{profile.favoriteSurface}]]</th>
+                <th>[[#{favoriteSurface}]]</th>
 				<td><span id="favoriteSurface" class="label" th:data-surface="${favoriteSurface.code != null ? favoriteSurface.code : _}"><span th:text="${favoriteSurface}" th:title="${favoriteSurface.surfaceGroup != null ? favoriteSurface.surfaceGroup.surfacesText : _}">Hard</span> <span th:text="${#numbers.formatDecimal(favoriteSurface.specialization, 0, 0)} + '%'" title="Surface specialization rating">25%</span></span></td>
 			</tr>
 			<tr th:if="${player.coach}">
-				<th>[[#{profile.coach}]]</th>
+                <th>[[#{coach}]]</th>
 				<td th:text="${player.coach}">Brad Gilbert</td>
 			</tr>
 			<tr th:if="${player.turnedPro > 0}">
-				<th>[[#{profile.turnedPro}]]</th>
+                <th>[[#{turnedPro}]]</th>
 				<td th:text="${player.turnedPro}">2005</td>
 			</tr>
 			<tr th:if="${seasonCount > 0}">
-				<th>[[#{profile.seasons}]]</th>
+                <th>[[#{seasons}]]</th>
 				<td><a th:href="@{/playerProfile(playerId=${player.id}, tab=timeline)}" th:text="${seasonCount}" title="Show timeline">10</a></td>
 			</tr>
 			<tr th:if="${player.active}">
-				<th>[[#{profile.active}]]</th>
-				<td>[[#{profile.yes}]] <img th:if="${player.active}" src="/images/active.png" title="Active" width="12"
+                <th>[[#{active}]]</th>
+                <td>[[#{yes}]] <img th:if="${player.active}" src="/images/active.png" title="Active" width="12"
 											height="12" style="vertical-align: 0"/></td>
 			</tr>
 			<tr th:if="${!player.active && lastEvent != null}">
-				<th>[[#{profile.retired}]]</th>
+                <th>[[#{retired}]]</th>
 				<td th:text="${lastEvent.season}">2010</td>
 			</tr>
 			<tr th:if="${player.prizeMoney}">
-				<th>[[#{profile.prizeMoney}]]</th>
+                <th>[[#{prizeMoney}]]</th>
                 <td th:text="${player.prizeMoney}" style="white-space: normal !important">US$ 1,000,000</td>
 			</tr>
 			<!--/* Social */-->
@@ -103,7 +103,7 @@
 				<td><img src="/images/glyphicons-social-wikipedia-small.png" width="16" height="16"/> <a th:href="${player.wikipedia != null ? player.wikipedia : '/playerWikipediaUrl?playerId=' + player.id}" href="https://en.wikipedia.org/wiki/Roger_Federer" target="_blank" class="external">Wikipedia</a></td>
 			</tr>
 			<tr th:if="${player.webSite}">
-				<th>[[#{profile.website}]]</th>
+                <th>[[#{website}]]</th>
 				<td><a th:href="'http://' + ${player.webSite}" href="http://www.johnsmith.com" target="_blank" class="external">[(${player.webSite})]</a></td>
 			</tr>
 			<tr th:if="${player.facebook}">
@@ -115,7 +115,7 @@
 				<td><img src="/images/glyphicons-social-twitter-small.png" width="16" height="16"/> <a th:href="'https://twitter.com/' + ${player.twitter}" href="https://twitter.com/JohnSmith" target="_blank" class="external" th:text="'@'+ ${player.twitter}">@JohnSmith</a></td>
 			</tr>
 			<tr th:if="${player.nicknames}">
-				<th>[[#{profile.nicknames}]]</th>
+                <th>[[#{nicknames}]]</th>
 				<td th:text="${player.nicknames}">Maestro</td>
 			</tr>
 		</table>
@@ -125,7 +125,7 @@
 		<table class="table table-condensed text-nowrap">
 			<!--/* Titles */-->
 			<tr th:if="${player.titles > 0}">
-				<th>[[#{profile.titles}]]</th>
+                <th>[[#{titles}]]</th>
 				<td width="100%"><a class="label label-default player-title" th:text="${player.titles}" th:href="@{/playerProfile(playerId=${player.id}, tab=events, result=W)}" title="Show titles">10</a> <i class="fa fa-trophy fa-b"></i></td>
 			</tr>
 			<tr th:if="${player.grandSlams > 0}">
@@ -151,41 +151,41 @@
 			<tr th:if="${player.titles > 0}"><td colspan="2">&nbsp;</td></tr>
 			<!--/* Ranking */-->
 			<tr th:if="${player.currentRank > 0}">
-				<th>[[#{profile.currentRank}]]</th>
+                <th>[[#{currentRank}]]</th>
 				<td th:text="${player.currentRank + ' (' + player.currentRankPoints + ')'}">10 (3000)</td>
 			</tr>
 			<tr th:if="${player.bestRank > 0}">
-				<th>[[#{profile.bestRank}]]</th>
+                <th>[[#{bestRank}]]</th>
 				<td>[(${player.bestRank})] (<a th:href="@{/rankingsTable(rankType=RANK, date=${#temporals.format(player.bestRankDate, 'dd-MM-yyyy')})}" th:text="${#temporals.format(player.bestRankDate, 'dd-MM-yyyy')}">01-01-2010</a>)</td>
 			</tr>
 			<tr th:if="${player.currentEloRank > 0}">
-				<th>[[#{profile.currentEloRank}]]</th>
+                <th>[[#{currentEloRank}]]</th>
 				<td th:text="${player.currentEloRank + ' (' + player.currentEloRating + ')'}">10 (2100)</td>
 			</tr>
 			<tr th:if="${player.bestEloRank > 0}">
-				<th>[[#{profile.bestEloRank}]]</th>
+                <th>[[#{bestEloRank}]]</th>
 				<td>[(${player.bestEloRank})] (<a th:href="@{/rankingsTable(rankType=ELO_RANK, date=${#temporals.format(player.bestEloRankDate, 'dd-MM-yyyy')})}" th:text="${#temporals.format(player.bestEloRankDate, 'dd-MM-yyyy')}">01-01-2010</a>)</td>
 			</tr>
 			<tr th:if="${player.bestEloRating > 0}">
-				<th>[[#{profile.peakEloRating}]]</th>
+                <th>[[#{peakEloRating}]]</th>
 				<td>[(${player.bestEloRating})] (<a th:href="@{/rankingsTable(rankType=ELO_RANK, date=${#temporals.format(player.bestEloRatingDate, 'dd-MM-yyyy')})}" th:text="${#temporals.format(player.bestEloRatingDate, 'dd-MM-yyyy')}">01-01-2010</a>)</td>
 			</tr>
 			<tr th:if="${player.goatPoints > 0}">
-				<th>[[#{profile.goatRank}]]</th>
+                <th>[[#{goatRank}]]</th>
 				<td>[(${player.goatRank})] (<a th:href="@{/playerProfile(playerId=${player.id}, tab=goatPoints)}" th:text="${player.goatPoints}" title="Show GOAT points distribution">25</a>)</td>
 			</tr>
 			<tr th:if="${player.weeksAtNo1 > 0}">
-				<th>[[#{profile.weeksAtNo1}]]</th>
+                <th>[[#{weeksAtNo1}]]</th>
 				<td th:text="${player.weeksAtNo1}">50</td>
 			</tr>
 			<tr th:if="${bestSeason != null || lastEvent != null}"><td colspan="2">&nbsp;</td></tr>
 			<tr th:if="${bestSeason}">
-				<th>[[#{profile.bestSeason}]]</th>
+                <th>[[#{bestSeason}]]</th>
 				<td><a th:href="@{/playerProfile(playerId=${player.id}, tab=season, season=${bestSeason})}" title="Show season highlights" th:text="${bestSeason}">2015</a></td>
 			</tr>
 			<th:block th:if="${lastEvent}">
 			<tr>
-				<th>[[#{profile.lastAppearance}]]</th>
+                <th>[[#{lastAppearance}]]</th>
 				<td th:text="${#temporals.format(lastEvent.date, 'dd-MM-yyyy')}">15-07-2015</td>
 			</tr>
 			<tr>
@@ -314,7 +314,7 @@
 		</table>
 		</th:block>
 		<div class="input-group">
-			<label for="h2hPlayer" class="input-group-addon">[[#{profile.h2hWith}]]:</label>
+            <label for="h2hPlayer" class="input-group-addon">[[#{h2hWith}]]:</label>
 			<input id="h2hPlayer" type="text" class="ui-widget search-field form-control" size="30"
 				   th:placeholder="#{searchPlayer}"/>
 		</div>

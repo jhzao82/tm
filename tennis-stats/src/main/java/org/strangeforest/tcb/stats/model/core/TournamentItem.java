@@ -8,11 +8,13 @@ public class TournamentItem implements Comparable<TournamentItem> {
 
 	private final int id;
 	private final String name;
+	private final String chineseName;
 	private final String level;
 
-	public TournamentItem(int id, String name, String level) {
+	public TournamentItem(int id, String name, String chineseName, String level) {
 		this.id = id;
 		this.name = name;
+		this.chineseName = chineseName;
 		this.level = level;
 	}
 
@@ -22,6 +24,10 @@ public class TournamentItem implements Comparable<TournamentItem> {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getChineseName() {
+		return chineseName;
 	}
 
 	public String getLevel() {

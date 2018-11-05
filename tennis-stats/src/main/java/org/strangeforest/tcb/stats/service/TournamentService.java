@@ -170,7 +170,7 @@ public class TournamentService {
 		"WHERE tournament_event_id = :tournamentEventId";
 
 	private static final String PLAYER_TOURNAMENT_ITEMS_QUERY =
-		"SELECT DISTINCT tournament_id, t.name, t.level\n" +
+			"SELECT DISTINCT tournament_id, t.name, t.chinese_name, t.level\n" +
 		"FROM player_tournament_event_result r\n" +
 		"INNER JOIN tournament_event e USING (tournament_event_id)\n" +
 		"INNER JOIN tournament t USING (tournament_id)\n" +
@@ -640,8 +640,9 @@ public class TournamentService {
 	private TournamentItem tournamentItemMapper(ResultSet rs, int rowNum) throws SQLException {
 		int tournamentId = rs.getInt("tournament_id");
 		String name = rs.getString("name");
+		String chineseName = rs.getString("chinese_name");
 		String level = getInternedString(rs, "level");
-		return new TournamentItem(tournamentId, name, level);
+		return new TournamentItem(tournamentId, name, chineseName, level);
 	}
 
 	private TournamentEventItem tournamentEventItemMapper(ResultSet rs, int rowNum) throws SQLException {

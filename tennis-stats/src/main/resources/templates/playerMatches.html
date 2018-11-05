@@ -328,8 +328,11 @@
 		</div>
 		<div class="col-md-2">
 			<select id="matchesResult" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by tournament result">
-				<option value="">All results</option>
-				<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}" th:selected="${aResult.code == result}">Win</option>
+				<option value="">[[#{allResults}]]</option>
+				<option th:each="aResult : ${results}" th:value="${aResult.code}"
+						th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W"
+						th:text="#{'enum'+${aResult}}" th:selected="${aResult.code == result}">Win
+				</option>
 			</select>
 		</div>
 		<div class="col-md-3">
@@ -442,20 +445,25 @@
 </div>
 <div id="matchesTournamentDiv" class="btn-group pull-left margin-right no-margin-left" style="width: 210px">
 	<select id="matchesTournament" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-		<option value="">All tournaments</option>
-        <optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam"
+		<option value="">[[#{allTournaments}]]</option>
+		<optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
                   th:class="'bg-level-' + ${lts.key.code}">
             <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                    th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}"
-                    th:selected="${tournament.id == tournamentId}">Wimbledon
+					th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+					th:class="'bg-level-' + ${tournament.level}"
+					th:selected="${tournament.id == tournamentId}">Wimbledon
             </option>
         </optgroup>
 	</select>
 </div>
 <div id="matchesTournamentEventDiv" class="btn-group pull-left margin-right" style="width: 240px">
 	<select id="matchesTournamentEvent" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by tournament event">
-		<option value="">All events</option>
-		<option th:each="tournamentEvent : ${tournamentEvents}" th:value="${tournamentEvent.id}" value="1001" th:text="|${tournamentEvent.name} ${tournamentEvent.season}|" th:class="'bg-level-' + ${tournamentEvent.level}" th:selected="${tournamentEvent.id == tournamentEventId}">Wimbledon 2008</option>
+		<option value="">[[#{allEvents}]]</option>
+		<option th:each="tournamentEvent : ${tournamentEvents}" th:value="${tournamentEvent.id}" value="1001"
+				th:text="__${#locale}__ == 'zh' and ${tournamentEvent.chineseName} != null ? |${tournamentEvent.chineseName}  ${tournamentEvent.season}| : |${tournamentEvent.name}  ${tournamentEvent.season}|"
+				th:class="'bg-level-' + ${tournamentEvent.level}"
+				th:selected="${tournamentEvent.id == tournamentEventId}">Wimbledon 2008
+		</option>
 	</select>
 </div>
 <div id="matchesOutcomeDiv" class="btn-group pull-left margin-right">

@@ -209,9 +209,10 @@
     <div class="col-md-2">
         <select id="tournamentsResult" class="form-control" onchange="reloadTournaments()" data-toggle="tooltip"
                 data-placement="top" title="Filter by result">
-            <option value="">All results</option>
+			<option value="">[[#{allResults}]]</option>
             <option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|"
-                    value="W" class="bg-result-W" th:text="${aResult.text}" th:selected="${aResult.code == result}">Win
+					value="W" class="bg-result-W" th:text="#{'enum'+${aResult}}"
+					th:selected="${aResult.code == result}">Win
             </option>
         </select>
     </div>

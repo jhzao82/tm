@@ -42,7 +42,7 @@ public class TournamentLevelTimeline {
 	}
 
 	private void addSeasonTournament(TournamentLevelTimelineItem item) {
-		TournamentItem tournamentItem = new TournamentItem(item.getTournamentId(), item.getName(), item.getLevel());
+		TournamentItem tournamentItem = new TournamentItem(item.getTournamentId(), item.getName(), item.getName(), item.getLevel());
 		seasonsTournaments.computeIfAbsent(item.getSeason(), s -> new ArrayList<>()).add(tournamentItem);
 	}
 

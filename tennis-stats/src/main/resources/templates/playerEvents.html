@@ -246,14 +246,17 @@
 	</div>
 	<div class="col-md-2">
 		<select id="eventsResult" class="form-control" onchange="reloadEvents()" data-toggle="tooltip" data-placement="top" title="Filter by result">
-			<option value="">All results</option>
-			<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}" th:selected="${aResult.code == result}">Win</option>
+			<option value="">[[#{allResults}]]</option>
+			<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|"
+					value="W" class="bg-result-W" th:text="#{'enum'+${aResult}}"
+					th:selected="${aResult.code == result}">Win
+			</option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<div data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#eventsAdvancedFilter">
-				<i class="fa fa-folder-open"></i>&nbsp;&nbsp;Adv.&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+				<i class="fa fa-folder-open"></i>&nbsp;&nbsp;[[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
 			</button>
 		</div>
 	</div>
@@ -263,10 +266,10 @@
         <div class="row margin-top">
             <div class="col-md-4">
                 <div id="eventsDateRange" class="input-group">
-                    <label for="eventsFromDate" class="input-group-addon">From:</label>
+					<label for="eventsFromDate" class="input-group-addon">[[#{from}]]:</label>
                     <input id="eventsFromDate" type="text" maxlength="10" class="form-control"
                            th:value="${#temporals.format(fromDate, 'dd-MM-yyyy')}" onchange="reloadEvents()"/>
-                    <label for="eventsToDate" class="input-group-addon">To:</label>
+					<label for="eventsToDate" class="input-group-addon">[[#{to}]]:</label>
                     <input id="eventsToDate" type="text" maxlength="10" class="form-control"
                            th:value="${#temporals.format(toDate, 'dd-MM-yyyy')}" onchange="reloadEvents()"/>
                 </div>
@@ -274,10 +277,10 @@
             <div class="col-md-2">
                 <select id="eventsSpeed" class="form-control" onchange="reloadEvents()" data-toggle="tooltip"
                         data-placement="top" title="Filter by court speed">
-                    <option value="">All speeds</option>
+					<option value="">[[#{allSpeeds}]]</option>
                     <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                            style="color: white" value="50" class="points-50" th:text="${aSpeed.text}"
-                            th:selected="${aSpeed.speed == speed}">Medium
+							style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}"
+							th:selected="${aSpeed.speed == speed}">Medium
                     </option>
                 </select>
             </div>
@@ -300,10 +303,10 @@
                     <label id="eventsStatsCategoryLabel" for="eventsStatsCategory" class="input-group-addon"
                            style="width: 75px" data-toggle="tooltip" data-placement="top"
                            title="Statistics category value for the selected filter"></label>
-                    <label for="eventsStatsFrom" class="input-group-addon">From:</label>
+					<label for="eventsStatsFrom" class="input-group-addon">[[#{from}]]:</label>
                     <input id="eventsStatsFrom" type="text" maxlength="6" class="form-control"
                            oninput="eventsStatsFilterChanged()" onchange="eventsStatsFilterChanged()"/>
-                    <label id="eventsStatsRange" for="eventsStatsTo" class="input-group-addon">To:</label>
+					<label id="eventsStatsRange" for="eventsStatsTo" class="input-group-addon">[[#{to}]]:</label>
                     <input id="eventsStatsTo" type="text" maxlength="6" class="form-control"
                            oninput="eventsStatsFilterChanged()" onchange="eventsStatsFilterChanged()"/>
                 </div>
@@ -312,36 +315,37 @@
 </div>
 <div id="eventsTournamentDiv" class="btn-group pull-left margin-right no-margin-left" style="width: 210px">
 	<select id="eventsTournament" class="form-control" onchange="reloadEvents()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-		<option value="">All tournaments</option>
+		<option value="">[[#{allTournaments}]]</option>
         <optgroup th:each="lts : ${tournaments}" th:if="${lts.key.code != 'D' && lts.key.code != 'T'}"
-                  th:label="${lts.key.text}" label="Grand Slam" th:class="'bg-level-' + ${lts.key.code}">
+				  th:label="#{'enum'+${lts.key}}" label="Grand Slam" th:class="'bg-level-' + ${lts.key.code}">
             <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                    th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}"
-                    th:selected="${tournament.id == tournamentId}">Wimbledon
+					th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+					th:class="'bg-level-' + ${tournament.level}"
+					th:selected="${tournament.id == tournamentId}">Wimbledon
             </option>
         </optgroup>
 	</select>
 </div>
 <button id="eventsMatches" type="button" class="btn btn-info grid-control margin-right" onclick="showEventsMatches()" data-toggle="tooltip" data-placement="top" th:title="|${playerName} Matches (for the selected tournament events)|">
-	<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Matches
+	<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;[[#{matches}]]
 </button>
 <button id="eventsStats" type="button" class="btn btn-info grid-control margin-right" onclick="showEventsStats(event)" data-toggle="tooltip" data-placement="top" th:title="|${playerName} Statistics (for the selected tournament events)|">
-	<span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Stats
+	<span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;[[#{stats}]]
 </button>
 <button id="eventsClear" type="button" class="btn btn-default grid-control margin-right" onclick="clearEventsFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-	<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+	<i class="fa fa-eraser"></i>&nbsp;&nbsp;[[#{clear}]]
 </button>
 <table id="eventsTable" class="table table-condensed table-hover table-striped">
 	<thead>
 	<tr>
-		<th data-column-id="season" data-type="numeric" data-width="80">Season</th>
-		<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">Date</th>
-		<th data-column-id="name" data-formatter="tournament" data-width="200">Tournament</th>
-		<th data-column-id="surface" data-formatter="surface" data-width="80">Surface</th>
+		<th data-column-id="season" data-type="numeric" data-width="80">[[#{season}]]</th>
+		<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">[[#{date}]]</th>
+		<th data-column-id="name" data-formatter="tournament" data-width="200">[[#{tournament}]]</th>
+		<th data-column-id="surface" data-formatter="surface" data-width="80">[[#{surface}]]</th>
         <th data-column-id="speed" data-formatter="speed" data-width="70" data-align="center"
-            data-header-align="center">Speed
+			data-header-align="center">[[#{speed}]]
         </th>
-		<th data-column-id="draw" data-width="65">Draw</th>
+		<th data-column-id="draw" data-width="65">[[#{draw}]]</th>
 		<th data-column-id="participation" data-formatter="participation" data-width="60" data-align="right" data-header-align="right">Part.</th>
 		<th data-column-id="strength" data-type="numeric" data-width="50" data-align="right" data-header-align="right">Str.</th>
 		<th data-column-id="averageEloRating" data-type="numeric" data-width="50" data-align="right" data-header-align="right">Elo</th>

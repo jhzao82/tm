@@ -36,6 +36,12 @@ public class Country {
 		return code != null ? code.getName() : UNKNOWN_NAME;
 	}
 
+	public String getChineseName() {
+		CountryCode code = code(countryId);
+		Locale locale = code.toLocale();
+		String name = locale.getDisplayCountry(Locale.CHINESE);
+		return code != null ? name : UNKNOWN_NAME;
+	}
 
 	// Object methods
 

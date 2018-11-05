@@ -81,8 +81,8 @@
 		<th colspan="2" style="text-align: right"><button th:id="'roundRight' + ${id}" type="button" class="btn btn-info btn-xs" onclick="roundRight()"></button></th>
 	</tr>
 	<tr>
-		<th th:each="round : ${results.rounds}" th:text="#{'round'+${roundStat.index}}"
-			th:data-round-index="${roundStat.index}">Final
+		<th th:each="round : ${results.rounds}" th:text="#{'enum'+${round}}" th:data-round-index="${roundStat.index}">
+			Final
 		</th>
 	</tr>
 	</thead>

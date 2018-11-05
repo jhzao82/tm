@@ -38,7 +38,10 @@
 			</tr>
 			<tr>
 				<th>[[#{profile.country}]]</th>
-				<td><img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/us.png" th:title="${player.country.id}" title="USA" width="24" height="20"/> <span th:text="${player.country.name}">United States</span></td>
+				<td><img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/us.png"
+						 th:title="${player.country.id}" title="USA" width="24" height="20"/> <span
+						th:text="__${#locale}__ == 'zh' ? ${player.country.chineseName} : ${player.country.name}">United States</span>
+				</td>
 			</tr>
 			<tr th:if="${player.birthplace}">
 				<th>[[#{profile.birthplace}]]</th>

@@ -103,8 +103,10 @@
 				}
 			},
 			labels: {
+				search: "[[#{search}]]",
+				infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
 				loading: bootgridTemplateLoading,
-				noResults: "No matches found"
+				noResults: "[[#{nomatchesFound}]]"
 			},
 			templates: {
 				paginationItem: bootgridTemplatePaginationItem
@@ -313,17 +315,17 @@
 	<div class="row margin-top">
 		<div class="col-md-4">
 			<div id="matchesDateRange" class="input-group">
-				<label for="matchesFromDate" class="input-group-addon">From:</label>
+				<label for="matchesFromDate" class="input-group-addon">[[#{from}]]:</label>
 				<input id="matchesFromDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(fromDate, 'dd-MM-yyyy')}" onchange="reloadMatches()"/>
-				<label for="matchesToDate" class="input-group-addon">To:</label>
+				<label for="matchesToDate" class="input-group-addon">[[#{to}]]:</label>
 				<input id="matchesToDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(toDate, 'dd-MM-yyyy')}" onchange="reloadMatches()"/>
 			</div>
 		</div>
 		<div class="col-md-2">
 			<select id="matchesIndoor" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-				<option value="">Outdoor / Indoor</option>
-				<option value="false" th:selected="${indoor == false}">Outdoor</option>
-				<option value="true" th:selected="${indoor}">Indoor</option>
+				<option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+				<option value="false" th:selected="${indoor == false}">[[#{outdoor}]]</option>
+				<option value="true" th:selected="${indoor}">[[#{indoor}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
@@ -398,10 +400,10 @@
         <div class="col-md-2">
             <select id="matchesSpeed" class="form-control" onchange="reloadMatches()" data-toggle="tooltip"
                     data-placement="top" title="Filter by court speed">
-                <option value="">All speeds</option>
+				<option value="">[[#{allSpeeds}]]</option>
                 <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                        style="color: white" value="50" class="points-50" th:text="${aSpeed.text}"
-                        th:selected="${aSpeed.speed == speed}">Medium
+						style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}"
+						th:selected="${aSpeed.speed == speed}">Medium
                 </option>
             </select>
         </div>
@@ -433,10 +435,10 @@
                     <label id="matchesStatsCategoryLabel" for="matchesStatsCategory" class="input-group-addon"
                            style="width: 75px" data-toggle="tooltip" data-placement="top"
                            title="Statistics category value for the selected filter"></label>
-                    <label for="matchesStatsFrom" class="input-group-addon">From:</label>
+					<label for="matchesStatsFrom" class="input-group-addon">[[#{from}]]:</label>
                     <input id="matchesStatsFrom" type="text" maxlength="6" class="form-control"
                            oninput="matchesStatsFilterChanged()" onchange="matchesStatsFilterChanged()"/>
-                    <label id="matchesStatsRange" for="matchesStatsTo" class="input-group-addon">To:</label>
+					<label id="matchesStatsRange" for="matchesStatsTo" class="input-group-addon">[[#{to}]]:</label>
                     <input id="matchesStatsTo" type="text" maxlength="6" class="form-control"
                            oninput="matchesStatsFilterChanged()" onchange="matchesStatsFilterChanged()"/>
                 </div>
@@ -468,29 +470,39 @@
 </div>
 <div id="matchesOutcomeDiv" class="btn-group pull-left margin-right">
 	<select id="matchesOutcome" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by outcome">
-		<option value="">All matches</option>
-		<option value="won" th:selected="${outcome == 'won'}" class="option-won">Won</option>
-		<option value="lost" th:selected="${outcome == 'lost'}" class="option-lost">Lost</option>
-		<option value="played" th:selected="${outcome == 'played'}">Played</option>
-		<option value="wonplayed" th:selected="${outcome == 'wonplayed'}" class="option-won">Played & won</option>
-		<option value="lostplayed" th:selected="${outcome == 'lostplayed'}" class="option-lost">Played & lost</option>
-		<option value="finished" th:selected="${outcome == 'finished'}">Finished</option>
-		<option value="wonfinished" th:selected="${outcome == 'wonfinished'}" class="option-won">Finished & won</option>
-		<option value="lostfinished" th:selected="${outcome == 'lostfinished'}" class="option-lost">Finished & lost</option>
-		<option value="notFinished" th:selected="${outcome == 'notFinished'}">Not finished</option>
-		<option value="wonnotFinished" th:selected="${outcome == 'wonnotFinished'}" class="option-won">Not finished & won</option>
-		<option value="lostnotFinished" th:selected="${outcome == 'lostnotFinished'}" class="option-lost">Not finished & lost</option>
-		<option value="RET" th:selected="${outcome == 'RET'}">Retirement</option>
-		<option value="wonRET" th:selected="${outcome == 'wonRET'}" class="option-won">Won by retirement</option>
-		<option value="lostRET" th:selected="${outcome == 'lostRET'}" class="option-lost">Lost by retirement</option>
-		<option value="W/O" th:selected="${outcome == 'W/O'}">Walkover</option>
-		<option value="wonW/O" th:selected="${outcome == 'wonW/O'}" class="option-won">Won by walkover</option>
-		<option value="lostW/O" th:selected="${outcome == 'lostW/O'}" class="option-lost">Lost by walkover</option>
-		<option value="DEF" th:selected="${outcome == 'DEF'}">Defaulting</option>
-		<option value="wonDEF" th:selected="${outcome == 'wonDEF'}" class="option-won">Won by defaulting</option>
-		<option value="lostDEF" th:selected="${outcome == 'lostDEF'}" class="option-lost">Lost by defaulting</option>
-		<option value="ABD" th:selected="${outcome == 'ABD'}" class="option-abd">Abandoned</option>
-		<option value="notPlayed" th:selected="${outcome == 'notPlayed'}">Not played</option>
+		<option value="">[[#{allMatches}]]</option>
+		<option value="won" th:selected="${outcome == 'won'}" class="option-won">[[#{won}]]</option>
+		<option value="lost" th:selected="${outcome == 'lost'}" class="option-lost">[[#{lost}]]</option>
+		<option value="played" th:selected="${outcome == 'played'}">[[#{played}]]</option>
+		<option value="wonplayed" th:selected="${outcome == 'wonplayed'}" class="option-won">[[#{playedWon}]]</option>
+		<option value="lostplayed" th:selected="${outcome == 'lostplayed'}" class="option-lost">[[#{playedLost}]]
+		</option>
+		<option value="finished" th:selected="${outcome == 'finished'}">[[#{finished}]]</option>
+		<option value="wonfinished" th:selected="${outcome == 'wonfinished'}" class="option-won">[[#{finishedWon}]]
+		</option>
+		<option value="lostfinished" th:selected="${outcome == 'lostfinished'}" class="option-lost">
+			[[#{finishedLost}]]
+		</option>
+		<option value="notFinished" th:selected="${outcome == 'notFinished'}">[[#{notFinished}]]</option>
+		<option value="wonnotFinished" th:selected="${outcome == 'wonnotFinished'}" class="option-won">
+			[[#{notFinishedWon}]]
+		</option>
+		<option value="lostnotFinished" th:selected="${outcome == 'lostnotFinished'}" class="option-lost">
+			[[#{notFinishedLost}]]
+		</option>
+		<option value="RET" th:selected="${outcome == 'RET'}">[[#{retirement}]]</option>
+		<option value="wonRET" th:selected="${outcome == 'wonRET'}" class="option-won">[[#{wonByRetirement}]]</option>
+		<option value="lostRET" th:selected="${outcome == 'lostRET'}" class="option-lost">[[#{lostByRetirement}]]
+		</option>
+		<option value="W/O" th:selected="${outcome == 'W/O'}">[[#{walkover}]]</option>
+		<option value="wonW/O" th:selected="${outcome == 'wonW/O'}" class="option-won">[[#{wonByWalkover}]]</option>
+		<option value="lostW/O" th:selected="${outcome == 'lostW/O'}" class="option-lost">[[#{lostByWalkover}]]</option>
+		<option value="DEF" th:selected="${outcome == 'DEF'}">[[#{defaulting}]]</option>
+		<option value="wonDEF" th:selected="${outcome == 'wonDEF'}" class="option-won">[[#{wonByDefaulting}]]</option>
+		<option value="lostDEF" th:selected="${outcome == 'lostDEF'}" class="option-lost">[[#{lostByDefaulting}]]
+		</option>
+		<option value="ABD" th:selected="${outcome == 'ABD'}" class="option-abd">[[#{abandoned}]]</option>
+		<option value="notPlayed" th:selected="${outcome == 'notPlayed'}">[[#{notPlayed}]]</option>
 	</select>
 </div>
 <button id="matchesStats" type="button" class="btn btn-info grid-control margin-right" onclick="showMatchesStats(event)" data-toggle="tooltip" data-placement="top" th:title="|${playerName} Statistics (for the selected matches)|">

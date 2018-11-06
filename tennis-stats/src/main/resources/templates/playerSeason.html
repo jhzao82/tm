@@ -36,31 +36,43 @@
 <div class="row">
 	<div class="col-md-3">
 		<div class="input-group">
-			<label for="seasonSeason" class="input-group-addon">Season:</label>
+            <label for="seasonSeason" class="input-group-addon">[[#{season}]]:</label>
 			<select id="seasonSeason" class="form-control" onchange="seasonChanged()" data-toggle="tooltip" data-placement="top" title="Select season">
 				<option th:each="aSeason : ${seasons}" th:value="${aSeason}" value="2015" th:text="${aSeason}" th:selected="${aSeason == season}">2015</option>
 			</select>
 		</div>
 	</div>
 	<div class="col-md-9">
-		<a class="btn btn-default" th:href="@{/playerProfile(playerId=${playerId}, tab=events, season=${season})}" title="Show season tournament events">Events</a>
-		<a class="btn btn-default margin-left" th:href="@{/playerProfile(playerId=${playerId}, tab=matches, season=${season})}" title="Show season matches">Matches</a>
-		<a class="btn btn-default margin-left" th:href="@{/playerProfile(playerId=${playerId}, tab=rivalries, season=${season})}" title="Show season rivalries">Rivalries</a>
-		<a class="btn btn-default margin-left" th:href="@{/playerProfile(playerId=${playerId}, tab=performance, season=${season})}" title="Show season performance">Performance</a>
-		<a class="btn btn-default margin-left" th:href="@{/playerProfile(playerId=${playerId}, tab=statistics, season=${season})}" title="Show season statistics">Statistics</a>
+        <a class="btn btn-default" th:href="@{/playerProfile(playerId=${playerId}, tab=events, season=${season})}"
+           title="Show season tournament events">[[#{events}]]</a>
+        <a class="btn btn-default margin-left"
+           th:href="@{/playerProfile(playerId=${playerId}, tab=matches, season=${season})}" title="Show season matches">[[#{matches}]]</a>
+        <a class="btn btn-default margin-left"
+           th:href="@{/playerProfile(playerId=${playerId}, tab=rivalries, season=${season})}"
+           title="Show season rivalries">[[#{rivalries}]]</a>
+        <a class="btn btn-default margin-left"
+           th:href="@{/playerProfile(playerId=${playerId}, tab=performance, season=${season})}"
+           title="Show season performance">[[#{performance}]]</a>
+        <a class="btn btn-default margin-left"
+           th:href="@{/playerProfile(playerId=${playerId}, tab=statistics, season=${season})}"
+           title="Show season statistics">[[#{statistics}]]</a>
 	</div>
 </div>
 <br/>
 <table th:unless="${seasonHighlights.empty}" class="table table-condensed table-striped">
 	<tr>
-		<th colspan="2">Highlights</th>
+        <th colspan="2">[[#{highlights}]]</th>
 	</tr>
 	<tr th:each="resultHighlights : ${seasonHighlights}">
 		<th>
 			<a class="label highlight black bg-result-" th:attrappend="class=${resultHighlights.key.code}" th:href="@{/playerProfile(playerId=${playerId}, tab=events, season=${season}, result=${resultHighlights.key.code})}" th:text="${resultHighlights.key.code}" th:title="|Show season ${resultHighlights.key.text} results|">W</a>
 		</th>
 		<th width="100%">
-			<a th:each="result : ${resultHighlights.value}" th:href="@{/playerProfile(playerId=${playerId}, tab=matches, tournamentEventId=${result.tournamentEventId})}" class="label highlight label-" th:attrappend="class=${result.level}" th:text="${result.name}" title="Show tournament matches">Wimbledon</a>
+            <a th:each="result : ${resultHighlights.value}"
+               th:href="@{/playerProfile(playerId=${playerId}, tab=matches, tournamentEventId=${result.tournamentEventId})}"
+               class="label highlight label-" th:attrappend="class=${result.level}"
+               th:text="__${#locale}__ == 'zh' ? ${result.chineseName} : ${result.name}"
+               title="Show tournament matches">Wimbledon</a>
 		</th>
 	</tr>
 </table>
@@ -68,7 +80,7 @@
 	<div class="col-md-3">
 		<table id="playerSeasonSurface" class="table table-condensed table-striped text-nowrap">
 			<tr>
-				<th>Overall</th>
+                <th>[[#{overall}]]</th>
 				<th th:with="wl=${seasonPerf.matches}">
 					<div th:unless="${wl.empty}" class="progress progress-season">
 						<div class="progress-bar progress-bar-overall" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -81,10 +93,10 @@
 				<th colspan="2">&nbsp;</th>
 			</tr>
 			<tr>
-				<th colspan="2">Surface Breakdown</th>
+                <th colspan="2">[[#{surfaceBreakdown}]]</th>
 			</tr>
 			<tr th:each="surfaceWL : ${seasonPerf.surfaceMatches}" th:with="surface=${surfaceWL.key}, wl=${surfaceWL.value}">
-				<td th:text="${surface.text}">Hard</td>
+                <td th:text="#{'enum'+${surface}}">Hard</td>
 				<th>
 					<div class="progress progress-season">
 						<div class="progress-bar progress-bar-perf" th:data-surface="${surface.code}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -98,10 +110,10 @@
 	<div class="col-md-3">
 		<table class="table table-condensed table-striped text-nowrap">
 			<tr>
-				<th colspan="2">Tournament Level Breakdown</th>
+                <th colspan="2">[[#{tournamentLevelBreakdown}]]</th>
 			</tr>
 			<tr th:each="levelWL : ${seasonPerf.levelMatches}" th:with="level=${levelWL.key}, wl=${levelWL.value}">
-				<td th:text="${level.text}">Grand Slam</td>
+                <td th:text="#{'enum'+${level}}">Grand Slam</td>
 				<th>
 					<div class="progress progress-season">
 						<div class="progress-bar progress-bar-perf label-" th:attrappend="class=${level.code}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -115,10 +127,10 @@
 	<div class="col-md-3">
 		<table class="table table-condensed table-striped text-nowrap">
 			<tr>
-				<th colspan="2">Opposition Breakdown</th>
+                <th colspan="2">[[#{oppositionBreakdown}]]</th>
 			</tr>
 			<tr th:each="oppositionWL : ${seasonPerf.oppositionMatches}" th:with="opposition=${oppositionWL.key}, wl=${oppositionWL.value}">
-				<td th:text="${opposition.text}">Vs No. 1</td>
+                <td th:text="#{'enum'+${opposition}}">Vs No. 1</td>
 				<th>
 					<div class="progress progress-season">
 						<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -132,10 +144,10 @@
 	<div class="col-md-3">
 		<table class="table table-condensed table-striped text-nowrap">
 			<tr>
-				<th colspan="2">Round Breakdown</th>
+                <th colspan="2">[[#{roundBreakdown}]]</th>
 			</tr>
 			<tr th:each="roundWL : ${seasonPerf.roundMatches}" th:with="round=${roundWL.key}, wl=${roundWL.value}">
-				<td th:text="${round.text}">Final</td>
+                <td th:text="#{'enum'+${round}}">Final</td>
 				<th>
 					<div class="progress progress-season">
 						<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">

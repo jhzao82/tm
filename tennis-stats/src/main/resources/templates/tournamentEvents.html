@@ -17,7 +17,7 @@
 <head th:replace="fragments/head :: commonHead(#{titleTournamentEvents}, true, ~{::template})">
 	<title>Tournament Events</title>
 	<template>
-	<meta name="description" content="Latest and historical tennis tournament results"/>
+		<meta name="description" content=""/>
 	<script type="text/javascript">
 		$(function() {
 			var $tournamentEventsTable = $("#tournamentEventsTable");
@@ -59,8 +59,10 @@
 					"finalEx": finalExFormatter
 				},
 				labels: {
-					loading: bootgridTemplateLoading,
-					noResults: "No tournament events found"
+					search: "[[#{search}]]",
+					infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+					loading: "[[#{loading}]]",
+					noResults: "[[#{noTournamentEventsFound}]]"
 				},
 				templates: {
 					paginationItem: bootgridTemplatePaginationItem
@@ -146,11 +148,12 @@
 	</div>
 	<div id="tournamentDiv" class="btn-group margin-right no-margin-left">
 		<select id="tournament" class="form-control" onchange="reloadTournamentEvents()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-			<option value="">All tournaments</option>
+			<option value="">[[#{allTournaments}]]</option>
 			<optgroup th:each="lts : ${tournaments}" th:if="${lts.key.code != 'D' && lts.key.code != 'T'}"
-					  th:label="${lts.key.text}" label="Grand Slam" th:class="'bg-level-' + ${lts.key.code}">
+					  th:label="#{'enum'+${lts.key}}" label="Grand Slam" th:class="'bg-level-' + ${lts.key.code}">
 				<option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-						th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}"
+						th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+						th:class="'bg-level-' + ${tournament.level}"
 						th:selected="${tournament.id == tournamentId}">Wimbledon
 				</option>
 			</optgroup>
@@ -168,25 +171,33 @@
 	</div>
 	<div id="clearDiv" class="btn-group margin-right">
 		<button type="button" class="btn btn-default" onclick="clearTournamentEventsFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-			<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+			<i class="fa fa-eraser"></i>&nbsp;&nbsp;[[#{clear}]]
 		</button>
 	</div>
 	<table id="tournamentEventsTable" class="table table-condensed table-hover table-striped">
 		<thead>
 		<tr>
-			<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">Date</th>
-			<th data-column-id="name" data-formatter="event" data-width="200">Name</th>
-			<th data-column-id="surface" data-formatter="surface" data-width="80">Surface</th>
+			<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">[[#{date}]]</th>
+			<th data-column-id="name" data-formatter="event" data-width="200">[[#{name}]]</th>
+			<th data-column-id="surface" data-formatter="surface" data-width="80">[[#{surface}]]</th>
 			<th data-column-id="speed" data-formatter="speed" data-width="70" data-align="center"
-				data-header-align="center">Speed
+				data-header-align="center">[[#{speed}]]
 			</th>
-			<th data-column-id="draw" data-width="65">Draw</th>
-			<th data-column-id="playerCount" data-type="numeric" data-width="55" data-align="right" data-header-align="right">Pls.</th>
-			<th data-column-id="participation" data-formatter="participation" data-width="60" data-align="right" data-header-align="right">Part.</th>
-			<th data-column-id="strength" data-type="numeric" data-width="50" data-align="right" data-header-align="right">Str.</th>
+			<th data-column-id="draw" data-width="65">[[#{draw}]]</th>
+			<th data-column-id="playerCount" data-type="numeric" data-width="55" data-align="right"
+				data-header-align="right">[[#{pls}]]
+			</th>
+			<th data-column-id="participation" data-formatter="participation" data-width="60" data-align="right"
+				data-header-align="right">[[#{part}]]
+			</th>
+			<th data-column-id="strength" data-type="numeric" data-width="50" data-align="right"
+				data-header-align="right">[[#{str}]]
+			</th>
 			<th data-column-id="averageEloRating" data-type="numeric" data-width="50" data-align="right" data-header-align="right">Elo</th>
-			<th data-column-id="final" data-formatter="final" data-sortable="false" data-width="500">Final</th>
-			<th data-column-id="finalEx" data-formatter="finalEx" data-sortable="false" data-visible="false" data-width="550">Final Details</th>
+			<th data-column-id="final" data-formatter="final" data-sortable="false" data-width="500">[[#{final}]]</th>
+			<th data-column-id="finalEx" data-formatter="finalEx" data-sortable="false" data-visible="false"
+				data-width="550">[[#{finalDetails}]]
+			</th>
 		</tr>
 		</thead>
 	</table>

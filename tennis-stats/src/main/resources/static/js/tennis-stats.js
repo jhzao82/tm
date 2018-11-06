@@ -363,10 +363,10 @@ function surfaceName(surface) {
 
 function surfaceShortName(surface) {
 	switch (surface) {
-		case "H": return "Hd";
-		case "C": return "Cl";
-		case "G": return "Gr";
-		case "P": return "Cp";
+		case "H": return isChinese ? messageHard.substring(0, 1) : "Hd";
+		case "C": return isChinese ? messageClay.substring(0, 1) : "Cl";
+		case "G": return isChinese ? messageGrass.substring(0, 1) : "Gr";
+		case "P": return isChinese ? messageCarpet.substring(0, 1) : "Cp";
 		default: return surface;
 	}
 }

@@ -316,7 +316,7 @@ public class TournamentService {
 					topPlayer.get("titles").asInt(),
 					topPlayer.get("player_id").asInt(),
 					topPlayer.get("name").asText(),
-						topPlayer.get("chinese_name").asText(),
+                        topPlayer.get("chinese_name").asText(),
 					topPlayer.get("country_id").asText(),
 					topPlayer.get("active").asBoolean()
 				));
@@ -447,7 +447,7 @@ public class TournamentService {
 			rs.getInt("season"),
 			getLocalDate(rs, "date"),
 			rs.getString("name"),
-				rs.getString("chinese_name"),
+                rs.getString("chinese_name"),
 			getInternedString(rs, "level"),
 			getInternedString(rs, "surface"),
 			rs.getBoolean("indoor")
@@ -484,8 +484,8 @@ public class TournamentService {
 			(rs, rowNum) -> new RecordDetailRow<RecordDetail>(
 				rs.getInt("rank"),
 				rs.getInt("player_id"),
-					rs.getString("name"),
-					rs.getString("chinese_name"),
+                    rs.getString("name"),
+                    rs.getString("chinese_name"),
 				getInternedString(rs, "country_id"),
 				rs.getBoolean("active"),
 				new IntegerRecordDetail(rs.getInt("count")),
@@ -586,7 +586,7 @@ public class TournamentService {
 				return new PlayerTournament(
 					rs.getInt("tournament_id"),
 					rs.getString("name"),
-						rs.getString("chinese_name"),
+                        rs.getString("chinese_name"),
 					sortKeysByValuesDesc(levels, comparing(TournamentLevel::decode)),
 					sortKeysByValuesDesc(surfaces, comparing(Surface::decode)),
                         avgSpeeds,
@@ -618,7 +618,7 @@ public class TournamentService {
 						rs.getInt("season"),
 						getLocalDate(rs, "date"),
 						rs.getString("name"),
-							rs.getString("chinese_name"),
+                            rs.getString("chinese_name"),
 						getInternedString(rs, "level"),
 						getInternedString(rs, "surface"),
 						rs.getBoolean("indoor"),

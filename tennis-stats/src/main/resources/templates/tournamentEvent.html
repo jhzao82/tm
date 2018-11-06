@@ -41,12 +41,16 @@
 			<table class="table table-condensed text-nowrap">
 				<tr>
 					<th>[[#{level}]]</th>
-					<td><span class="label label-" th:attrappend="class=${tournamentEvent.level}" th:text="${levels[tournamentEvent.level]}">Grand Slam</span></td>
+                    <td><span class="label label-" th:attrappend="class=${tournamentEvent.level}"
+                              th:text="#{'enumLevel'+${tournamentEvent.level}}">Grand Slam</span></td>
 				</tr>
 				<tr th:unless="${isTeam}">
 					<th>[[#{surface}]]</th>
 					<td>
-						<span id="eventSurface" th:if="${tournamentEvent.surface}" class="label" th:data-surface="${tournamentEvent.surface}">[(${surfaces[tournamentEvent.surface]})]<span th:if="${tournamentEvent.indoor && tournamentEvent.surface != 'P'}" title="Indoor"> (i)</span></span>
+                        <span id="eventSurface" th:if="${tournamentEvent.surface}" class="label"
+                              th:data-surface="${tournamentEvent.surface}">[[#{'enum'+${tournamentEvent.surface}}]]<span
+                                th:if="${tournamentEvent.indoor && tournamentEvent.surface != 'P'}"
+                                th:title="#{indoor}"> ([[#{i}]])</span></span>
                         <span id="eventSpeed" th:if="${tournamentEvent.speed}" class="label"
                               th:data-surface="${tournamentEvent.surface}"
                               th:data-court-speed="${tournamentEvent.speed}"

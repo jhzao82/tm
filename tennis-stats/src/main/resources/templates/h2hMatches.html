@@ -57,8 +57,10 @@
 				}
 			},
 			labels: {
-				loading: bootgridTemplateLoading,
-				noResults: "No matches found"
+				search: "[[#{search}]]",
+				infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+				loading: "[[#{loading}]]",
+				noResults: "[[#{noMatchesFound}]]"
 			},
 			templates: {
 				paginationItem: bootgridTemplatePaginationItem
@@ -285,7 +287,8 @@
 	<div class="col-xs-5 text-right">
 		<h4>
 			<img th:src="@{/images/flags/{code}.png(code=${player1.country.code})}" src="/images/flags/ch.png'" style="margin-top: -3px" th:title="${player1.country.id}" title="SUI" width="24" height="20"/>
-			<a th:href="@{/playerProfile(playerId=${player1.id})}" th:text="${player1.name}">Roger Federer</a>
+            <a th:href="@{/playerProfile(playerId=${player1.id})}"
+               th:text="__${#locale}__ == 'zh' ? ${player1.chineseName} : ${player1.name}">Roger Federer</a>
 		</h4>
 	</div>
 	<div class="col-xs-2 text-center">
@@ -294,45 +297,62 @@
 	<div class="col-xs-5 text-left">
 		<h4>
 			<img th:src="@{/images/flags/{code}.png(code=${player2.country.code})}" src="/images/flags/es.png'" style="margin-top: -3px" th:title="${player2.country.id}" title="ESP" width="24" height="20"/>
-			<a th:href="@{/playerProfile(playerId=${player2.id})}" th:text="${player2.name}">Rafael Nadal</a>
+            <a th:href="@{/playerProfile(playerId=${player2.id})}"
+               th:text="__${#locale}__ == 'zh' ? ${player2.chineseName} : ${player2.name}">Rafael Nadal</a>
 		</h4>
 	</div>
 </div>
 <div id="matchesFilter" class="row">
 	<div class="col-md-2">
 		<select id="matchesSeason" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Select career or filter by season">
-			<option value="">Career</option>
-			<option value="-1" th:selected="${season == -1}">Last 52 weeks</option>
+            <option value="">[[#{career}]]</option>
+            <option value="-1" th:selected="${season == -1}">[[#{last52weeks}]]</option>
 			<option th:each="aSeason : ${seasons}" th:value="${aSeason}" value="2005" th:text="${aSeason}" th:selected="${aSeason == season}">2005</option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="matchesLevel" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by tournament level">
-			<option value="">All levels</option>
-			<option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|" value="G" class="bg-level-G" th:text="${aLevel.text}" th:selected="${aLevel.code == level}">Grand Slam</option>
-			<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO" th:text="${levelGroup.text}" th:selected="${levelGroup.codes == level}">Big Tournaments</option>
+            <option value="">[[#{allLevels}]]</option>
+            <option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|"
+                    value="G" class="bg-level-G" th:text="#{'enum'+${aLevel}}" th:selected="${aLevel.code == level}">
+                Grand Slam
+            </option>
+            <option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO"
+                    th:text="#{'enumLevelGroup'+${levelGroup}}" th:selected="${levelGroup.codes == level}">Big
+                Tournaments
+            </option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="matchesSurface" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by surface">
-			<option value="">All surfaces</option>
-			<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}" th:selected="${aSurface.code == surface}">Hard</option>
-			<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP" th:text="${surfaceGroup.text}" th:selected="${surfaceGroup.codes.length() > 1 && surfaceGroup.codes == surface}">Fast (H, G, Cp)</option>
+            <option value="">[[#{allSurfaces}]]</option>
+            <option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+                    th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
+                    th:text="#{'enum'+${aSurface}}" th:selected="${aSurface.code == surface}">Hard
+            </option>
+            <option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
+                    th:text="#{'enumSurfaceGroup'+${surfaceGroup}}"
+                    th:selected="${surfaceGroup.codes.length() > 1 && surfaceGroup.codes == surface}">Fast (H, G, Cp)
+            </option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="matchesRound" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by round">
-			<option value="">All rounds</option>
-			<option th:each="aRound : ${rounds}" th:value="${aRound.code}" th:class="|bg-result-${aRound.baseCode}|" value="F" class="bg-result-F" th:text="${aRound.text}" th:selected="${aRound.code == round}">Final</option>
+            <option value="">[[#{allRounds}]]</option>
+            <option th:each="aRound : ${rounds}" th:value="${aRound}" th:class="|bg-result-${aRound.baseCode}|"
+                    value="F" class="bg-result-F" th:text="#{'enum'+${aRound}}" th:selected="${aRound.code == round}">
+                Final
+            </option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="matchesTournament" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-			<option value="">All tournaments</option>
-            <optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam"
+            <option value="">[[#{allTournaments}]]</option>
+            <optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
                       th:class="'bg-level-' + ${lts.key.code}">
                 <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                        th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}"
+                        th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+                        th:class="'bg-level-' + ${tournament.level}"
                         th:selected="${tournament.id == tournamentId}">Wimbledon
                 </option>
             </optgroup>
@@ -348,7 +368,7 @@
 	<div class="col-md-1">
 		<span data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#matchesAdvancedFilter">
-				Adv.&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+				[[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
 			</button>
 		</span>
 	</div>
@@ -357,46 +377,46 @@
          th:attrappend="class=${fromDate != null || toDate != null || bestOf != null || indoor != null || speed != null ? ' in' : _}">
 	<div class="col-md-4">
 		<div id="matchesDateRange" class="input-group">
-			<label for="matchesFromDate" class="input-group-addon">From:</label>
+            <label for="matchesFromDate" class="input-group-addon">[[#{from}]]:</label>
 			<input id="matchesFromDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(fromDate, 'dd-MM-yyyy')}" onchange="reloadMatches()"/>
-			<label for="matchesToDate" class="input-group-addon">To:</label>
+            <label for="matchesToDate" class="input-group-addon">[[#{to}]]:</label>
 			<input id="matchesToDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(toDate, 'dd-MM-yyyy')}" onchange="reloadMatches()"/>
 		</div>
 	</div>
 	<div class="col-md-2">
 		<select id="matchesIndoor" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-			<option value="">Outdoor / Indoor</option>
-			<option value="false" th:selected="${indoor == false}">Outdoor</option>
-			<option value="true" th:selected="${indoor}">Indoor</option>
+            <option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+            <option value="false" th:selected="${indoor == false}">[[#{outdoor}]]</option>
+            <option value="true" th:selected="${indoor}">[[#{indoor}]]</option>
         </select>
     </div>
         <div class="col-md-2">
             <select id="matchesSpeed" class="form-control" onchange="reloadMatches()" data-toggle="tooltip"
                     data-placement="top" title="Filter by court speed">
-                <option value="">All speeds</option>
+                <option value="">[[#{allSpeeds}]]</option>
                 <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                        style="color: white" value="50" class="points-50" th:text="${aSpeed.text}"
+                        style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}"
                         th:selected="${aSpeed.speed == speed}">Medium
                 </option>
             </select>
         </div>
 	<div class="col-md-2">
 		<select id="matchesBestOf" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-			<option value="">Best of any</option>
-			<option value="3" th:selected="${bestOf == 3}">Best of 3</option>
-			<option value="5" th:selected="${bestOf == 5}">Best of 5</option>
+            <option value="">[[#{bestOfAny}]]</option>
+            <option value="3" th:selected="${bestOf == 3}">[[#{bestOf3}]]</option>
+            <option value="5" th:selected="${bestOf == 5}">[[#{bestOf5}]]</option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="matchesScore" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by match score">
-			<option value="">All scores</option>
-			<optgroup label="Best of 3">
+            <option value="">[[#{allScores}]]</option>
+            <optgroup th:label="#{bestOf3}">
 				<option value="2:0">2:0</option>
 				<option value="2:1">2:1</option>
 				<option value="1:2">1:2</option>
 				<option value="0:2">0:2</option>
 			</optgroup>
-			<optgroup label="Best of 5">
+            <optgroup th:label="#{bestOf5}">
 				<option value="3:0">3:0</option>
 				<option value="3:1">3:1</option>
 				<option value="3:2">3:2</option>
@@ -404,15 +424,15 @@
 				<option value="1:3">1:3</option>
 				<option value="0:3">0:3</option>
 			</optgroup>
-			<optgroup label="After">
-				<option value="1:0+">After 1:0</option>
-				<option value="0:1+">After 0:1</option>
-				<option value="1:1+">After 1:1</option>
-				<option value="2:0+">After 2:0</option>
-				<option value="0:2+">After 0:2</option>
-				<option value="2:1+">After 2:1</option>
-				<option value="1:2+">After 1:2</option>
-				<option value="2:2+">After 2:2</option>
+            <optgroup th:label="#{after}">
+                <option value="1:0+">[[#{after}]] 1:0</option>
+                <option value="0:1+">[[#{after}]] 0:1</option>
+                <option value="1:1+">[[#{after}]] 1:1</option>
+                <option value="2:0+">[[#{after}]] 2:0</option>
+                <option value="0:2+">[[#{after}]] 0:2</option>
+                <option value="2:1+">[[#{after}]] 2:1</option>
+                <option value="1:2+">[[#{after}]] 1:2</option>
+                <option value="2:2+">[[#{after}]] 2:2</option>
 			</optgroup>
 		</select>
 	</div>
@@ -432,30 +452,32 @@
         </select>
 </div>
 <button th:id="|rivalryStats-${player2.id}|" type="button" class="btn btn-info grid-control pull-left no-margin-left margin-right" th:onclick="|showRivalryStats(${player1.id}, ${player2.id}, 'right', event, false)|" data-toggle="tooltip" data-placement="top" th:title="|${player1.name} vs ${player2.name} Statistics (for the selected matches)|">
-	<span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Stats 1
+    <span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;[[#{stats}]] 1
 </button>
 <button th:id="|rivalryStats-${player1.id}|" type="button" class="btn btn-info grid-control margin-right" th:onclick="|showRivalryStats(${player2.id}, ${player1.id}, 'left', event, true)|" data-toggle="tooltip" data-placement="top" th:title="|${player2.name} vs ${player1.name} Statistics (for the selected matches)|">
-	<span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Stats 2
+    <span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;[[#{stats}]] 2
 </button>
 <button id="matchesClear" type="button" class="btn btn-default grid-control margin-right" onclick="clearMatchesFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-	<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+    <i class="fa fa-eraser"></i>&nbsp;&nbsp;[[#{clear}]]
 </button>
 <table id="matchesTable" class="table table-condensed table-hover table-striped">
 	<thead>
 	<tr>
-		<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">Date</th>
-		<th data-column-id="tournament" data-formatter="tournament" data-width="175">Tournament</th>
-		<th data-column-id="surface" data-formatter="surface" data-width="80">Surface</th>
+        <th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">[[#{date}]]</th>
+        <th data-column-id="tournament" data-formatter="tournament" data-width="175">[[#{tournament}]]</th>
+        <th data-column-id="surface" data-formatter="surface" data-width="80">[[#{surface}]]</th>
         <th data-column-id="speed" data-formatter="speed" data-visible="false" data-width="70" data-align="center"
-            data-header-align="center">Speed
+            data-header-align="center">[[#{speed}]]
         </th>
-		<th data-column-id="round" data-width="75">Round</th>
-		<th data-column-id="match" data-formatter="match" data-sortable="false" data-width="300">Match</th>
-		<th data-column-id="matchEx" data-formatter="matchEx" data-sortable="false" data-visible="false" data-width="500">Match Details</th>
+        <th data-column-id="round" data-width="75">[[#{round}]]</th>
+        <th data-column-id="match" data-formatter="match" data-sortable="false" data-width="300">[[#{match}]]</th>
+        <th data-column-id="matchEx" data-formatter="matchEx" data-sortable="false" data-visible="false"
+            data-width="500">[[#{matchDetails}]]
+        </th>
 		<th data-column-id="bestOf" data-width="50" data-visible="false">BO</th>
-		<th data-column-id="score" data-formatter="score" data-sortable="false" data-width="175">Score</th>
+        <th data-column-id="score" data-formatter="score" data-sortable="false" data-width="175">[[#{score}]]</th>
 		<th data-column-id="h2h" data-formatter="h2h" data-sortable="false" data-width="55">H2H</th>
-		<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="75">Stats</th>
+        <th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="75">[[#{stats}]]</th>
 	</tr>
 	</thead>
 </table>
@@ -484,13 +506,16 @@
 		<table id="matches1Table" class="table table-ultra-condensed table-hover table-striped" style="display: none">
 			<thead>
 			<tr>
-				<th data-column-id="date" data-formatter="date" data-order="desc" data-width="80">Date</th>
-				<th data-column-id="tournament" data-formatter="tournament" data-width="120">Tournament</th>
+                <th data-column-id="date" data-formatter="date" data-order="desc" data-width="80">[[#{date}]]</th>
+                <th data-column-id="tournament" data-formatter="tournament" data-width="120">[[#{tournament}]]</th>
 				<th data-column-id="surface" data-formatter="surface" data-width="50">Sfc</th>
 				<th data-column-id="round" data-width="40">Rd</th>
 				<th data-column-id="wonLost" data-formatter="wonLost" data-sortable="false" data-width="30">O</th>
-				<th data-column-id="opponent" data-formatter="opponent" data-sortable="false" data-width="150">Opponent</th>
-				<th data-column-id="score" data-formatter="score" data-sortable="false" data-width="150">Score</th>
+                <th data-column-id="opponent" data-formatter="opponent" data-sortable="false" data-width="150">
+                    [[#{opponent}]]
+                </th>
+                <th data-column-id="score" data-formatter="score" data-sortable="false" data-width="150">[[#{score}]]
+                </th>
 				<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="30">S</th>
 			</tr>
 			</thead>
@@ -500,13 +525,16 @@
 		<table id="matches2Table" class="table table-ultra-condensed table-hover table-striped" style="display: none">
 			<thead>
 			<tr>
-				<th data-column-id="date" data-formatter="date" data-order="desc" data-width="80">Date</th>
-				<th data-column-id="tournament" data-formatter="tournament" data-width="120">Tournament</th>
+                <th data-column-id="date" data-formatter="date" data-order="desc" data-width="80">[[#{date}]]</th>
+                <th data-column-id="tournament" data-formatter="tournament" data-width="120">[[#{tournament}]]</th>
 				<th data-column-id="surface" data-formatter="surface" data-width="50">Sfc</th>
 				<th data-column-id="round" data-width="40">Rd</th>
 				<th data-column-id="wonLost" data-formatter="wonLost" data-sortable="false" data-width="30">O</th>
-				<th data-column-id="opponent" data-formatter="opponent" data-sortable="false" data-width="150">Opponent</th>
-				<th data-column-id="score" data-formatter="score" data-sortable="false" data-width="150">Score</th>
+                <th data-column-id="opponent" data-formatter="opponent" data-sortable="false" data-width="150">
+                    [[#{opponent}]]
+                </th>
+                <th data-column-id="score" data-formatter="score" data-sortable="false" data-width="150">[[#{score}]]
+                </th>
 				<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="30">S</th>
 			</tr>
 			</thead>

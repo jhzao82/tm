@@ -17,10 +17,11 @@
 <!--/*@thymesVar id="tournamentId" type="java.lang.Integer"*/-->
 <!--/*@thymesVar id="rankType" type="java.lang.String"*/-->
 <!--/*@thymesVar id="params" type="org.strangeforest.tcb.stats.controller.ParamsUtil"*/-->
-<head th:replace="fragments/head :: commonHead(${anyPlayerSelected} ? ${player1 != null ? player1.name : '?'} + ' vs ' +  ${player2 != null ? player2.name : '?'} : ~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(${anyPlayerSelected} ? (__${#locale}__ == 'zh' ? ${player1.chineseName} : ${player1.name}) + | #{vs} | +  (__${#locale}__ == 'zh' ? ${player2.chineseName} : ${player2.name}) : ~{::title/text()}, true, ~{::template})">
 	<title>Head-to-Head</title>
 	<template>
-	<meta name="description" th:content="${(bothPlayersSelected ? player1.name + ' vs ' + player2.name : 'Head-to-Head') + ' at Ultimate Tennis Statistics'}"/>
+		<meta name="description"
+			  th:content="${(bothPlayersSelected ? player1.name + ' vs ' + player2.name : 'Head-to-Head') + ' H2H'}"/>
 	<script type="text/javascript" th:inline="javascript">
 		var currentTab = "profiles";
 		$(function() {
@@ -111,14 +112,18 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="input-group">
-				<label for="player1" class="input-group-addon"><i class="fa fa-user"></i> Player 1:</label>
-				<input id="player1" type="text" class="ui-widget search-field form-control" size="30" th:value="${player1 != null ? player1.name : _}" th:data-playerId="${player1 != null ? player1.id : _}" placeholder="Search Player 1"/>
+				<label for="player1" class="input-group-addon"><i class="fa fa-user"></i> [[#{player}]] 1:</label>
+				<input id="player1" type="text" class="ui-widget search-field form-control" size="30"
+					   th:value="__${#locale}__ == 'zh' ? ${player1.chineseName} : ${player1.name}"
+					   placeholder="Search Player 1"/>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="input-group">
-				<label for="player2" class="input-group-addon"><i class="fa fa-user"></i> Player 2:</label>
-				<input id="player2" type="text" class="ui-widget search-field form-control" size="30" th:value="${player2 != null ? player2.name : _}" th:data-playerId="${player2 != null ? player2.id : _}" placeholder="Search Player 2"/>
+				<label for="player2" class="input-group-addon"><i class="fa fa-user"></i> [[#{player}]] 2:</label>
+				<input id="player2" type="text" class="ui-widget search-field form-control" size="30"
+					   th:value="__${#locale}__ == 'zh' ? ${player2.chineseName} : ${player2.name}"
+					   th:data-playerId="${player2 != null ? player2.id : _}" placeholder="Search Player 2"/>
 			</div>
 		</div>
 	</div>
@@ -126,20 +131,22 @@
 		<div class="col-xs-5 text-left">
 			<h3 th:if="${player1}">
 				<img th:src="@{/images/flags/{code}.png(code=${player1.country.code})}" src="/images/flags/ch.png'" style="margin-top: -3px" th:title="${player1.country.id}" title="SUI" width="24" height="20"/>
-				<a th:href="@{/playerProfile(playerId=${player1.id})}" th:text="${player1.name}">Roger Federer</a>
+				<a th:href="@{/playerProfile(playerId=${player1.id})}"
+				   th:text="__${#locale}__ == 'zh' ? ${player1.chineseName} : ${player1.name}">Roger Federer</a>
 			</h3>
 		</div>
 		<div class="col-xs-2 text-center text-nowrap">
 			<h3>
 				<a th:if="${bothPlayersSelected && !samePlayersSelected}" href="javascript:swapPlayers()" title="Swap players"><h4 style="margin: 0" class="glyphicon glyphicon-transfer"></h4></a>
-				vs
+				[[#{vs}]]
 				<a th:if="${bothPlayersSelected && !samePlayersSelected}" th:href="@{/headToHead(name1=${player1.name}, name2=${player2.name})}" th:title="|Permalink to ${player1.name} vs ${player2.name} Rivalry|"><h4 style="margin: 0" class="glyphicon glyphicon-link"></h4></a>
 			</h3>
 		</div>
 		<div class="col-xs-5 text-right">
 			<h3 th:if="${player2}">
 				<img th:src="@{/images/flags/{code}.png(code=${player2.country.code})}" src="/images/flags/es.png'" style="margin-top: -3px" th:title="${player2.country.id}" title="ESP" width="24" height="20"/>
-				<a th:href="@{/playerProfile(playerId=${player2.id})}" th:text="${player2.name}">Rafael Nadal</a>
+				<a th:href="@{/playerProfile(playerId=${player2.id})}"
+				   th:text="__${#locale}__ == 'zh' ? ${player2.chineseName} : ${player2.name}">Rafael Nadal</a>
 			</h3>
 		</div>
 	</div>
@@ -149,26 +156,38 @@
 	<div th:if="${bothPlayersSelected && samePlayersSelected}" class="alert alert-warning">Cannot compare the same player!</div>
 	<th:block th:if="${bothPlayersSelected && !samePlayersSelected}">
 	<ul id="h2hPills" class="nav nav-pills tab-param" th:with="playerIdsParams='?playerId1=' + ${player1.id} + '&playerId2=' + ${player2.id}, playerIdParams='?playerId=' + ${player1.id} + '&playerId=' + ${player2.id}">
-		<li><a id="profilesPill" data-toggle="pill" href="#profiles" th:data-url="'/h2hProfiles' + ${playerIdsParams}">Profiles</a></li>
-		<li><a id="seasonPill" data-toggle="pill" href="#season" th:data-url="'/h2hSeason' + ${playerIdsParams}">Season</a></li>
-		<li><a id="matchesPill" data-toggle="pill" href="#matches" th:data-url="'/h2hMatches' + ${playerIdsParams}">Matches</a></li>
-		<li><a id="rankingPill" data-toggle="pill" href="#ranking" th:data-url="'/h2hRankings' + ${playerIdParams}">Ranking</a></li>
+		<li><a id="profilesPill" data-toggle="pill" href="#profiles" th:data-url="'/h2hProfiles' + ${playerIdsParams}">[[#{profiles}]]</a>
+		</li>
+		<li><a id="seasonPill" data-toggle="pill" href="#season" th:data-url="'/h2hSeason' + ${playerIdsParams}">[[#{season}]]</a>
+		</li>
+		<li><a id="matchesPill" data-toggle="pill" href="#matches" th:data-url="'/h2hMatches' + ${playerIdsParams}">[[#{matches}]]</a>
+		</li>
+		<li><a id="rankingPill" data-toggle="pill" href="#ranking" th:data-url="'/h2hRankings' + ${playerIdParams}">[[#{ranking}]]</a>
+		</li>
 		<li class="dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Performance<span class="caret"></span></a>
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#">[[#{performance}]]<span class="caret"></span></a>
 			<ul class="dropdown-menu">
-				<li><a id="performancePill" data-toggle="pill" href="#performance" th:data-url="'/h2hPerformance' + ${playerIdsParams}">Performance</a></li>
-				<li><a id="performanceChartPill" data-toggle="pill" href="#performanceChart" th:data-url="'/h2hPerformanceChart' + ${playerIdParams}">Performance Chart</a></li>
+				<li><a id="performancePill" data-toggle="pill" href="#performance"
+					   th:data-url="'/h2hPerformance' + ${playerIdsParams}">[[#{performance}]]</a></li>
+				<li><a id="performanceChartPill" data-toggle="pill" href="#performanceChart"
+					   th:data-url="'/h2hPerformanceChart' + ${playerIdParams}">[[#{performanceChart}]]</a></li>
 			</ul>
 		</li>
 		<li class="dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics<span class="caret"></span></a>
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#">[[#{statistics}]]<span class="caret"></span></a>
 			<ul class="dropdown-menu">
-				<li><a id="statisticsPill" data-toggle="pill" href="#statistics" th:data-url="'/h2hStats' + ${playerIdsParams}">Statistics</a></li>
-				<li><a id="statisticsChartPill" data-toggle="pill" href="#statisticsChart" th:data-url="'/h2hStatsChart' + ${playerIdParams}">Statistics Chart</a></li>
+				<li><a id="statisticsPill" data-toggle="pill" href="#statistics"
+					   th:data-url="'/h2hStats' + ${playerIdsParams}">[[#{statistics}]]</a></li>
+				<li><a id="statisticsChartPill" data-toggle="pill" href="#statisticsChart"
+					   th:data-url="'/h2hStatsChart' + ${playerIdParams}">[[#{statisticsChart}]]</a></li>
 			</ul>
 		</li>
-		<li><a id="goatPointsPill" data-toggle="pill" href="#goatPoints" th:data-url="'/h2hGOATPoints' + ${playerIdsParams}" title="GOAT Points Breakdown">GOAT Points</a></li>
-		<li><a id="hypotheticalMatchupPill" data-toggle="pill" href="#hypotheticalMatchup" th:data-url="'/h2hHypotheticalMatchup' + ${playerIdsParams}">Hypothetical Matchup<sup class="cool-feature"></sup></a></li>
+		<li><a id="goatPointsPill" data-toggle="pill" href="#goatPoints"
+			   th:data-url="'/h2hGOATPoints' + ${playerIdsParams}" title="GOAT Points Breakdown">[[#{goatPoints}]]</a>
+		</li>
+		<li><a id="hypotheticalMatchupPill" data-toggle="pill" href="#hypotheticalMatchup"
+			   th:data-url="'/h2hHypotheticalMatchup' + ${playerIdsParams}">[[#{hypotheticalMatchup}]]<sup
+				class="cool-feature"></sup></a></li>
 	</ul>
 	<div class="tab-content">
 		<div id="profiles" class="tab-pane fade"><div class="loading"></div></div>

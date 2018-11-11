@@ -103,7 +103,9 @@
 		<div class="input-group" data-toggle="tooltip" data-placement="top" title="Select statistics category">
 			<label for="statsCategory" class="input-group-addon">[[#{category}]]:</label>
 			<select id="statsCategory" class="form-control" onchange="reloadStatsLeaders()">
-				<optgroup th:each="categoryClass : ${categoryClasses}" th:label="#{${categoryClass.key}}" label="Serve">
+				<optgroup th:each="categoryClass : ${categoryClasses}"
+						  th:label="#{'text'+${#strings.replace(categoryClass.key, ' ','').replace('&','')}}"
+						  label="Serve">
 					<option th:each="category : ${categoryClass.value}" th:value="${category.name}" value="aces"
 							th:text="#{'stats'+${#strings.capitalize(category.name)}}"
 							th:title="#{__${category.descriptionId}__}">Aces

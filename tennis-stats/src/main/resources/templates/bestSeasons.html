@@ -69,7 +69,10 @@
 					}
 				},
 				labels: {
-					loading: bootgridTemplateLoading,
+					all: [[#{all}]],
+					search: [[#{search}]],
+					loading: [[#{loading}]],
+					infos: [[#{showing}]] + " {{ctx.start}} " + [[#{to}]] + " {{ctx.end}} " + [[#{of}]] + " {{ctx.total}} " + [[#{entries}]],
 					noResults: "No player seasons found"
 				},
 				templates: {

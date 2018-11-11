@@ -254,7 +254,7 @@
 		<div class="col-md-2">
 			<select id="statsBestOf" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
 				<option value="">[[#{bestOfAny}]]</option>
-				<option value="3" th:selected="${bestOf == 3}">[[#{besOf3}]]</option>
+				<option value="3" th:selected="${bestOf == 3}">[[#{bestOf3}]]</option>
 				<option value="5" th:selected="${bestOf == 5}">[[#{bestOf5}]]</option>
             </select>
         </div>
@@ -315,7 +315,9 @@
 					</th:block>
 					<th th:unless="${compare}" class="pct-data text-right" width="40%"><i class="fa fa-percent"></i></th>
 					<th class="raw-data text-right" width="40%"><i class="fa fa-hashtag"></i></th>
-					<th class="text-center" width="20%" th:text="${subGroup.name}">Serve</th>
+					<th class="text-center" width="20%"
+						th:text="#{'text'+${#strings.replace(subGroup.name, ' ','').replace('-','')}}">Serve
+					</th>
 					<th class="raw-data text-left" width="40%"><i class="fa fa-hashtag"></i></th>
 					<th th:unless="${compare}" class="pct-data text-left" width="40%"><i class="fa fa-percent"></i></th>
 					<th:block th:if="${compare}">

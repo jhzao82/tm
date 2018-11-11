@@ -71,27 +71,28 @@
 		<div class="col-md-6">
 			<table class="table table-condensed text-nowrap">
 				<tr>
-					<th>Level</th>
+					<th>[[#{level}]]</th>
 					<td id="tournamentLevels">
-						<div th:each="level : ${tournament.levels}" class="label label-" th:attrappend="class=${level}" th:text="${levels.get(level)}">Grand Slam</div>
+						<div th:each="level : ${tournament.levels}" class="label label-" th:attrappend="class=${level}"
+							 th:text="#{'enumLevel'+${level}}">Grand Slam
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<th>Surface</th>
+					<th>[[#{surface}]]</th>
 					<td id="tournamentSurfaces">
-                        <!--th:block th:each="surface : ${tournament.surfaces}"
-                                  th:with="speed=${tournament.speeds.get(surface)}">
-                            <div class="label tournament-surface" th:data-surface="${surface}" th:text="${surfaces.get(surface)}">Hard</div>
-                            <div th:if="${speed}" class="label tournament-court-speed" th:data-surface="${surface}" th:data-court-speed="${speed}" th:text="${speed}">50</div>
-                        </th:block-->
+						<!--th:block th:each="surface : ${tournament.surfaces}" th:with="speed=${tournament.speeds.get(surface)}">
+							<div class="label tournament-surface" th:data-surface="${surface}" th:text="${surfaces.get(surface)}">Hard</div>
+							<div th:if="${speed}" class="label tournament-court-speed" th:data-surface="${surface}" th:data-court-speed="${speed}" th:text="${speed}">50</div>
+						</th:block-->
 					</td>
 				</tr>
 				<tr>
-					<th>Events</th>
+					<th>[[#{events}]]</th>
 					<td th:text="${tournament.eventCount}">25</td>
 				</tr>
 				<tr>
-					<th>Seasons</th>
+					<th>[[#{seasons}]]</th>
 					<td th:text="${tournament.seasons}">1968-2015</td>
 				</tr>
 			</table>
@@ -99,19 +100,19 @@
 		<div class="col-md-3">
 			<table class="table table-condensed text-nowrap">
 				<tr>
-					<th>Average Players</th>
+					<th>[[#{averagePlayers}]]</th>
 					<td th:text="${tournament.playerCount}">128</td>
 				</tr>
 				<tr th:title="#{event.participation.title}">
-					<th>Average Participation</th>
+					<th>[[#{averageParticipation}]]</th>
 					<td th:text="${#numbers.formatDecimal(100 * tournament.participation, 1, 1) + '%'}">67.3%</td>
 				</tr>
 				<tr th:title="#{event.strength.title}">
-					<th>Average Strength</th>
+					<th>[[#{averageStrength}]]</th>
 					<td th:text="${tournament.strength}">1232</td>
 				</tr>
 				<tr th:title="#{event.averageEloRating.title}">
-					<th>Average Elo Rating</th>
+					<th>[[#{averageEloRating}]]</th>
 					<td th:text="${tournament.averageEloRating}">832</td>
 				</tr>
 			</table>
@@ -119,10 +120,12 @@
 		<div class="col-md-3">
 			<table class="table table-condensed text-nowrap">
 				<tr th:each="player : ${tournament.topPlayers}">
-					<th th:text="|${player.rank} Titles|">5 Titles:</th>
+					<th th:text="|${player.rank} #{titles}|">5 Titles:</th>
 					<td>
 						<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/ch.png'" th:title="${player.country.id}" title="SUI" width="24" height="20"/>
-						<a th:href="@{/playerProfile(playerId=${player.playerId})}" th:text="${player.name}" title="Show profile">Roger Federer</a>
+						<a th:href="@{/playerProfile(playerId=${player.playerId})}"
+						   th:text="__${#locale}__ == 'zh' and ${player.chineseName} != 'null' ? ${player.chineseName} : ${player.name}"
+						   title="Show profile">Roger Federer</a>
 						<img th:if="${player.active}" src="/images/active.png" title="Active" width="12" height="12" style="vertical-align: 0"/>
 					</td>
 				</tr>
@@ -130,30 +133,45 @@
 		</div>
 	</div>
 	<ul id="tournamentPills" class="nav nav-pills">
-		<li class="active"><a data-toggle="pill" href="#events">Events</a></li>
-		<li><a data-toggle="pill" href="#records" th:data-url="'/tournamentRecords?tournamentId=' + ${tournament.id}">Records</a></li>
-		<li><a data-toggle="pill" href="#performance" th:data-url="'/tournamentPerformance?tournamentId=' + ${tournament.id}">Performance</a></li>
-		<li><a data-toggle="pill" href="#statistics" th:data-url="'/tournamentStats?tournamentId=' + ${tournament.id}">Statistics</a></li>
+		<li class="active"><a data-toggle="pill" href="#events">[[#{events}]]</a></li>
+		<li><a data-toggle="pill" href="#records" th:data-url="'/tournamentRecords?tournamentId=' + ${tournament.id}">[[#{records}]]</a>
+		</li>
+		<li><a data-toggle="pill" href="#performance"
+			   th:data-url="'/tournamentPerformance?tournamentId=' + ${tournament.id}">[[#{performance}]]</a></li>
+		<li><a data-toggle="pill" href="#statistics" th:data-url="'/tournamentStats?tournamentId=' + ${tournament.id}">[[#{statistics}]]</a>
+		</li>
 	</ul>
 	<div class="tab-content">
 		<div id="events" class="tab-pane fade in active">
-			<h3 id="tournamentHistoryTable-title" class="grid-title" th:text="${tournament.name} + ' Events'">Australian Open Events</h3>
+			<h3 id="tournamentHistoryTable-title" class="grid-title"
+				th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} + #{events} : ${tournament.name} + ' Events'">
+				Australian Open Events</h3>
 			<table id="tournamentHistoryTable" class="table table-condensed table-hover table-striped">
 				<thead>
 				<tr>
-					<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">Date</th>
-					<th data-column-id="name" data-formatter="event" data-width="200">Name</th>
-					<th data-column-id="surface" data-formatter="surface" data-width="80">Surface</th>
+					<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">[[#{date}]]</th>
+					<th data-column-id="name" data-formatter="event" data-width="200">[[#{name}]]</th>
+					<th data-column-id="surface" data-formatter="surface" data-width="80">[[#{surface}]]</th>
 					<th data-column-id="speed" data-formatter="speed" data-width="70" data-align="center"
-						data-header-align="center">Speed
+						data-header-align="center">[[#{speed}]]
 					</th>
-					<th data-column-id="draw" data-width="65">Draw</th>
-					<th data-column-id="playerCount" data-type="numeric" data-width="55" data-align="right" data-header-align="right">Pls.</th>
-					<th data-column-id="participation" data-formatter="participation" data-width="60" data-align="right" data-header-align="right">Part.</th>
-					<th data-column-id="strength" data-type="numeric" data-width="50" data-align="right" data-header-align="right">Str.</th>
+					<th data-column-id="draw" data-width="65">[[#{draw}]]</th>
+					<th data-column-id="playerCount" data-type="numeric" data-width="55" data-align="right"
+						data-header-align="right">[[#{pls}]]
+					</th>
+					<th data-column-id="participation" data-formatter="participation" data-width="60" data-align="right"
+						data-header-align="right">[[#{part}]]
+					</th>
+					<th data-column-id="strength" data-type="numeric" data-width="55" data-align="right"
+						data-header-align="right">[[#{str}]]
+					</th>
 					<th data-column-id="averageEloRating" data-type="numeric" data-width="50" data-align="right" data-header-align="right">Elo</th>
-					<th data-column-id="final" data-formatter="final" data-sortable="false" data-width="500">Final</th>
-					<th data-column-id="finalEx" data-formatter="finalEx" data-sortable="false" data-visible="false" data-width="550">Final Details</th>
+					<th data-column-id="final" data-formatter="final" data-sortable="false" data-width="500">
+						[[#{final}]]
+					</th>
+					<th data-column-id="finalEx" data-formatter="finalEx" data-sortable="false" data-visible="false"
+						data-width="550">[[#{finalDetails}]]
+					</th>
 				</tr>
 				</thead>
 			</table>

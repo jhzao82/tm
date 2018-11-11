@@ -44,6 +44,6 @@ public class PerfMatchScore implements Comparable<PerfMatchScore> {
 	}
 
 	@Override public String toString() {
-		return "Best of " + bestOf + ": " + getScore();
+        return bestOf + ": " + getScore();
 	}
 }

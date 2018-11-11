@@ -175,11 +175,11 @@
 </script>
 <div class="row margin-top">
 	<div class="col-md-8">
-		<h3 class="text-nowrap" style="display: inline">Top Performers</h3>
+		<h3 class="text-nowrap" style="display: inline">[[#{titleTopPerformers}]]</h3>
 	</div>
 	<div class="col-md-4">
 		<div class="input-group" data-toggle="tooltip" data-placement="top" title="Select performance category">
-			<label for="perfCategory" class="input-group-addon">Category:</label>
+			<label for="perfCategory" class="input-group-addon">[[#{category}]]:</label>
 			<select id="perfCategory" class="form-control" onchange="reloadTopPerformers()">
 				<optgroup th:each="categoryClass : ${categoryClasses}" th:label="${categoryClass.key}" label="Performance">
 					<option th:each="category : ${categoryClass.value}" th:value="${category.name}" value="matches" th:class="${category.cssClass}" th:text="${category.title}">Overall Matches</option>
@@ -192,36 +192,44 @@
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="perfLevel" class="form-control" onchange="perfLevelChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by tournament level">
-				<option value="">All levels</option>
+				<option value="">[[#{allLevels}]]</option>
 				<option th:each="level : ${levels}" th:value="${level.code}" th:class="|bg-level-${level.code}|" value="G" class="bg-level-G" th:text="${level.text}">Grand Slam</option>
 				<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO" th:text="${levelGroup.text}">Big Tournaments</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="perfSurface" class="form-control" onchange="perfSurfaceChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by surface">
-				<option value="">All surfaces</option>
-				<option th:each="surface : ${surfaces}" th:value="${surface.code}" th:class="|bg-surface-${surface.code}|" value="H" class="bg-surface-H" th:text="${surface.text}">Hard</option>
-				<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP" th:text="${surfaceGroup.text}">Fast (H, G, Cp)</option>
+				<option value="">[[#{allSurfaces}]]</option>
+				<option th:each="surface : ${surfaces}" th:value="${surface.code}"
+						th:class="|bg-surface-${surface.code}|" value="H" class="bg-surface-H"
+						th:text="#{'enum'+${surface}}">Hard
+				</option>
+				<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
+						th:text="#{'enumSurfaceGroup'+${surfaceGroup}}">Fast (H, G, Cp)
+				</option>
 			</select>
 		</div>
         <div class="col-md-2">
             <select id="perfSpeed" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip"
                     data-placement="top" title="Filter by court speed">
-                <option value="">All speeds</option>
+				<option value="">[[#{allSpeeds}]]</option>
                 <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                        style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium
+						style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}">Medium
                 </option>
             </select>
         </div>
 		<div class="col-md-3">
 			<select id="perfCountry" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-				<option value="">Vs all countries</option>
-				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI" th:text="${country.name}">Switzerland</option>
+				<option value="">[[#{vsAllCountries}]]</option>
+				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI"
+						th:text="__${#locale}__ == 'zh' ? ${country.toLocale().getDisplayCountry('zh')} : ${country.toLocale().getDisplayCountry('en')}">
+					Switzerland
+				</option>
 			</select>
 		</div>
         <div class="col-md-3">
 			<div class="input-group" data-toggle="tooltip" data-placement="top" title="Override minimum entries">
-				<label for="perfMinEntriesOverride" class="input-group-addon">Min. entries:</label>
+				<label for="perfMinEntriesOverride" class="input-group-addon">[[#{minEntries}]]:</label>
 				<input id="perfMinEntriesOverride" type="text" size="6" class="form-control" oninput="reloadTopPerformers()" onchange="reloadTopPerformers()"/>
 			</div>
 		</div>
@@ -229,34 +237,37 @@
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="perfBestOf" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-				<option value="">Best of any</option>
-				<option value="3">Best of 3</option>
-				<option value="5">Best of 5</option>
+				<option value="">[[#{bestOfAny}]]</option>
+				<option value="3">[[#{bestOf3}]]</option>
+				<option value="5">[[#{bestOf5}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="perfIndoor" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-				<option value="">Outdoor / Indoor</option>
-				<option value="false">Outdoor</option>
-				<option value="true">Indoor</option>
+				<option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+				<option value="false">[[#{outdoor}]]</option>
+				<option value="true">[[#{indoor}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="perfResult" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by tournament result">
-				<option value="">All results</option>
-				<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}">Win</option>
+				<option value="">[[#{allResults}]]</option>
+				<option th:each="aResult : ${results}" th:value="${aResult.code}"
+						th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W"
+						th:text="#{'enum'+${aResult}}">Win
+				</option>
 			</select>
 		</div>
 		<div class="col-md-4">
 			<div class="input-group">
-				<label for="perfFromSeason" class="input-group-addon">From:</label>
+				<label for="perfFromSeason" class="input-group-addon">[[#{from}]]:</label>
 				<select id="perfFromSeason" class="form-control" onchange="perfSeasonFilterChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Select from season">
-					<option value="">All seasons</option>
+					<option value="">[[#{allSeasons}]]</option>
 					<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 				</select>
-				<label for="perfToSeason" class="input-group-addon">To:</label>
+				<label for="perfToSeason" class="input-group-addon">[[#{to}]]:</label>
 				<select id="perfToSeason" class="form-control" onchange="perfSeasonFilterChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Select to season">
-					<option value="">All seasons</option>
+					<option value="">[[#{allSeasons}]]</option>
 					<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 				</select>
 			</div>
@@ -265,28 +276,32 @@
 </div>
 <div id="perfSeasonDiv" class="btn-group pull-left margin-right no-margin-left">
 	<select id="perfSeason" class="form-control" onchange="perfSeasonFilterChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Select career or filter by season">
-		<option value="">Career</option>
+		<option value="">[[#{career}]]</option>
 		<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 	</select>
 </div>
 <div id="perfRoundDiv" class="btn-group pull-left margin-right">
 	<select id="perfRound" class="form-control" onchange="perfRoundChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by round">
-		<option value="">All rounds</option>
-		<option th:each="round : ${rounds}" th:value="${round.code}" th:class="|bg-result-${round.baseCode}|" value="F" class="bg-result-F" th:text="${round.text}">Final</option>
+		<option value="">[[#{allRounds}]]</option>
+		<option th:each="round : ${rounds}" th:value="${round.code}" th:class="|bg-result-${round.baseCode}|" value="F"
+				class="bg-result-F" th:text="#{'enum'+${round}}">Final
+		</option>
 	</select>
 </div>
 <div id="perfOpponentDiv" class="btn-group pull-left margin-right">
 	<select id="perfOpponent" class="form-control" onchange="perfOpponentChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-		<option value="">Vs all</option>
+		<option value="">[[#{vsAll}]]</option>
 		<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-			<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1" th:text="${opponent.text}">Vs No. 1</option>
+			<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1"
+					th:text="#{'enum'+${opponent}}">Vs No. 1
+			</option>
 		</optgroup>
 	</select>
 </div>
 <div id="perfActiveDiv" class="btn-group margin-right">
 	<div class="checkbox">
 		<label data-toggle="tooltip" data-placement="top" title="Show only active players">
-			<input id="perfActive" type="checkbox" onchange="reloadTopPerformers()"/> Active
+			<input id="perfActive" type="checkbox" onchange="reloadTopPerformers()"/> [[#{active}]]
 		</label>
 	</div>
 </div>
@@ -298,7 +313,7 @@
 <div id="perfAdvancedFilterDiv" class="btn-group margin-left no-margin-right">
 	<div class="pull-right" data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 		<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#perfAdvancedFilter">
-			Adv.&nbsp;&nbsp;<i class="fa fa-chevron-up"></i>
+			[[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-up"></i>
 		</button>
 	</div>
 </div>
@@ -306,13 +321,19 @@
 <table id="topPerformersTable" class="table table-condensed table-hover table-striped">
 	<thead>
 	<tr>
-		<th data-column-id="rank" data-type="numeric" data-sortable="false" data-width="65">Rank</th>
-		<th data-column-id="country" data-formatter="country" data-sortable="false" data-width="85">Country</th>
-		<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="250">Name</th>
+		<th data-column-id="rank" data-type="numeric" data-sortable="false" data-width="65">[[#{rank}]]</th>
+		<th data-column-id="country" data-formatter="country" data-sortable="false" data-width="85">[[#{country}]]</th>
+		<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="250">[[#{name}]]</th>
 		<th data-column-id="wonLostPct" data-order="desc" data-width="190" data-align="right" data-header-align="right">Pct.</th>
-		<th data-column-id="won" data-formatter="won" data-width="70" data-align="right" data-header-align="right">Won</th>
-		<th data-column-id="lost" data-formatter="lost" data-width="70" data-align="right" data-header-align="right">Lost</th>
-		<th data-column-id="played" data-formatter="played" data-width="75" data-align="right" data-header-align="right">Played</th>
+		<th data-column-id="won" data-formatter="won" data-width="70" data-align="right" data-header-align="right">
+			[[#{won}]]
+		</th>
+		<th data-column-id="lost" data-formatter="lost" data-width="70" data-align="right" data-header-align="right">
+			[[#{lost}]]
+		</th>
+		<th data-column-id="played" data-formatter="played" data-width="75" data-align="right"
+			data-header-align="right">[[#{played}]]
+		</th>
 	</tr>
 	</thead>
 </table>

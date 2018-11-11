@@ -40,7 +40,9 @@
 						<table class="table table-condensed table-hover table-striped">
 							<thead>
 							<tr>
-								<th th:text="${subGroup.name}">Serve</th>
+								<th th:text="#{'text'+${#strings.replace(subGroup.name, ' ','').replace('-','')}}">
+									Serve
+								</th>
 								<th:block th:if="${compare}">
 									<th th:if="${compareStats}" class="pct-data text-right" width="40px" th:title="|${relativeTo} statistics|"><i class="fa fa-thumb-tack"></i></th>
 									<th th:if="${compareStats}" class="pct-data text-right" width="40px" title="Statistics difference"><i class="fa fa-exchange"></i></th>
@@ -114,8 +116,15 @@
 						<label th:for="|${statsId}CompareLevel|" class="input-group-addon input-sm">Level:</label>
 						<select th:id="|${statsId}CompareLevel|" class="form-control input-sm" th:data-container-id="${statsContainerId}" th:data-stats-id="${statsId}" onchange="compareStats($(this).data('container-id'), $(this).data('stats-id'))">
 							<option value="">All levels</option>
-							<option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|" value="G" class="bg-level-G" th:text="${aLevel.text}" th:selected="${aLevel.code == compareLevel}">Grand Slam</option>
-							<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO" th:text="${levelGroup.text}" th:selected="${levelGroup.codes == compareLevel}">Big Tournaments</option>
+							<option th:each="aLevel : ${levels}" th:value="${aLevel.code}"
+									th:class="|bg-level-${aLevel.code}|" value="G" class="bg-level-G"
+									th:text="#{'enum'+${aLevel}}" th:selected="${aLevel.code == compareLevel}">Grand
+								Slam
+							</option>
+							<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO"
+									th:text="#{'enumLevelGroup'+${levelGroup}}"
+									th:selected="${levelGroup.codes == compareLevel}">Big Tournaments
+							</option>
 						</select>
 					</div>
 				</div>

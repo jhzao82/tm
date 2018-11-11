@@ -240,7 +240,8 @@
 		<div class="col-md-2">
 			<select id="opponent" class="form-control" onchange="opponentChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
 				<option value="">[[#{vsAll}]]</option>
-				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
+                <optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+                          label="Rank">
 					<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1"
 							th:text="#{'enum'+${opponent}}">Vs No. 1
 					</option>

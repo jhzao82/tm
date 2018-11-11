@@ -478,7 +478,7 @@
                         <th colspan="2">[[#{scoreBreakdown}]]</th>
 					</tr>
 					<tr th:each="scoreWL : ${perf.scoreCounts}" th:with="score=${scoreWL.key}, wl=${scoreWL.value}">
-						<td width="40%" th:text="${score}">2-0</td>
+						<td width="40%" th:text="|#{bestOf} ${score}|">2-0</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">

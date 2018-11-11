@@ -130,7 +130,7 @@
 	<div class="col-md-2">
 		<select id="perfSeason" class="form-control" onchange="reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Select career or filter by season">
             <option value="">[[#{career}]]</option>
-			<option value="-1" th:selected="${season == -1}">Last 52 weeks</option>
+			<option value="-1" th:selected="${season == -1}">[[#{last52weeks}]]</option>
 			<option th:each="aSeason : ${seasons}" th:value="${aSeason}" value="2005" th:text="${aSeason}" th:selected="${aSeason == season}">2005</option>
 		</select>
 	</div>
@@ -689,7 +689,7 @@
 						</div>
 					</div>
 				</th>
-				<td class="text-center" th:text="${score}">2-0</td>
+				<td class="text-center" th:text="|#{bestOf} ${score}|">2-0</td>
 				<th class="text-left">
 					<div th:if="${wl2}" class="progress progress-perf pull-left">
 						<div class="progress-bar progress-bar-perf" th:attrappend="class=${wlc < 0 ? '-w' : (wlc > 0 ? '-l' : _)}" role="progressbar" th:style="'width: ' + ${wl2.wonPctStr}" th:attr="aria-valuenow=${wl2.wonPct}" aria-valuemin="0" aria-valuemax="100">

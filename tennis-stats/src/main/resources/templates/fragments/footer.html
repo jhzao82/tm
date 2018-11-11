@@ -1,3 +1,14 @@
 <footer xmlns:th="http://www.thymeleaf.org" th:fragment="copy">
 	<p class="text-center">&copy; 2018-[[${#temporals.createToday().year}]] tennismeta.com</p>
+	<script>
+$(document).ready(function(){
+$('[data-toggle="tooltip"]').tooltip('disable');
+$("a").attr("title","");
+});
+$( document ).ajaxComplete(function() {
+$('[data-toggle="tooltip"]').tooltip('disable');
+$("a").attr("title","");
+});
+
+	</script>
 </footer>

@@ -152,29 +152,44 @@
 <div class="row">
 	<div class="col-md-2">
 		<select id="statsSeason" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Select career or filter by season">
-			<option value="">Career</option>
-			<option value="-1" th:selected="${season == -1}">Last 52 weeks</option>
+			<option value="">[[#{career}]]</option>
+			<option value="-1" th:selected="${season == -1}">[[#{last52weeks}]]</option>
 			<option th:each="aSeason : ${seasons}" th:value="${aSeason}" value="2005" th:text="${aSeason}" th:selected="${aSeason == season}">2005</option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="statsLevel" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by tournament level">
-			<option value="">All levels</option>
-			<option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|" value="G" class="bg-level-G" th:text="${aLevel.text}" th:selected="${aLevel.code == level}">Grand Slam</option>
-			<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO" th:text="${levelGroup.text}" th:selected="${levelGroup.codes == level}">Big Tournaments</option>
+			<option value="">[[#{allLevels}]]</option>
+			<option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|"
+					value="G" class="bg-level-G" th:text="#{'enum'+${aLevel}}" th:selected="${aLevel.code == level}">
+				Grand Slam
+			</option>
+			<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO"
+					th:text="#{'enumLevelGroup'+${levelGroup}}" th:selected="${levelGroup.codes == level}">Big
+				Tournaments
+			</option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="statsSurface" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by surface">
-			<option value="">All surfaces</option>
-			<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}" th:selected="${aSurface.code == surface}">Hard</option>
-			<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP" th:text="${surfaceGroup.text}" th:selected="${surfaceGroup.codes.length() > 1 && surfaceGroup.codes == surface}">Fast (H, G, Cp)</option>
+			<option value="">[[#{allSurfaces}]]</option>
+			<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+					th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
+					th:text="#{'enum'+${aSurface}}" th:selected="${aSurface.code == surface}">Hard
+			</option>
+			<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
+					th:text="#{'enumSurfaceGroup'+${surfaceGroup}}"
+					th:selected="${surfaceGroup.codes.length() > 1 && surfaceGroup.codes == surface}">Fast (H, G, Cp)
+			</option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="statsRound" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by round">
-			<option value="">All rounds</option>
-			<option th:each="aRound : ${rounds}" th:value="${aRound.code}" th:class="|bg-result-${aRound.baseCode}|" value="F" class="bg-result-F" th:text="${aRound.text}" th:selected="${aRound.code == round}">Final</option>
+			<option value="">[[#{allRounds}]]</option>
+			<option th:each="aRound : ${rounds}" th:value="#{'enum'+${aRound}}"
+					th:class="|bg-result-${aRound.baseCode}|" value="F" class="bg-result-F"
+					th:text="#{'enum'+${aRound}}" th:selected="${aRound.code == round}">Final
+			</option>
 		</select>
 	</div>
 	<div class="col-md-1">
@@ -186,13 +201,13 @@
 	</div>
 	<div class="col-md-2">
 		<button type="button" class="btn btn-default" onclick="clearStatsFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-			<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+			<i class="fa fa-eraser"></i>&nbsp;&nbsp;[[#{clear}]]
 		</button>
 	</div>
 	<div class="col-md-1">
 		<div class="pull-right" data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#statsAdvancedFilter">
-				<i class="fa fa-folder-open"></i>&nbsp;&nbsp;Adv.&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+				<i class="fa fa-folder-open"></i>&nbsp;&nbsp;[[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
 			</button>
 		</div>
 	</div>
@@ -201,30 +216,36 @@
 	<div class="row margin-top">
 		<div class="col-md-4">
 			<div id="statsDateRange" class="input-group">
-				<label for="statsFromDate" class="input-group-addon">From:</label>
+				<label for="statsFromDate" class="input-group-addon">[[#{from}]]:</label>
 				<input id="statsFromDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(fromDate, 'dd-MM-yyyy')}" onchange="reloadStats()"/>
-				<label for="statsToDate" class="input-group-addon">To:</label>
+				<label for="statsToDate" class="input-group-addon">[[#{to}]]:</label>
 				<input id="statsToDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(toDate, 'dd-MM-yyyy')}" onchange="reloadStats()"/>
 			</div>
 		</div>
 		<div class="col-md-2">
 			<select id="statsIndoor" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-				<option value="">Outdoor / Indoor</option>
-				<option value="false" th:selected="${indoor == false}">Outdoor</option>
-				<option value="true" th:selected="${indoor}">Indoor</option>
+				<option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+				<option value="false" th:selected="${indoor == false}">[[#{outdoor}]]</option>
+				<option value="true" th:selected="${indoor}">[[#{indoor}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="statsResult" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by tournament result">
-				<option value="">All results</option>
-				<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}" th:selected="${aResult.code == result}">Win</option>
+				<option value="">[[#{allResults}]]</option>
+				<option th:each="aResult : ${results}" th:value="${aResult.code}"
+						th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W"
+						th:text="#{'enum'+${aResult}}" th:selected="${aResult.code == result}">Win
+				</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="statsOpponent" class="form-control" onchange="opponentChanged(); reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-				<option value="">Vs all</option>
-				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-					<option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1" th:text="${anOpponent.text}" th:selected="${anOpponent.name() == opponent}">Vs No. 1</option>
+				<option value="">[[#{vsAll}]]</option>
+				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+						  label="Rank">
+					<option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1"
+							th:text="#{'enum'+${anOpponent}}" th:selected="${anOpponent.name() == opponent}">Vs No. 1
+					</option>
 				</optgroup>
 			</select>
 		</div>
@@ -232,37 +253,40 @@
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="statsBestOf" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-				<option value="">Best of any</option>
-				<option value="3" th:selected="${bestOf == 3}">Best of 3</option>
-				<option value="5" th:selected="${bestOf == 5}">Best of 5</option>
+				<option value="">[[#{bestOfAny}]]</option>
+				<option value="3" th:selected="${bestOf == 3}">[[#{besOf3}]]</option>
+				<option value="5" th:selected="${bestOf == 5}">[[#{bestOf5}]]</option>
             </select>
         </div>
         <div class="col-md-2">
             <select id="statsSpeed" class="form-control" onchange="reloadStats()" data-toggle="tooltip"
                     data-placement="top" title="Filter by court speed">
-                <option value="">All speeds</option>
+				<option value="">[[#{allSpeeds}]]</option>
                 <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                        style="color: white" value="50" class="points-50" th:text="${aSpeed.text}"
-                        th:selected="${aSpeed.speed == speed}">Medium
+						style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}"
+						th:selected="${aSpeed.speed == speed}">Medium
                 </option>
             </select>
         </div>
 		<div class="col-md-3">
 			<select id="statsTournament" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-				<option value="">All tournaments</option>
-                <optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam"
+				<option value="">[[#{allTournaments}]]</option>
+				<optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
                           th:class="'bg-level-' + ${lts.key.code}">
                     <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                            th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}"
-                            th:selected="${tournament.id == tournamentId}">Wimbledon
+							th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+							th:selected="${tournament.id == tournamentId}">Wimbledon
                     </option>
                 </optgroup>
 			</select>
 		</div>
 		<div class="col-md-3">
 			<select id="statsCountry" class="form-control" onchange="countryChanged(); reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-				<option value="">Vs all countries</option>
-				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI" th:text="${country.name}" th:selected="${country.alpha3 == countryId}">Switzerland</option>
+				<option value="">[[#{vsAllCountries}]]</option>
+				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI"
+						th:text="__${#locale}__ == 'zh' ? ${country.toLocale().getDisplayCountry('zh')} : ${country.toLocale().getDisplayCountry('en')}"
+						th:selected="${country.alpha3 == countryId}">Switzerland
+				</option>
 			</select>
 		</div>
 	</div>
@@ -273,7 +297,10 @@
 		hasPointCompareStats1=${compareStats1 != null && compareStats1.hasPointStats()}, hasPointCompareStats2=${compareStats2 != null && compareStats2.hasPointStats()},
 		doCompareStats1=${!stats1.empty && compareStats1 != null && !compareStats1.empty}, doCompareStats2=${!stats2.empty && compareStats2 != null && !compareStats2.empty}, doCompareStats=${doCompareStats1 || doCompareStats2}">
 	<ul id="statisticsTabs" class="nav nav-tabs" style="text-align: center">
-		<li th:each="group : ${categoryGroups}" th:if="${hasPointStats || !group.needsStats}" th:class="${('statistics' + group.id == tab) || (tab == null && group.default) ? 'active' : _}" style="float:none; display:inline-block"><a data-toggle="tab" th:href="'#' + ${'statistics' + group.id}" th:text="${group.name}">Overview</a></li>
+		<li th:each="group : ${categoryGroups}" th:if="${hasPointStats || !group.needsStats}"
+			th:class="${('statistics' + group.id == tab) || (tab == null && group.default) ? 'active' : _}"
+			style="float:none; display:inline-block"><a data-toggle="tab" th:href="'#' + ${'statistics' + group.id}"
+														th:text="#{'tab'+${group.id}}">Overview</a></li>
 	</ul>
 	<div class="tab-content" style="margin-top: 30px">
 		<div th:each="group : ${categoryGroups}" th:if="${hasPointStats || !group.needsStats}" th:id="${'statistics' + group.id}" class="tab-pane fade" th:attrappend="class=${('statistics' + group.id == tab) || (tab == null && group.default) ? ' in active' : _}">
@@ -319,7 +346,9 @@
                                title="Show matches">6 / 10</a>
 						</th>
 					</th:block>
-					<td class="text-center" th:title="#{${category.descriptionId}}" th:text="${category.title}">Ace %</td>
+					<td class="text-center" th:title="#{${category.descriptionId}}"
+						th:text="#{'stats'+${#strings.capitalize(category.name)}}">Ace %
+					</td>
 					<th:block th:unless="${category.matchesLink}">
 						<th th:text="${showStats2 ? category.getStatFormatted(stats2) : _}" class="text-left stat" th:attrappend="class=${(sc < 0 ? '-w' : (sc > 0 ? '-l' : '')) + (category.hasRawData() ? ' pct-data' : '')}">10%</th>
 						<th th:if="${category.hasRawData()}" th:text="${showStats2 ? category.getStatUp(stats2) + ' / ' + category.getStatDown(stats2) : _}" class="text-left stat" th:attrappend="class=${(sc < 0 ? '-w' : (sc > 0 ? '-l' : '')) + (category.hasRawData() ? ' raw-data' : '')}">10 / 100</th>
@@ -361,31 +390,44 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div class="input-group">
-					<label for="statisticsCompareSeason" class="input-group-addon input-sm">Season:</label>
+					<label for="statisticsCompareSeason" class="input-group-addon input-sm">[[#{season}]]:</label>
 					<select id="statisticsCompareSeason" class="form-control input-sm" onchange="compareStats('statistics', 'statistics')">
-						<option value="">Career</option>
-						<option value="-1" th:selected="${compareSeason == -1}">Last 52 weeks</option>
+						<option value="">[[#{career}]]</option>
+						<option value="-1" th:selected="${compareSeason == -1}">[[#{last52weeks}]]</option>
 						<option th:each="aSeason : ${seasons}" th:value="${aSeason}" value="2005" th:text="${aSeason}" th:selected="${aSeason == compareSeason}">2005</option>
 					</select>
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="input-group">
-					<label for="statisticsCompareLevel" class="input-group-addon input-sm">Level:</label>
+					<label for="statisticsCompareLevel" class="input-group-addon input-sm">[[#{level}]]:</label>
 					<select id="statisticsCompareLevel" class="form-control input-sm" onchange="compareStats('statistics', 'statistics')">
-						<option value="">All levels</option>
-						<option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|" value="G" class="bg-level-G" th:text="${aLevel.text}" th:selected="${aLevel.code == compareLevel}">Grand Slam</option>
-						<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO" th:text="${levelGroup.text}" th:selected="${levelGroup.codes == compareLevel}">Big Tournaments</option>
+						<option value="">[[#{allLevels}]]</option>
+						<option th:each="aLevel : ${levels}" th:value="${aLevel.code}"
+								th:class="|bg-level-${aLevel.code}|" value="G" class="bg-level-G"
+								th:text="#{'enum'+${aLevel}}" th:selected="${aLevel.code == compareLevel}">Grand Slam
+						</option>
+						<option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.codes}" value="GFLMO"
+								th:text="#{'enumLevelGroup'+${levelGroup}}"
+								th:selected="${levelGroup.codes == compareLevel}">Big Tournaments
+						</option>
 					</select>
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="input-group">
-					<label for="statisticsCompareSurface" class="input-group-addon input-sm">Surface:</label>
+					<label for="statisticsCompareSurface" class="input-group-addon input-sm">[[#{surface}]]:</label>
 					<select id="statisticsCompareSurface" class="form-control input-sm" onchange="compareStats('statistics', 'statistics')">
-						<option value="">All surfaces</option>
-						<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}" th:selected="${aSurface.code == compareSurface}">Hard</option>
-						<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP" th:text="${surfaceGroup.text}" th:selected="${surfaceGroup.codes.length() > 1 && surfaceGroup.codes == compareSurface}">Fast (H, G, Cp)</option>
+						<option value="">[[#{allSurfaces}]]</option>
+						<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+								th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
+								th:text="#{'enum'+${aSurface}}" th:selected="${aSurface.code == compareSurface}">Hard
+						</option>
+						<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
+								th:text="#{'enumSurfaceGroup'+${surfaceGroup}}"
+								th:selected="${surfaceGroup.codes.length() > 1 && surfaceGroup.codes == compareSurface}">
+							Fast (H, G, Cp)
+						</option>
 					</select>
 				</div>
 			</div>

@@ -135,9 +135,12 @@
 	</div>
 	<div class="col-md-2">
 		<select id="perfOpponent" class="form-control" onchange="reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-			<option value="">Vs all</option>
-			<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-				<option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1" th:text="${anOpponent.text}" th:selected="${anOpponent.name() == opponent}">Vs No. 1</option>
+            <option value="">[[#{vsAll}]]</option>
+            <optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+                      label="Rank">
+                <option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1"
+                        th:text="#{'enum'+${anOpponent}}" th:selected="${anOpponent.name() == opponent}">Vs No. 1
+                </option>
 			</optgroup>
 		</select>
 	</div>
@@ -149,7 +152,7 @@
 	<div class="col-md-1">
 		<div class="pull-right" data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#perfAdvancedFilter">
-				Adv.&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+                [[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
 			</button>
 		</div>
 	</div>
@@ -158,51 +161,65 @@
 	<div class="row margin-top">
 		<div class="col-md-4">
 			<div id="perfDateRange" class="input-group">
-				<label for="perfFromDate" class="input-group-addon">From:</label>
+                <label for="perfFromDate" class="input-group-addon">[[#{from}]]:</label>
 				<input id="perfFromDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(fromDate, 'dd-MM-yyyy')}" onchange="reloadPerformance()"/>
-				<label for="perfToDate" class="input-group-addon">To:</label>
+                <label for="perfToDate" class="input-group-addon">[[#{to}]]:</label>
 				<input id="perfToDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(toDate, 'dd-MM-yyyy')}" onchange="reloadPerformance()"/>
 			</div>
 		</div>
 		<div class="col-md-2">
 			<select id="perfIndoor" class="form-control" onchange="reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-				<option value="">Outdoor / Indoor</option>
-				<option value="false" th:selected="${indoor == false}">Outdoor</option>
-				<option value="true" th:selected="${indoor}">Indoor</option>
+                <option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+                <option value="false" th:selected="${indoor == false}">[[#{outdoor}]]</option>
+                <option value="true" th:selected="${indoor}">[[#{indoor}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="perfResult" class="form-control" onchange="reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by tournament result">
-				<option value="">All results</option>
-				<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}" th:selected="${aResult.code == result}">Win</option>
+                <option value="">[[#{allResults}]]</option>
+                <option th:each="aResult : ${results}" th:value="${aResult.code}"
+                        th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W"
+                        th:text="#{'enum'+${aResult}}" th:selected="${aResult.code == result}">Win
+                </option>
 			</select>
 		</div>
 		<div class="col-md-3">
 			<select id="perfCountry" class="form-control" onchange="reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-				<option value="">Vs all countries</option>
-				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI" th:text="${country.name}" th:selected="${country.alpha3 == countryId}">Switzerland</option>
+                <option value="">[[#{vsAllCountries}]]</option>
+                <option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI"
+                        th:text="__${#locale}__ == 'zh' ? ${country.toLocale().getDisplayCountry('zh')} : ${country.toLocale().getDisplayCountry('en')}"
+                        th:selected="${country.alpha3 == countryId}">Switzerland
+                </option>
 			</select>
 		</div>
 	</div>
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="perfBestOf" class="form-control" onchange="reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-				<option value="">Best of any</option>
-				<option value="3" th:selected="${bestOf == 3}">Best of 3</option>
-				<option value="5" th:selected="${bestOf == 5}">Best of 5</option>
+                <option value="">[[#{bestOfAny}]]</option>
+                <option value="3" th:selected="${bestOf == 3}">[[#{bestOf3}]]</option>
+                <option value="5" th:selected="${bestOf == 5}">[[#{bestOf5}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="perfSpeed" class="form-control" onchange="reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by court speed">
-				<option value="">All speeds</option>
-				<option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|" style="color: white" value="50" class="points-50" th:text="${aSpeed.text}" th:selected="${aSpeed.speed == speed}">Medium</option>
+                <option value="">[[#{allSpeeds}]]</option>
+                <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
+                        style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}"
+                        th:selected="${aSpeed.speed == speed}">Medium
+                </option>
 			</select>
 		</div>
 		<div class="col-md-3">
 			<select id="perfTournament" class="form-control" onchange="reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-				<option value="">All tournaments</option>
-				<optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam" th:class="'bg-level-' + ${lts.key.code}">
-					<option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101" th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}" th:selected="${tournament.id == tournamentId}">Wimbledon</option>
+                <option value="">[[#{allTournaments}]]</option>
+                <optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
+                          th:class="'bg-level-' + ${lts.key.code}">
+                    <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
+                            th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+                            th:class="'bg-level-' + ${tournament.level}" th:selected="${tournament.id == tournamentId}">
+                        Wimbledon
+                    </option>
 				</optgroup>
 			</select>
 		</div>
@@ -215,7 +232,7 @@
 			<div class="col-lg-4 col-sm-6">
 				<table id="playerPerfSurface" class="table table-condensed table-striped">
 					<tr>
-						<th width="40%">Overall</th>
+                        <th width="40%">[[#{overall}]]</th>
 						<th th:with="wl=${perf.matches}">
 							<div th:unless="${wl.empty}" class="progress progress-perf">
 								<div class="progress-bar progress-bar-overall" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -231,10 +248,10 @@
 						<th colspan="2">&nbsp;</th>
 					</tr>
 					<tr>
-						<th colspan="2">Surface Breakdown</th>
+                        <th colspan="2">[[#{surfaceBreakdown}]]</th>
 					</tr>
 					<tr th:each="surfaceWL : ${perf.surfaceMatches}" th:with="surface=${surfaceWL.key}, wl=${surfaceWL.value}">
-						<td th:text="${surface.text}">Hard</td>
+                        <td th:text="#{'enum'+${surface}}">Hard</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf" th:data-surface="${surface.code}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -251,10 +268,10 @@
 			<div class="col-lg-4 col-sm-6">
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Tournament Level Breakdown</th>
+                        <th colspan="2">[[#{tournamentLevelBreakdown}]]</th>
 					</tr>
 					<tr th:each="levelWL : ${perf.levelMatches}" th:with="level=${levelWL.key}, wl=${levelWL.value}">
-						<td width="40%" th:text="${level.text}">Grand Slam</td>
+                        <td width="40%" th:text="#{'enum'+${level}}">Grand Slam</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf label-" th:attrappend="class=${level.code}" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -271,10 +288,10 @@
 			<div class="col-lg-4 col-sm-6">
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Pressure Situations</th>
+                        <th colspan="2">[[#{pressureSituations}]]</th>
 					</tr>
 					<tr>
-						<td width="40%">Deciding Set</td>
+                        <td width="40%">[[#{decidingSet}]]</td>
 						<th th:with="wl=${perf.decidingSets}">
 							<div th:unless="${wl.empty}" class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -287,7 +304,7 @@
 						</th>
 					</tr>
 					<tr>
-						<td>Fifth Set</td>
+                        <td>[[#{fifthSet}]]</td>
 						<th th:with="wl=${perf.fifthSets}">
 							<div th:unless="${wl.empty}" class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -300,7 +317,7 @@
 						</th>
 					</tr>
 					<tr>
-						<td>After Winning 1st Set</td>
+                        <td>[[#{afterWinning1stSet}]]</td>
 						<th th:with="wl=${perf.afterWinningFirstSet}">
 							<div th:unless="${wl.empty}" class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -313,7 +330,7 @@
 						</th>
 					</tr>
 					<tr>
-						<td>After Losing 1st Set</td>
+                        <td>[[#{afterLosing1stSet}]]</td>
 						<th th:with="wl=${perf.afterLosingFirstSet}">
 							<div th:unless="${wl.empty}" class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -326,7 +343,7 @@
 						</th>
 					</tr>
 					<tr>
-						<td>Tie Breaks</td>
+                        <td>[[#{tieBreaks}]]</td>
 						<th th:with="wl=${perf.tieBreaks}">
 							<div th:unless="${wl.empty}" class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -339,7 +356,7 @@
 						</th>
 					</tr>
 					<tr>
-						<td width="40%">Deciding Set Tie Breaks</td>
+                        <td width="40%">[[#{decidingSetTieBreaks}]]</td>
 						<th th:with="wl=${perf.decidingSetTieBreaks}">
 							<div th:unless="${wl.empty}" class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -358,10 +375,10 @@
 			<div class="col-lg-4 col-sm-6">
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Outdoor / Indoor Breakdown</th>
+                        <th colspan="2">[[#{outdoorIndoorBreakdown}]]</th>
 					</tr>
 					<tr th:each="indoorWL : ${perf.outdoorIndoorMatches}" th:with="indoor=${indoorWL.key}, wl=${indoorWL.value}">
-						<td width="40%" th:text="${indoor ? 'Indoor' : 'Outdoor'}">Outdoor</td>
+                        <td width="40%" th:text="#{indoor ? 'indoor' : 'outdoor'}">Outdoor</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -376,10 +393,10 @@
 				</table>
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Best of Breakdown</th>
+                        <th colspan="2">[[#{bestOfBreakdown}]]</th>
 					</tr>
 					<tr th:each="bestOfWL : ${perf.bestOfMatches}" th:with="bestOf=${bestOfWL.key}, wl=${bestOfWL.value}">
-						<td width="40%" th:text="|Best of ${bestOf}|">Best of 3</td>
+                        <td width="40%" th:text="#{|bestOf${bestOf}|}">Best of 3</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -396,10 +413,10 @@
 			<div class="col-lg-4 col-sm-6">
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Opposition Breakdown</th>
+                        <th colspan="2">[[#{oppositionBreakdown}]]</th>
 					</tr>
 					<tr th:each="oppositionWL : ${perf.oppositionMatches}" th:with="opposition=${oppositionWL.key}, wl=${oppositionWL.value}">
-						<td width="40%" th:text="${opposition.text}">Vs No. 1</td>
+                        <td width="40%" th:text="#{'enum'+${opposition}}">Vs No. 1</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -416,10 +433,10 @@
 			<div class="col-lg-4 col-sm-6">
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Round Breakdown</th>
+                        <th colspan="2">[[#{roundBreakdown}]]</th>
 					</tr>
 					<tr th:each="roundWL : ${perf.roundMatches}" th:with="round=${roundWL.key}, wl=${roundWL.value}">
-						<td width="40%" th:text="${round.text}">Final</td>
+                        <td width="40%" th:text="#{'enum'+${round}}">Final</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -438,10 +455,10 @@
 			<div th:unless="${perf.speedMatches.empty}" class="col-lg-4 col-sm-6">
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Court Speed Breakdown</th>
+                        <th colspan="2">[[#{courtSpeedBreakdown}]]</th>
 					</tr>
 					<tr th:each="speedWL : ${perf.speedMatches}" th:with="speed=${speedWL.key}, wl=${speedWL.value}">
-						<td width="40%" th:text="${speed.text}" th:title="${speed.speedRange}">Medium</td>
+                        <td width="40%" th:text="#{'enum'+${speed}}" th:title="${speed.speedRange}">Medium</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">
@@ -458,7 +475,7 @@
 			<div th:unless="${perf.scoreCounts.empty}" class="col-lg-4 col-sm-6">
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Score Breakdown</th>
+                        <th colspan="2">[[#{scoreBreakdown}]]</th>
 					</tr>
 					<tr th:each="scoreWL : ${perf.scoreCounts}" th:with="score=${scoreWL.key}, wl=${scoreWL.value}">
 						<td width="40%" th:text="${score}">2-0</td>
@@ -478,10 +495,10 @@
 			<div th:unless="${perf.resultCounts.empty}" class="col-lg-4 col-sm-6">
 				<table class="table table-condensed table-striped">
 					<tr>
-						<th colspan="2">Result Breakdown</th>
+                        <th colspan="2">[[#{resultBreakdown}]]</th>
 					</tr>
 					<tr th:each="resultWL : ${perf.resultCounts}" th:with="result=${resultWL.key}, wl=${resultWL.value}">
-						<td width="40%" th:text="${result.text}">Win</td>
+                        <td width="40%" th:text="#{'enum'+${result}}">Win</td>
 						<th>
 							<div class="progress progress-perf">
 								<div class="progress-bar progress-bar-perf-def" role="progressbar" th:style="'width: ' + ${wl.wonPctStr}" th:attr="aria-valuenow=${wl.wonPct}" aria-valuemin="0" aria-valuemax="100">

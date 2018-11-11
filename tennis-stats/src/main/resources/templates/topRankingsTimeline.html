@@ -3,7 +3,7 @@
 <!--/*@thymesVar id="rankCategories" type="org.strangeforest.tcb.stats.model.core.RankCategory[]"*/-->
 <!--/*@thymesVar id="rankType" type="org.strangeforest.tcb.stats.model.core.RankType"*/-->
 <!--/*@thymesVar id="timeline" type="org.strangeforest.tcb.stats.model.TopRankingsTimeline"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, false, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titleTopRankingsTimeline}, false, ~{::template})">
 	<title>Top Rankings Timeline</title>
 	<template>
 	<meta name="description" content="ATP or Elo top rankings timeline"/>
@@ -22,14 +22,18 @@
 </head>
 <body th:with="rankTypeName=${rankType.name()}" class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3><i class="fa fa-list-ol"></i> Top Rankings Timeline</h3>
+    <h3><i class="fa fa-list-ol"></i> [[#{titleTopRankingsTimeline}]]</h3>
 	<th:block th:include="fragments/deviceDetector :: largeDeviceRequired('sm')"/>
 	<row>
 		<div class="col-md-4 input-group">
-			<label for="rankType" class="input-group-addon">Ranking type:</label>
+            <label for="rankType" class="input-group-addon">[[#{rankingType}]]:</label>
 			<select id="rankType" class="form-control" onchange="onRankTypeChange()">
 				<optgroup th:each="rankCategory : ${rankCategories}" th:label="${rankCategory.text}" label="ATP" th:with="isGOAT=${rankCategory.name() == 'GOAT'}">
-					<option th:each="aRankType : ${rankCategory.rankTypes}" th:if="${!aRankType.points || isGOAT}" th:value="${aRankType}" value="RANK" th:selected="${aRankType == rankType}" th:class="${aRankType.surface != null ? 'bg-surface-' + aRankType.surface.code : _}" th:text="${aRankType.text + (isGOAT ? ' Ranking' : '')}">ATP Ranking</option>
+                    <option th:each="aRankType : ${rankCategory.rankTypes}" th:if="${!aRankType.points || isGOAT}"
+                            th:value="${aRankType}" value="RANK" th:selected="${aRankType == rankType}"
+                            th:class="${aRankType.surface != null ? 'bg-surface-' + aRankType.surface.code : _}"
+                            th:text="#{'enum'+${aRankType}}">ATP Ranking
+                    </option>
 				</optgroup>
 			</select>
 		</div>
@@ -38,7 +42,7 @@
 	<table id="timelineTable" class="table table-condensed table-hover table-bordered text-nowrap">
 		<thead>
 			<tr>
-				<th>Season</th>
+                <th>[[#{season}]]</th>
 				<th th:each="rank : ${#numbers.sequence(1, timeline.topRanks)}" th:text="'No. ' + ${rank}">No. 1</th>
 			</tr>
 		</thead>
@@ -55,8 +59,9 @@
 				</th>
 				<td th:each="player : ${timeline.getTopPlayers(season)}">
 					<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/ch.png'" th:title="${player.country.id}" title="SUI" width="24" height="20"/>
-					<a th:href="${language}+@{/playerProfile(playerId=${player.playerId})}" th:text="${player.name}"
-					   style="vertical-align: middle" title="Show profile">Roger Federer</a>
+                    <a th:href="${language}+@{/playerProfile(playerId=${player.playerId})}"
+                       th:text="__${#locale}__ == 'zh' and ${player.chineseName} != null ? ${player.chineseName} : ${player.name}"
+                       style="vertical-align: middle" title="Show profile">Roger Federer</a>
 					<img th:if="${player.active}" src="/images/active.png" title="Active" width="12" height="12"/>
 					<span th:if="${player.rank == 1}" class="small-dimmed" th:text="'(' + ${player.yeNo1} + '/' + ${timeline.getYENo1(player.playerId)} + ')'">(2/5)</span>
 				</td>

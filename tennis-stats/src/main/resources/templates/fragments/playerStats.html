@@ -28,7 +28,10 @@
 		</script>
 		<th:block th:unless="${stats.empty}" th:with="hasPointStats=${stats.hasPointStats()}, hasPointCompareStats=${compareStats != null && compareStats.hasPointStats()}">
 		<ul th:id="|${statsId}Tabs|" class="nav nav-tabs" th:style="|width: ${popover ? '100' : '75'}%|">
-			<li th:each="group : ${categoryGroups}" th:if="${hasPointStats || !group.needsStats}" th:class="${(statsId + group.id == tab) || (tab == null && group.default) ? 'active' : _}"><a data-toggle="tab" th:href="'#' + ${statsId + group.id}" th:text="${group.name}">Overview</a></li>
+            <li th:each="group : ${categoryGroups}" th:if="${hasPointStats || !group.needsStats}"
+                th:class="${(statsId + group.id == tab) || (tab == null && group.default) ? 'active' : _}"><a
+                    data-toggle="tab" th:href="'#' + ${statsId + group.id}" th:text="#{'tab'+${group.id}}">Overview</a>
+            </li>
 		</ul>
 		<div class="tab-content" style="margin-top: 10px">
 			<div th:each="group : ${categoryGroups}" th:if="${hasPointStats || !group.needsStats}" th:id="${statsId + group.id}" class="tab-pane fade" th:attrappend="class=${(statsId + group.id == tab) || (tab == null && group.default) ? ' in active' : _}">
@@ -49,7 +52,9 @@
 							</thead>
 							<tbody>
 							<tr th:each="category : ${subGroup.categories}" th:if="${hasPointStats || !category.needsStats}">
-								<td th:title="#{${category.descriptionId}}" th:text="${category.title}">Ace %</td>
+                                <td th:title="#{${category.descriptionId}}"
+                                    th:text="#{'stats'+${#strings.capitalize(category.name)}}">Ace %
+                                </td>
 								<th th:if="${compareStats}" th:text="${hasPointCompareStats || !category.needsStats ? category.getStatFormatted(compareStats) : _}" class="pct-data text-right">10%</th>
 								<th th:if="${compareStats}" th:text="${hasPointCompareStats || !category.needsStats ? category.getStatDiffFormatted(compareStats, stats) : _}" class="pct-data text-right " th:attrappend="class=${category.getStatDiffClass(compareStats, stats)}">0%</th>
 								<th:block th:unless="${!popover && category.matchesLink}">

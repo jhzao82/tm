@@ -103,9 +103,10 @@
 				}
 			},
 			labels: {
+				all: "[[#{all}]]",
 				search: "[[#{search}]]",
 				infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
-				loading: bootgridTemplateLoading,
+				loading: "[[#{loading}]]",
 				noResults: "[[#{nomatchesFound}]]"
 			},
 			templates: {
@@ -285,14 +286,20 @@
 	<div class="col-md-2">
 		<select id="matchesRound" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by round">
 			<option value="">[[#{allRounds}]]</option>
-			<option th:each="aRound : ${rounds}" th:value="${aRound.code}" th:class="|bg-result-${aRound.baseCode}|" value="F" class="bg-result-F" th:text="${aRound.text}" th:selected="${aRound.code == round}">Final</option>
+			<option th:each="aRound : ${rounds}" th:value="${aRound.code}" th:class="|bg-result-${aRound.baseCode}|"
+					value="F" class="bg-result-F" th:text="#{'enum'+${aRound}}" th:selected="${aRound.code == round}">
+				Final
+			</option>
 		</select>
 	</div>
 	<div class="col-md-2">
 		<select id="matchesOpponent" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-			<option value="">Vs all</option>
-			<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-				<option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1" th:text="${anOpponent.text}" th:selected="${anOpponent.name() == opponent}">Vs No. 1</option>
+			<option value="">[[#{vsAll}]]</option>
+			<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+					  label="Rank">
+				<option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1"
+						th:text="#{'enum'+${anOpponent}}" th:selected="${anOpponent.name() == opponent}">Vs No. 1
+				</option>
 			</optgroup>
 			<optgroup th:if="${opponent != null && opponent.startsWith('OPP_')}" label="Vs Player">
 				<option th:value="${opponent}" th:text="${'Vs ' + opponentName}" selected="selected">Vs Roger Federer</option>
@@ -305,7 +312,7 @@
 		</button>
 		<span data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#matchesAdvancedFilter">
-				Adv.&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+				[[#{adv}]].&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
 			</button>
 		</span>
 	</div>
@@ -339,17 +346,20 @@
 		</div>
 		<div class="col-md-3">
 			<select id="matchesCountry" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-				<option value="">Vs all countries</option>
-				<option th:each="aCountry : ${countries}" th:value="${aCountry.alpha3}" value="SUI" th:text="${aCountry.name}" th:selected="${aCountry.alpha3 == countryId}">Switzerland</option>
+				<option value="">[[#{vsAllCountries}]]</option>
+				<option th:each="aCountry : ${countries}" th:value="${aCountry.alpha3}" value="SUI"
+						th:text="__${#locale}__ == 'zh' ? ${aCountry.toLocale().getDisplayCountry('zh')} : ${aCountry.toLocale().getDisplayCountry('en')}"
+						th:selected="${aCountry.alpha3 == countryId}">Switzerland
+				</option>
 			</select>
 		</div>
 	</div>
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="matchesBestOf" class="form-control" onchange="reloadMatches()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-				<option value="">Best of any</option>
-				<option value="3" th:selected="${bestOf == 3}">Best of 3</option>
-				<option value="5" th:selected="${bestOf == 5}">Best of 5</option>
+				<option value="">[[#{bestOfAny}]]</option>
+				<option value="3" th:selected="${bestOf == 3}">[[#{bestOf3}]]</option>
+				<option value="5" th:selected="${bestOf == 5}">[[#{bestOf5}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
@@ -506,25 +516,27 @@
 	</select>
 </div>
 <button id="matchesStats" type="button" class="btn btn-info grid-control margin-right" onclick="showMatchesStats(event)" data-toggle="tooltip" data-placement="top" th:title="|${playerName} Statistics (for the selected matches)|">
-	<span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Stats
+	<span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;[[#{stats}]]
 </button>
 <table id="matchesTable" class="table table-condensed table-hover table-striped">
 	<thead>
 	<tr>
-		<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">Date</th>
-		<th data-column-id="tournament" data-formatter="tournament" data-width="175">Tournament</th>
-		<th data-column-id="surface" data-formatter="surface" data-width="80">Surface</th>
+		<th data-column-id="date" data-formatter="date" data-order="desc" data-width="85">[[#{date}]]</th>
+		<th data-column-id="tournament" data-formatter="tournament" data-width="175">[[#{tournament}]]</th>
+		<th data-column-id="surface" data-formatter="surface" data-width="80">[[#{surface}]]</th>
         <th data-column-id="speed" data-formatter="speed" data-visible="false" data-width="70" data-align="center"
-            data-header-align="center">Speed
+			data-header-align="center">[[#{speed}]]
         </th>
-		<th data-column-id="round" data-width="75">Round</th>
+		<th data-column-id="round" data-width="75">[[#{round}]]</th>
 		<th data-column-id="wonLost" data-formatter="wonLost" data-width="55">W/L</th>
-		<th data-column-id="match" data-formatter="match" data-sortable="false" data-width="300">Match</th>
-		<th data-column-id="matchEx" data-formatter="matchEx" data-sortable="false" data-visible="false" data-width="500">Match Details</th>
+		<th data-column-id="match" data-formatter="match" data-sortable="false" data-width="300">[[#{match}]]</th>
+		<th data-column-id="matchEx" data-formatter="matchEx" data-sortable="false" data-visible="false"
+			data-width="500">[[#{matchDetails}]]
+		</th>
 		<th data-column-id="bestOf" data-width="50" data-visible="false">BO</th>
-		<th data-column-id="score" data-formatter="score" data-sortable="false" data-width="175">Score</th>
+		<th data-column-id="score" data-formatter="score" data-sortable="false" data-width="175">[[#{score}]]</th>
 		<th data-column-id="bigWinPoints" data-formatter="bigWinPoints" data-sortable="true" data-visible="false" data-width="50">BW</th>
-		<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="75">Stats</th>
+		<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="75">[[#{stats}]]</th>
 		<th data-column-id="h2h" data-formatter="h2h" data-sortable="false" data-visible="false" data-width="55" data-css-class="h2h-column">H2H</th>
 	</tr>
 	</thead>

@@ -74,7 +74,10 @@
 					}
 				},
 				labels: {
-					loading: bootgridTemplateLoading,
+					all: "[[#{all}]]",
+					search: "[[#{search}]]",
+					infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+					loading: "[[#{loading}]]",
 					noResults: "No rivalries found"
 				},
 				templates: {
@@ -200,9 +203,9 @@
 	<div id="advancedFilter" class="collapse row margin-top">
 		<div class="col-md-2">
 			<select id="bestOf" class="form-control" onchange="reloadGreatestRivalries()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-				<option value="">Best of any</option>
-				<option value="3">Best of 3</option>
-				<option value="5">Best of 5</option>
+				<option value="">[[#{bestOfAny}]]</option>
+				<option value="3">[[#{bestOf3}]]</option>
+				<option value="5">[[#{bestOf5}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
@@ -224,11 +227,12 @@
         <div class="col-md-2">
             <select id="tournament" class="form-control" onchange="reloadGreatestRivalries()" data-toggle="tooltip"
                     data-placement="top" title="Filter by tournament">
-                <option value="">All tournaments</option>
-                <optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam"
+				<option value="">[[#{allTournaments}]]</option>
+				<optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
                           th:class="'bg-level-' + ${lts.key.code}">
                     <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                            th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}">Wimbledon
+							th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+							th:class="'bg-level-' + ${tournament.level}">Wimbledon
                     </option>
                 </optgroup>
             </select>
@@ -283,13 +287,13 @@
 	</div>
 	<div id="clearDiv" class="btn-group margin-right">
 		<button type="button" class="btn btn-default" onclick="clearGreatestRivalriesFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-			<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+			<i class="fa fa-eraser"></i>&nbsp;&nbsp;[[#{clear}]]
 		</button>
 	</div>
 	<div id="advFilterDiv" class="btn-group pull-right margin-left no-margin-right">
 		<div data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#advancedFilter">
-				<i class="fa fa-folder-open"></i>&nbsp;&nbsp;Adv.&nbsp;&nbsp;<i class="fa fa-chevron-up"></i>
+				<i class="fa fa-folder-open"></i>&nbsp;&nbsp;[[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-up"></i>
 			</button>
 		</div>
 	</div>
@@ -297,12 +301,16 @@
 		<thead>
 		<tr>
 			<th data-column-id="rank" data-type="numeric" data-width="55" data-sortable="false">Rnk</th>
-			<th data-column-id="rivalry" data-formatter="rivalry" data-width="320" data-sortable="false">Rivalry</th>
+			<th data-column-id="rivalry" data-formatter="rivalry" data-width="320" data-sortable="false">
+				[[#{rivalry}]]
+			</th>
 			<th data-column-id="matches" data-formatter="matches" data-order="desc" data-width="45" data-align="right" data-header-align="right">M</th>
 			<th data-column-id="rivalryScore" data-type="numeric" data-width="50" data-align="right" data-header-align="right">Scr</th>
 			<th data-column-id="h2h" data-formatter="h2h" data-width="55" data-sortable="false" data-align="center" data-header-align="center">H2H</th>
 			<th data-column-id="h2hPct" data-formatter="h2hPct" data-width="120" data-sortable="false" data-align="center" data-header-align="center">H2H %</th>
-			<th data-column-id="lastMatch" data-formatter="lastMatch" data-sortable="false" data-width="450">Last Match</th>
+			<th data-column-id="lastMatch" data-formatter="lastMatch" data-sortable="false" data-width="450">
+				[[#{lastMatch}]]
+			</th>
 			<th data-column-id="h2h2" data-formatter="h2h2" data-sortable="false" data-width="55">H2H</th>
 		</tr>
 		</thead>

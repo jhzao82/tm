@@ -19,9 +19,9 @@ public class TournamentLevelService {
 	@Autowired private NamedParameterJdbcTemplate jdbcTemplate;
 
 	private static final String TIMELINE_QUERY = //language=SQL
-		"SELECT e.tournament_id, t.name, e.tournament_event_id, e.season, e.date, e.surface,\n" +
-		"  m.winner_id, pw.%1$s winner_name, pw.name winner_full_name, pw.country_id winner_country_id, pw.active winner_active, m.winner_seed, m.winner_entry,\n" +
-		"  m.loser_id runner_up_id, pl.%1$s runner_up_name, pl.name runner_up_full_name, pl.country_id runner_up_country_id, pl.active runner_up_active, m.loser_seed runner_up_seed, m.loser_entry runner_up_entry, m.score, m.outcome\n" +
+            "SELECT e.tournament_id, t.name, t.chinese_name, e.tournament_event_id, e.season, e.date, e.surface,\n" +
+                    "  m.winner_id, pw.%1$s winner_name, pw.name winner_full_name, pw.chinese_name as winner_chinese_name, pw.country_id winner_country_id, pw.active winner_active, m.winner_seed, m.winner_entry,\n" +
+                    "  m.loser_id runner_up_id, pl.%1$s runner_up_name, pl.name runner_up_full_name, pl.chinese_name as runner_up_chinese_name, pl.country_id runner_up_country_id, pl.active runner_up_active, m.loser_seed runner_up_seed, m.loser_entry runner_up_entry, m.score, m.outcome\n" +
 		"FROM tournament_event e\n" +
 		"INNER JOIN tournament t USING (tournament_id)\n" +
 		"LEFT JOIN match m ON m.tournament_event_id = e.tournament_event_id AND m.round = 'F'\n" +
@@ -63,6 +63,7 @@ public class TournamentLevelService {
 				TournamentLevelTimelineItem item = new TournamentLevelTimelineItem(
 					rs.getInt("tournament_id"),
 					rs.getString("name"),
+                        rs.getString("chinese_name"),
 					rs.getInt("season"),
 					rs.getInt("tournament_event_id"),
 					getLocalDate(rs, "date"),
@@ -82,7 +83,7 @@ public class TournamentLevelService {
 		TournamentLevelTimelinePlayer player = new TournamentLevelTimelinePlayer(rank,
 			rs.getInt(prefix + "id"),
                 rs.getString(prefix + "name"),
-                rs.getString(prefix + "name"),
+                rs.getString(prefix + "chinese_name"),
 			getInternedString(rs, prefix + "country_id"),
 			rs.getBoolean(prefix + "active")
 		);

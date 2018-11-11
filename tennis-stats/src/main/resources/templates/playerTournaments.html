@@ -84,8 +84,11 @@
 				}
 			},
 			labels: {
-				loading: bootgridTemplateLoading,
-				noResults: "No tournaments found"
+				all: "[[#{all}]]",
+				search: "[[#{search}]]",
+				infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+				loading: "[[#{loading}]]",
+				noResults: "[[#{noTournamentsFound}]]"
 			},
 			templates: {
 				paginationItem: bootgridTemplatePaginationItem
@@ -218,28 +221,28 @@
     </div>
 </div>
 <button id="tournamentsEvents" type="button" class="btn btn-info grid-control margin-right" onclick="showTournamentsEvents()" data-toggle="tooltip" data-placement="top" th:title="|${playerName} Tournament Events (for the selected tournaments)|">
-	<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Events
+	<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;[[#{events}]]
 </button>
 <button id="tournamentsStats" type="button" class="btn btn-info grid-control margin-right" onclick="showTournamentsStats(event)" data-toggle="tooltip" data-placement="top" th:title="|${playerName} Statistics (for the selected tournaments)|">
-	<span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Stats
+	<span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;[[#{stats}]]
 </button>
 <button id="tournamentsClear" type="button" class="btn btn-default grid-control margin-right" onclick="clearTournamentsFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-	<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+	<i class="fa fa-eraser"></i>&nbsp;&nbsp;[[#{clear}]]
 </button>
 <table id="tournamentsTable" class="table table-condensed table-hover table-striped">
 	<thead>
 	<tr>
-		<th data-column-id="name" data-formatter="tournament" data-width="200">Tournament</th>
-		<th data-column-id="levels" data-formatter="levels" data-width="140">Level</th>
-		<th data-column-id="surfaces" data-formatter="surfaces" data-width="110">Surface</th>
-        <th data-column-id="speeds" data-formatter="speeds" data-width="70">Speed</th>
-		<th data-column-id="eventCount" data-formatter="eventCount" data-width="75">Events</th>
-		<th data-column-id="seasons" data-formatter="seasons" data-width="180" data-sortable="false">Seasons</th>
+		<th data-column-id="name" data-formatter="tournament" data-width="200">[[#{tournament}]]</th>
+		<th data-column-id="levels" data-formatter="levels" data-width="140">[[#{level}]]</th>
+		<th data-column-id="surfaces" data-formatter="surfaces" data-width="110">[[#{surface}]]</th>
+		<th data-column-id="speeds" data-formatter="speeds" data-width="70">[[#{speed}]]</th>
+		<th data-column-id="eventCount" data-formatter="eventCount" data-width="75">[[#{events}]]</th>
+		<th data-column-id="seasons" data-formatter="seasons" data-width="180" data-sortable="false">[[#{seasons}]]</th>
 		<th data-column-id="bestResult" data-formatter="bestResult" data-width="60" data-align="center" data-header-align="center">Best</th>
 		<th data-column-id="lastResult" data-formatter="lastResult" data-width="60" data-align="center" data-header-align="center">Last</th>
 		<th data-column-id="wonPct" data-formatter="wonPct" data-width="60" data-align="right" data-header-align="right">W%</th>
 		<th data-column-id="titles" data-formatter="titles" data-width="40" data-align="center" data-header-align="right">T</th>
-		<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="75">Stats</th>
+		<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="75">[[#{stats}]]</th>
 	</tr>
 	</thead>
 </table>

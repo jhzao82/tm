@@ -1,14 +1,16 @@
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="playerTournamentTimeline(tournament)">
 	<!--/*@thymesVar id="tournament" type="org.strangeforest.tcb.stats.model.PlayerTournamentTimeline"*/-->
 	<td th:class="|bg-level-${tournament.maxLevel}|" class="bg-level-G">
-		<th:block th:unless="${tournament.maxLevel} == 'O'" th:each="levelAndName : ${tournament.levelsAndNames}">
+        <th:block th:unless="${tournament.maxLevel} == 'O'"
+                  th:each="levelAndName : __${#locale}__ == 'zh' and ${tournament.chineseLevelsAndNames} != null  ? ${tournament.chineseLevelsAndNames} : ${tournament.levelsAndNames}">
 			<a th:href="${language}+@{/tournament(tournamentId=${tournament.tournamentId})}"
 			   th:text="${levelAndName.value}" th:data-level="${levelAndName.key}" data-level="G"
 			   class="label tournament">Wimbledon</a>
 		</th:block>
 		<a th:if="${tournament.maxLevel} == 'O'"
-		   th:href="${language}+@{/tournament(tournamentId=${tournament.tournamentId})}" th:text="${tournament.name}"
-		   th:data-level="${tournament.maxLevel}" data-level="O" class="label tournament">Olympics</a>
+           th:href="${language}+@{/tournament(tournamentId=${tournament.tournamentId})}"
+           th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+           th:data-level="${tournament.maxLevel}" data-level="O" class="label tournament">Olympics</a>
 	</td>
 	<td th:class="|bg-level-${tournament.maxLevel}|" class="bg-level-G">
 		<th:block th:each="surface : ${tournament.surfaces}">

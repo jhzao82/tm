@@ -71,7 +71,7 @@
             <a th:each="result : ${resultHighlights.value}"
                th:href="@{/playerProfile(playerId=${playerId}, tab=matches, tournamentEventId=${result.tournamentEventId})}"
                class="label highlight label-" th:attrappend="class=${result.level}"
-               th:text="__${#locale}__ == 'zh' ? ${result.chineseName} : ${result.name}"
+               th:text="__${#locale}__ == 'zh' and ${result.chineseName} != null ? ${result.chineseName} : ${result.name}"
                title="Show tournament matches">Wimbledon</a>
 		</th>
 	</tr>

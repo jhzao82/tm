@@ -9,6 +9,7 @@ public class PlayerTimelineItem {
 	private final int originalTournamentId;
 	private final int tournamentId;
 	private final String tournamentName;
+    private final String tournamentChineseName;
 	private final int season;
 	private final int tournamentEventId;
 	private final LocalDate date;
@@ -21,13 +22,14 @@ public class PlayerTimelineItem {
 	static final String ABSENT = "A";
 
 	public PlayerTimelineItem(int tournamentId, int season, String result) {
-		this(tournamentId, tournamentId, null, season, 0, null, null, null, false, null, result);
-	}
+        this(tournamentId, tournamentId, null, null, season, 0, null, null, null, false, null, result);
+    }
 
-	public PlayerTimelineItem(int originalTournamentId, int tournamentId, String tournamentName, int season, int tournamentEventId, LocalDate date, String level, String surface, boolean indoor, String name, String result) {
+    public PlayerTimelineItem(int originalTournamentId, int tournamentId, String tournamentName, String tournamentChineseName, int season, int tournamentEventId, LocalDate date, String level, String surface, boolean indoor, String name, String result) {
 		this.originalTournamentId = originalTournamentId;
 		this.tournamentId = tournamentId;
 		this.tournamentName = tournamentName;
+        this.tournamentChineseName = tournamentChineseName;
 		this.season = season;
 		this.tournamentEventId = tournamentEventId;
 		this.date = date;
@@ -49,6 +51,10 @@ public class PlayerTimelineItem {
 	public String getTournamentName() {
 		return tournamentName;
 	}
+
+    public String getTournamentChineseName() {
+        return tournamentChineseName;
+    }
 
 	public int getSeason() {
 		return season;

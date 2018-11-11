@@ -2,21 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="level" type="org.strangeforest.tcb.stats.model.core.TournamentLevel"*/-->
 <!--/*@thymesVar id="timeline" type="java.util.List<org.strangeforest.tcb.stats.model.TeamTournamentLevelTimelineItem>"*/-->
-<head th:replace="fragments/head :: commonHead(${level.text} + ' Timeline', false, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{'enum'+${level}} + (__${#locale}__ == 'zh' ? '' : ' ') + #{timeline}, false, ~{::template})">
 	<template>
-	<meta name="description" th:content="${level.text} + ' Timeline at Ultimate Tennis Statistics'"/>
+        <meta name="description" th:content="#{'enum'+${level}} + ' Timeline at Ultimate Tennis Statistics'"/>
 	</template>
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3><i class="fa fa-history"></i> [[${level.text}]] Timeline</h3>
+    <h3><i class="fa fa-history"></i> [[#{'enum'+${level}} + (__${#locale}__ == 'zh' ? '' : ' ') + #{timeline}]]</h3>
 	<table class="table table-condensed table-hover table-bordered text-nowrap" style="width: 50%">
 		<thead>
 			<tr>
-				<th>Season</th>
-				<th>Winner</th>
-				<th>Runner-up</th>
-				<th>Score</th>
+                <th>[[#{season}]]</th>
+                <th>[[#{winner}]]</th>
+                <th>[[#{runnerup}]]</th>
+                <th>[[#{score}]]</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,11 +25,12 @@
 					   th:text="${item.season}">2005</a></td>
 				<td>
 					<img th:src="@{/images/flags/{code}.png(code=${item.winner.code})}" src="/images/flags/us.png'" th:title="${item.winner.id}" title="USA" width="24" height="20"/>
-					<strong th:text="${item.winner.name}">United States</strong>
+                    <strong th:text="__${#locale}__ == 'zh' and ${item.winner.chineseName} != null ? ${item.winner.chineseName} : ${item.winner.name}">United
+                        States</strong>
 				</td>
 				<td>
 					<img th:src="@{/images/flags/{code}.png(code=${item.runnerUp.code})}" src="/images/flags/au.png'" th:title="${item.runnerUp.id}" title="AUS" width="24" height="20"/>
-					<span th:text="${item.runnerUp.name}">Australia</span>
+                    <span th:text="__${#locale}__ == 'zh' and ${item.runnerUp.chineseName} != null ? ${item.runnerUp.chineseName} : ${item.runnerUp.name}">Australia</span>
 				</td>
 				<td th:class="|bg-surface-${item.surface}|" class="bg-surface-H" th:text="${item.score}">4-1</td>
 			<tr>

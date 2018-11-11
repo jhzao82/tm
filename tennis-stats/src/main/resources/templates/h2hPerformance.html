@@ -217,9 +217,12 @@
 		</div>
 		<div class="col-md-2">
 			<select id="perfOpponent" class="form-control" onchange="opponentChanged(); reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-				<option value="">Vs all</option>
-				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-					<option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1" th:text="${anOpponent.text}" th:selected="${anOpponent.name() == opponent}">Vs No. 1</option>
+				<option value="">[[#{vsAll}]]</option>
+				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+						  label="Rank">
+					<option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1"
+							th:text="#{'enum'+${anOpponent}}" th:selected="${anOpponent.name() == opponent}">Vs No. 1
+					</option>
 				</optgroup>
 			</select>
 		</div>
@@ -251,8 +254,11 @@
 		</div>
 		<div class="col-md-3">
 			<select id="perfCountry" class="form-control" onchange="countryChanged(); reloadPerformance()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-				<option value="">Vs all countries</option>
-				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI" th:text="${country.name}" th:selected="${country.alpha3 == countryId}">Switzerland</option>
+				<option value="">[[#{vsAllCountries}]]</option>
+				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI"
+						th:text="__${#locale}__ == 'zh' ? ${country.toLocale().getDisplayCountry('zh')} : ${country.toLocale().getDisplayCountry('en')}"
+						th:selected="${country.alpha3 == countryId}">Switzerland
+				</option>
 			</select>
 		</div>
 	</div>
@@ -303,7 +309,8 @@
 					</div>
 				</div>
 			</th>
-			<th class="text-center"><span class="label label-surface" th:data-surface="${surface.code}" th:text="${surface.text}">Hard</span></th>
+			<th class="text-center"><span class="label label-surface" th:data-surface="${surface.code}"
+										  th:text="#{'enum'+${surface}}">Hard</span></th>
 			<th class="text-left">
 				<div th:if="${wl2}" class="progress progress-perf pull-left">
 					<div class="progress-bar progress-bar-perf" th:attrappend="class=${wlc < 0 ? '-w' : (wlc > 0 ? '-l' : _)}" th:data-surface="${surface.code}" role="progressbar" th:style="'width: ' + ${wl2.wonPctStr}" th:attr="aria-valuenow=${wl2.wonPct}" aria-valuemin="0" aria-valuemax="100">

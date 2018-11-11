@@ -39,7 +39,10 @@
 				}
 			},
 			labels: {
-				loading: bootgridTemplateLoading,
+				all: "[[#{all}]]",
+				search: "[[#{search}]]",
+				infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+				loading: "[[#{loading}]]",
 				noResults: "No statistics found"
 			},
 			templates: {
@@ -94,14 +97,17 @@
 </script>
 <div class="row margin-top">
 	<div class="col-md-8">
-		<h3 class="text-nowrap" style="display: inline">Statistics Leaders</h3>
+		<h3 class="text-nowrap" style="display: inline">[[#{titleStatisticsLeaders}]]</h3>
 	</div>
 	<div class="col-md-4">
 		<div class="input-group" data-toggle="tooltip" data-placement="top" title="Select statistics category">
-			<label for="statsCategory" class="input-group-addon">Category:</label>
+			<label for="statsCategory" class="input-group-addon">[[#{category}]]:</label>
 			<select id="statsCategory" class="form-control" onchange="reloadStatsLeaders()">
-				<optgroup th:each="categoryClass : ${categoryClasses}" th:label="${categoryClass.key}" label="Serve">
-					<option th:each="category : ${categoryClass.value}" th:value="${category.name}" value="aces" th:text="${category.title}" th:title="#{__${category.descriptionId}__}">Aces</option>
+				<optgroup th:each="categoryClass : ${categoryClasses}" th:label="#{${categoryClass.key}}" label="Serve">
+					<option th:each="category : ${categoryClass.value}" th:value="${category.name}" value="aces"
+							th:text="#{'stats'+${#strings.capitalize(category.name)}}"
+							th:title="#{__${category.descriptionId}__}">Aces
+					</option>
 				</optgroup>
 			</select>
 		</div>
@@ -110,34 +116,44 @@
 <div id="statsAdvancedFilter" class="collapse row margin-top">
 	<div class="col-md-2">
 		<select id="statsResult" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by tournament result">
-			<option value="">All results</option>
-			<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}">Win</option>
+			<option value="">[[#{allResults}]]</option>
+			<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|"
+					value="W" class="bg-result-W" th:text="#{'enum'+${aResult}}">Win
+			</option>
 		</select>
 	</div>
 	<div class="col-md-3">
 		<select id="statsCountry" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-			<option value="">Vs all countries</option>
-			<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI" th:text="${country.name}">Switzerland</option>
+			<option value="">[[#{vsAllCountries}]]</option>
+			<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI"
+					th:text="__${#locale}__ == 'zh' ? ${country.toLocale().getDisplayCountry('zh')} : ${country.toLocale().getDisplayCountry('en')}">
+				Switzerland
+			</option>
 		</select>
 	</div>
 	<div class="col-md-3">
 		<div class="input-group" data-toggle="tooltip" data-placement="top" title="Override minimum entries">
-			<label for="statsMinEntriesOverride" class="input-group-addon">Min. entries:</label>
+			<label for="statsMinEntriesOverride" class="input-group-addon">[[#{minEntries}]]:</label>
 			<input id="statsMinEntriesOverride" type="text" size="8" class="form-control" oninput="reloadStatsLeaders()" onchange="reloadStatsLeaders()"/>
 		</div>
 	</div>
 </div>
 <div id="statsRoundDiv" class="btn-group pull-left margin-right no-margin-left">
 	<select id="statsRound" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by round">
-		<option value="">All rounds</option>
-		<option th:each="round : ${rounds}" th:value="${round.code}" th:class="|bg-result-${round.baseCode}|" value="F" class="bg-result-F" th:text="${round.text}">Final</option>
+		<option value="">[[#{allRounds}]]</option>
+		<option th:each="round : ${rounds}" th:value="${round.code}" th:class="|bg-result-${round.baseCode}|" value="F"
+				class="bg-result-F" th:text="#{'enum'+${round}}">Final
+		</option>
 	</select>
 </div>
 <div id="statsOpponentDiv" class="btn-group pull-left margin-right">
 	<select id="statsOpponent" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-		<option value="">Vs all</option>
-		<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-			<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1" th:text="${opponent.text}">Vs No. 1</option>
+		<option value="">[[#{vsAll}]]</option>
+		<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+				  label="Rank">
+			<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1"
+					th:text="#{'enum'+${opponent}}">Vs No. 1
+			</option>
 		</optgroup>
 	</select>
 </div>
@@ -149,7 +165,7 @@
 <div id="statsAdvancedFilterDiv" class="btn-group margin-left no-margin-right">
 	<div class="pull-right" data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 		<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#statsAdvancedFilter">
-			Adv.&nbsp;&nbsp;<i class="fa fa-chevron-up"></i>
+			[[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-up"></i>
 		</button>
 	</div>
 </div>
@@ -157,9 +173,9 @@
 <table id="statsLeadersTable" class="table table-condensed table-hover table-striped">
 	<thead>
 	<tr>
-		<th data-column-id="rank" data-type="numeric" data-sortable="false" data-width="65">Rank</th>
-		<th data-column-id="country" data-formatter="country" data-sortable="false" data-width="85">Country</th>
-		<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="250">Name</th>
+		<th data-column-id="rank" data-type="numeric" data-sortable="false" data-width="65">[[#{rank}]]</th>
+		<th data-column-id="country" data-formatter="country" data-sortable="false" data-width="85">[[#{country}]]</th>
+		<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="250">[[#{name}]]</th>
 		<th data-column-id="value" data-formatter="value" data-order="desc" data-width="200" data-align="right" data-header-align="right">Value</th>
 	</tr>
 	</thead>

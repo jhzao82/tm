@@ -107,8 +107,8 @@
 <table id="timelineTable" class="table table-condensed table-hover table-bordered text-nowrap">
 	<thead>
 	<tr class="bg-primary">
-		<th>Tournament</th>
-		<th>Surface</th>
+        <th>[[#{tournament}]]</th>
+        <th>[[#{surface}]]</th>
 		<th th:each="season : ${timeline.seasons}" class="season">
 			<a th:href="@{/playerProfile(playerId=${playerId}, tab=season, season=${season})}" th:text="${season}" class="season" title="Show season">2015</a>
 		</th>
@@ -122,8 +122,8 @@
 	</tbody>
 	<thead>
 	<tr class="bg-primary">
-		<th>Tournament</th>
-		<th>Surface</th>
+        <th>[[#{tournament}]]</th>
+        <th>[[#{surface}]]</th>
 		<th th:each="season : ${timeline.seasons}" class="season">
 			<a th:href="@{/playerProfile(playerId=${playerId}, tab=season, season=${season})}" th:text="${season}" class="season" title="Show season">2015</a>
 		</th>
@@ -136,8 +136,8 @@
 	</tbody>
 	<thead>
 	<tr class="bg-primary" style="border-bottom: 3px solid lightgray">
-		<th>Timeline</th>
-		<th class="text-center">Career</th>
+        <th>[[#{timeline}]]</th>
+        <th class="text-center">[[#{career}]]</th>
 		<th th:each="season : ${timeline.seasons}" class="season">
 			<a th:href="@{/playerProfile(playerId=${playerId}, tab=season, season=${season})}" th:text="${season}" class="season" title="Show season">2015</a>
 		</th>
@@ -146,7 +146,7 @@
 	<tbody th:with="titles=${timeline.titles}, entries=${timeline.entries}, yearEndRanks=${timeline.yearEndRanks}, bestEloRatings=${timeline.bestEloRatings}, goatPoints=${timeline.goatPoints}">
 		<!-- Titles -->
 		<tr th:unless="${titles.empty}">
-			<td class="stats-header stats-general">Titles</td>
+            <td class="stats-header stats-general">[[#{titles}]]</td>
 			<td th:text="${titles.get(null)}" class="stats">25</td>
 			<td th:each="season : ${timeline.seasons}" th:text="${titles.get(season)}" class="stats" align="center">5</td>
 		</tr>
@@ -164,13 +164,13 @@
 		</tr>
 		<!-- Best Elo Rating -->
 		<tr th:unless="${bestEloRatings.empty}">
-			<td class="stats-header stats-general">Peak Elo Rating</td>
+            <td class="stats-header stats-general">[[#{peakEloRating}]]</td>
 			<td th:text="${bestEloRatings.get(null)}" class="stats">2350</td>
 			<td th:each="season : ${timeline.seasons}" th:text="${bestEloRatings.get(season)}" class="stats" align="center">5</td>
 		</tr>
 		<!-- GOAT Points -->
 		<tr th:unless="${goatPoints.empty}">
-			<td class="stats-header stats-general">GOAT Points</td>
+            <td class="stats-header stats-general">[[#{goatPoints}]]</td>
 			<td th:text="${goatPoints.get(null)}" class="stats">155</td>
 			<td th:each="season : ${timeline.seasons}" th:text="${goatPoints.get(season)}" class="stats" align="center">25</td>
 		</tr>

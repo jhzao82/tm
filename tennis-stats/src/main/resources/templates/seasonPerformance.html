@@ -60,7 +60,10 @@
 				}
 			},
 			labels: {
-				loading: bootgridTemplateLoading,
+				all: "[[#{all}]]",
+				search: "[[#{search}]]",
+				infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+				loading: "[[#{loading}]]",
 				noResults: "No performance results found"
 			},
 			templates: {
@@ -161,7 +164,7 @@
 </script>
 <div class="row margin-top">
 	<div class="col-md-8">
-		<h3 class="text-nowrap" style="display: inline">Top Performers</h3>
+		<h3 class="text-nowrap" style="display: inline">[[#{titleTopPerformers}]]</h3>
 	</div>
 	<div class="col-md-4">
 		<div class="input-group" data-toggle="tooltip" data-placement="top" title="Select performance category">
@@ -178,9 +181,12 @@
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="perfOpponent" class="form-control" onchange="perfOpponentChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-				<option value="">Vs all</option>
-				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-					<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1" th:text="${opponent.text}">Vs No. 1</option>
+				<option value="">[[#{vsAll}]]</option>
+				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+						  label="Rank">
+					<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1"
+							th:text="#{'enum'+${opponent}}">Vs No. 1
+					</option>
 				</optgroup>
 			</select>
 		</div>
@@ -195,11 +201,12 @@
 		</div>
 		<div class="col-md-3">
 			<select id="perfTournament" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-				<option value="">All tournaments</option>
-                <optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam"
+				<option value="">[[#{allTournaments}]]</option>
+				<optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
                           th:class="'bg-level-' + ${lts.key.code}">
                     <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                            th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}">Wimbledon
+							th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+							th:class="'bg-level-' + ${tournament.level}">Wimbledon
                     </option>
                 </optgroup>
             </select>
@@ -207,9 +214,10 @@
         <div class="col-md-3">
             <select id="perfCountry" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip"
                     data-placement="top" title="Filter by opponent country">
-                <option value="">Vs all countries</option>
+				<option value="">[[#{vsAllCountries}]]</option>
                 <option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI"
-                        th:text="${country.name}">Switzerland
+						th:text="__${#locale}__ == 'zh' ? ${country.toLocale().getDisplayCountry('zh')} : ${country.toLocale().getDisplayCountry('en')}">
+					Switzerland
                 </option>
 			</select>
 		</div>
@@ -223,9 +231,9 @@
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="perfBestOf" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-				<option value="">Best of any</option>
-				<option value="3">Best of 3</option>
-				<option value="5">Best of 5</option>
+				<option value="">[[#{bestOfAny}]]</option>
+				<option value="3">[[#{bestOf3}]]</option>
+				<option value="5">[[#{bestOf5}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
@@ -237,8 +245,11 @@
 		</div>
 		<div class="col-md-2">
 			<select id="perfResult" class="form-control" onchange="reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by tournament result">
-				<option value="">All results</option>
-				<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}">Win</option>
+				<option value="">[[#{allResults}]]</option>
+				<option th:each="aResult : ${results}" th:value="${aResult.code}"
+						th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W"
+						th:text="#{'enum'+${aResult}}">Win
+				</option>
 			</select>
 		</div>
 		<div class="col-md-4">
@@ -289,7 +300,7 @@
 <div id="perfAdvancedFilterDiv" class="btn-group margin-left no-margin-right">
 	<div class="pull-right" data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 		<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#perfAdvancedFilter">
-			Adv.&nbsp;&nbsp;<i class="fa fa-chevron-up"></i>
+			[[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-up"></i>
 		</button>
 	</div>
 </div>
@@ -297,13 +308,19 @@
 <table id="topPerformersTable" class="table table-condensed table-hover table-striped">
 	<thead>
 	<tr>
-		<th data-column-id="rank" data-type="numeric" data-sortable="false" data-width="65">Rank</th>
-		<th data-column-id="country" data-formatter="country" data-sortable="false" data-width="85">Country</th>
-		<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="250">Name</th>
+		<th data-column-id="rank" data-type="numeric" data-sortable="false" data-width="65">[[#{rank}]]</th>
+		<th data-column-id="country" data-formatter="country" data-sortable="false" data-width="85">[[#{country}]]</th>
+		<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="250">[[#{name}]]</th>
 		<th data-column-id="wonLostPct" data-order="desc" data-width="190" data-align="right" data-header-align="right">Pct.</th>
-		<th data-column-id="won" data-formatter="won" data-width="70" data-align="right" data-header-align="right">Won</th>
-		<th data-column-id="lost" data-formatter="lost" data-width="70" data-align="right" data-header-align="right">Lost</th>
-		<th data-column-id="played" data-formatter="played" data-width="75" data-align="right" data-header-align="right">Played</th>
+		<th data-column-id="won" data-formatter="won" data-width="70" data-align="right" data-header-align="right">
+			[[#{won}]]
+		</th>
+		<th data-column-id="lost" data-formatter="lost" data-width="70" data-align="right" data-header-align="right">
+			[[#{lost}]]
+		</th>
+		<th data-column-id="played" data-formatter="played" data-width="75" data-align="right"
+			data-header-align="right">[[#{played}]]
+		</th>
 	</tr>
 	</thead>
 </table>

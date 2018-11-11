@@ -63,7 +63,10 @@
 					}
 				},
 				labels: {
-					loading: bootgridTemplateLoading,
+					all: "[[#{all}]]",
+					search: "[[#{search}]]",
+					infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+					loading: "[[#{loading}]]",
 					noResults: "No statistics found"
 				},
 				templates: {
@@ -157,8 +160,13 @@
 			<div class="input-group" data-toggle="tooltip" data-placement="top" title="Select statistics category">
 				<label for="category" class="input-group-addon">[[#{category}]]:</label>
 				<select id="category" class="form-control" onchange="reloadStatsLeaders()">
-					<optgroup th:each="categoryClass : ${categoryClasses}" th:label="${categoryClass.key}" label="Serve">
-						<option th:each="aCategory : ${categoryClass.value}" th:value="${aCategory.name}" value="aces" th:text="${aCategory.title}" th:title="#{__${aCategory.descriptionId}__}" th:selected="${aCategory.name == category}">Aces</option>
+					<optgroup th:each="categoryClass : ${categoryClasses}" th:label="#{${categoryClass.key}}"
+							  label="Serve">
+						<option th:each="aCategory : ${categoryClass.value}" th:value="${aCategory.name}" value="aces"
+								th:text="#{'stats'+${#strings.capitalize(aCategory.name)}}"
+								th:title="#{__${aCategory.descriptionId}__}"
+								th:selected="${aCategory.name == category}">Aces
+						</option>
 					</optgroup>
 				</select>
 			</div>
@@ -167,8 +175,8 @@
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="season" class="form-control" onchange="dateFilterChanged(); reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Select career or filter by season">
-				<option value="">Career</option>
-				<option value="-1">Last 52 weeks</option>
+				<option value="">[[#{career}]]</option>
+				<option value="-1">[[#{last52weeks}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
 		</div>
@@ -205,16 +213,20 @@
 		</div>
 		<div class="col-md-2">
 			<select id="opponent" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-				<option value="">Vs all</option>
-				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-					<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1" th:text="${opponent.text}">Vs No. 1</option>
+				<option value="">[[#{vsAll}]]</option>
+				<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+						  label="Rank">
+					<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1"
+							th:text="#{'enum'+${opponent}}">Vs No. 1
+					</option>
 				</optgroup>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<div class="pull-right" data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 				<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#advancedFilter">
-					<i class="fa fa-folder-open"></i>&nbsp;&nbsp;Adv.&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+					<i class="fa fa-folder-open"></i>&nbsp;&nbsp;[[#{adv}]]&nbsp;&nbsp;<i
+						class="fa fa-chevron-down"></i>
 				</button>
 			</div>
 		</div>
@@ -238,23 +250,29 @@
 			</div>
 			<div class="col-md-2">
 				<select id="result" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by tournament result">
-					<option value="">All results</option>
-					<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}">Win</option>
+					<option value="">[[#{allResults}]]</option>
+					<option th:each="aResult : ${results}" th:value="${aResult.code}"
+							th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W"
+							th:text="#{'enum'+${aResult}}">Win
+					</option>
 				</select>
 			</div>
 			<div class="col-md-3">
 				<select id="country" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-					<option value="">Vs all countries</option>
-					<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI" th:text="${country.name}">Switzerland</option>
+					<option value="">[[#{vsAllCountries}]]</option>
+					<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI"
+							th:text="__${#locale}__ == 'zh' ? ${country.toLocale().getDisplayCountry('zh')} : ${country.toLocale().getDisplayCountry('en')}">
+						Switzerland
+					</option>
 				</select>
 			</div>
 		</div>
 		<div class="row margin-top">
 			<div class="col-md-2">
 				<select id="bestOf" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-					<option value="">Best of any</option>
-					<option value="3">Best of 3</option>
-					<option value="5">Best of 5</option>
+					<option value="">[[#{bestOfAny}]]</option>
+					<option value="3">[[#{bestOf3}]]</option>
+					<option value="5">[[#{bestOf5}]]</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -268,18 +286,19 @@
             </div>
 			<div class="col-md-3">
 				<select id="tournament" class="form-control" onchange="reloadStatsLeaders()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-					<option value="">All tournaments</option>
-                    <optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam"
+					<option value="">[[#{allTournaments}]]</option>
+					<optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
                               th:class="'bg-level-' + ${lts.key.code}">
                         <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                                th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}">Wimbledon
+								th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+								th:class="'bg-level-' + ${tournament.level}">Wimbledon
                         </option>
                     </optgroup>
 				</select>
 			</div>
 			<div class="col-md-3">
 				<div class="input-group" data-toggle="tooltip" data-placement="top" title="Override minimum entries">
-					<label for="minEntriesOverride" class="input-group-addon">Min. entries:</label>
+					<label for="minEntriesOverride" class="input-group-addon">[[#{minEntries}]]:</label>
 					<input id="minEntriesOverride" type="text" size="8" class="form-control" oninput="reloadStatsLeaders()" onchange="reloadStatsLeaders()"/>
 				</div>
 			</div>
@@ -288,13 +307,13 @@
 	<div id="activeDiv" class="btn-group margin-right">
 		<div class="checkbox">
 			<label data-toggle="tooltip" data-placement="top" title="Show only active players">
-				<input id="active" type="checkbox" onchange="reloadStatsLeaders()"/> Active
+				<input id="active" type="checkbox" onchange="reloadStatsLeaders()"/> [[#{active}]]
 			</label>
 		</div>
 	</div>
 	<div id="clearDiv" class="btn-group margin-right">
 		<button type="button" class="btn btn-default" onclick="clearStatsLeadersFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-			<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+			<i class="fa fa-eraser"></i>&nbsp;&nbsp;[[#{clear}]]
 		</button>
 	</div>
 	<table id="statsLeadersTable" class="table table-condensed table-hover table-striped">

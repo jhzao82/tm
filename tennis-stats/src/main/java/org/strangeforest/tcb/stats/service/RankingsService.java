@@ -167,7 +167,7 @@ public class RankingsService {
 		"WHERE player_id = :playerId";
 
 	private static final String TOP_RANKINGS_TIMELINE_QUERY = //language=SQL
-		"SELECT r.season, r.%1$s AS year_end_rank, player_id, p.short_name, p.country_id, p.active\n" +
+            "SELECT r.season, r.%1$s AS year_end_rank, player_id, p.short_name, p.chinese_name, p.country_id, p.active\n" +
 		"FROM %2$s r\n" +
 		"INNER JOIN player_v p USING (player_id)\n" +
 		"WHERE r.%1$s <= :topRanks AND lower(p.name) NOT LIKE '%%unknown%%'\n" +
@@ -224,7 +224,7 @@ public class RankingsService {
 				int goatRank = rs.getInt("rank");
 				int playerId = rs.getInt("player_id");
 				String name = shortenName(rs.getString("last_name"));
-				String chineseName = shortenChineseName(rs.getString("chinese_name"));
+                String chineseName = rs.getString("chinese_name") != null ? shortenChineseName(rs.getString("chinese_name")) : null;
 				String countryId = getInternedString(rs, "country_id");
 				int goatPoints = rs.getInt("points");
                 return new PlayerRanking(goatRank, playerId, name, chineseName, countryId, null, goatPoints);
@@ -557,7 +557,7 @@ public class RankingsService {
 						rs.getInt("year_end_rank"),
 						rs.getInt("player_id"),
                             rs.getString("short_name"),
-                            rs.getString("short_name"),
+                            rs.getString("chinese_name"),
 						getInternedString(rs, "country_id"),
 						rs.getBoolean("active")
 					));

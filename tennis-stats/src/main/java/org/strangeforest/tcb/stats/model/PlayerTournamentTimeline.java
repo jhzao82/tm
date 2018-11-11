@@ -16,7 +16,9 @@ public class PlayerTournamentTimeline implements Comparable<PlayerTournamentTime
 	private final PlayerTimeline timeline;
 	private final int tournamentId;
 	private String name;
+    private String chineseName;
 	private final Map<String, String> levels = new LinkedHashMap<>(); // <Level, Name>
+    private final Map<String, String> chineseLevels = new LinkedHashMap<>(); // <Level, Name>
 	private final Set<TimelineSurface> surfaces = new LinkedHashSet<>();
 	private final List<LocalDate> dates = new ArrayList<>();
 	private final Map<Integer, PlayerTimelineItem> items = new HashMap<>();
@@ -35,9 +37,17 @@ public class PlayerTournamentTimeline implements Comparable<PlayerTournamentTime
 		return name;
 	}
 
+    public String getChineseName() {
+        return chineseName;
+    }
+
 	public Map<String, String> getLevelsAndNames() {
 		return levels;
 	}
+
+    public Map<String, String> getChineseLevelsAndNames() {
+        return chineseLevels;
+    }
 
 	public int getLevelCount() {
 		return levels.size();
@@ -71,6 +81,7 @@ public class PlayerTournamentTimeline implements Comparable<PlayerTournamentTime
 			name = item.getTournamentName();
 		items.put(item.getSeason(), item);
 		levels.put(item.getLevel(), item.getName());
+        chineseLevels.put(item.getLevel(), item.getTournamentChineseName());
 		String surface = item.getSurface();
 		if (surface != null)
 			surfaces.add(new TimelineSurface(surface, item.isIndoor()));

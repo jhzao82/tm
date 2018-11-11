@@ -40,7 +40,10 @@
 					"factor3": function(column, row) { return formatRecordDetail(row.value.toFixed(3), row.detailUrl); }
 				},
 				labels: {
-					loading: bootgridTemplateLoading,
+					all: "[[#{all}]]",
+					search: "[[#{search}]]",
+					infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+					loading: "[[#{loading}]]",
 					noResults: "Record has not been set"
 				},
 				templates: {

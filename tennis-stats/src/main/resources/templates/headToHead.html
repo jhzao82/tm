@@ -17,7 +17,7 @@
 <!--/*@thymesVar id="tournamentId" type="java.lang.Integer"*/-->
 <!--/*@thymesVar id="rankType" type="java.lang.String"*/-->
 <!--/*@thymesVar id="params" type="org.strangeforest.tcb.stats.controller.ParamsUtil"*/-->
-<head th:replace="fragments/head :: commonHead(${anyPlayerSelected} ? (__${#locale}__ == 'zh' ? ${player1.chineseName} : ${player1.name}) + | #{vs} | +  (__${#locale}__ == 'zh' ? ${player2.chineseName} : ${player2.name}) : ~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(${anyPlayerSelected} ? (${player1} != null ? (__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}) : '?') + ' vs ' +  (${player2} != null ? (__${#locale}__ == 'zh' and ${player2.chineseName} != null  ? ${player2.chineseName} : ${player2.name}) : '?') : ~{::title/text()}, true, ~{::template})">
 	<title>Head-to-Head</title>
 	<template>
 		<meta name="description"
@@ -112,18 +112,18 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="input-group">
-				<label for="player1" class="input-group-addon"><i class="fa fa-user"></i> [[#{player}]] 1:</label>
-				<input id="player1" type="text" class="ui-widget search-field form-control" size="30"
-					   th:value="__${#locale}__ == 'zh' ? ${player1.chineseName} : ${player1.name}"
-					   placeholder="Search Player 1"/>
+                <label for="player1" class="input-group-addon"><i class="fa fa-user"></i> Player 1:</label>
+                <input id="player1" type="text" class="ui-widget search-field form-control" size="30"
+                       th:value="(${player1} != null ? (__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}) : '')"
+                       th:data-playerId="${player1 != null ? player1.id : _}" placeholder="Search Player 1"/>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="input-group">
-				<label for="player2" class="input-group-addon"><i class="fa fa-user"></i> [[#{player}]] 2:</label>
-				<input id="player2" type="text" class="ui-widget search-field form-control" size="30"
-					   th:value="__${#locale}__ == 'zh' ? ${player2.chineseName} : ${player2.name}"
-					   th:data-playerId="${player2 != null ? player2.id : _}" placeholder="Search Player 2"/>
+                <label for="player2" class="input-group-addon"><i class="fa fa-user"></i> Player 2:</label>
+                <input id="player2" type="text" class="ui-widget search-field form-control" size="30"
+                       th:value="(${player2} != null ? (__${#locale}__ == 'zh' and ${player2.chineseName} != null ? ${player2.chineseName} : ${player2.name}) : '')"
+                       placeholder="Search Player 2"/>
 			</div>
 		</div>
 	</div>
@@ -132,7 +132,8 @@
 			<h3 th:if="${player1}">
 				<img th:src="@{/images/flags/{code}.png(code=${player1.country.code})}" src="/images/flags/ch.png'" style="margin-top: -3px" th:title="${player1.country.id}" title="SUI" width="24" height="20"/>
 				<a th:href="@{/playerProfile(playerId=${player1.id})}"
-				   th:text="__${#locale}__ == 'zh' ? ${player1.chineseName} : ${player1.name}">Roger Federer</a>
+                   th:text="__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}">Roger
+                    Federer</a>
 			</h3>
 		</div>
 		<div class="col-xs-2 text-center text-nowrap">
@@ -146,7 +147,8 @@
 			<h3 th:if="${player2}">
 				<img th:src="@{/images/flags/{code}.png(code=${player2.country.code})}" src="/images/flags/es.png'" style="margin-top: -3px" th:title="${player2.country.id}" title="ESP" width="24" height="20"/>
 				<a th:href="@{/playerProfile(playerId=${player2.id})}"
-				   th:text="__${#locale}__ == 'zh' ? ${player2.chineseName} : ${player2.name}">Rafael Nadal</a>
+                   th:text="__${#locale}__ == 'zh' and ${player2.chineseName} != null ? ${player2.chineseName} : ${player2.name}">Rafael
+                    Nadal</a>
 			</h3>
 		</div>
 	</div>

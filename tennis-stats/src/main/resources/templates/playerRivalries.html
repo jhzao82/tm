@@ -79,8 +79,11 @@
 				}
 			},
 			labels: {
-				loading: bootgridTemplateLoading,
-				noResults: "No rivalries found"
+				all: "[[#{all}]]",
+				search: "[[#{search}]]",
+				infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
+				loading: "[[#{loading}]]",
+				noResults: "[[#{noRivalriesFound}]]"
 			},
 			templates: {
 				paginationItem: bootgridTemplatePaginationItem
@@ -247,7 +250,7 @@
 	<div class="col-md-2">
 		<div data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#rivalryAdvancedFilter">
-				<i class="fa fa-folder-open"></i>&nbsp;&nbsp;Adv.&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+				<i class="fa fa-folder-open"></i>&nbsp;&nbsp;[[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
 			</button>
 		</div>
 	</div>
@@ -256,36 +259,39 @@
 	<div class="row margin-top">
 		<div class="col-md-4">
 			<div id="rivalrySeasonRange" class="input-group">
-				<label for="rivalryFromSeason" class="input-group-addon">From:</label>
+				<label for="rivalryFromSeason" class="input-group-addon">[[#{from}]]:</label>
 				<select id="rivalryFromSeason" class="form-control" onchange="rivalrySeasonsChanged(); reloadRivalries()">
-					<option value="">All seasons</option>
+					<option value="">[[#{allSeasons}]]</option>
 					<option th:each="aSeason : ${seasons}" th:value="${aSeason}" value="2005" th:text="${aSeason}">2005</option>
 				</select>
-				<label for="rivalryToSeason" class="input-group-addon">To:</label>
+				<label for="rivalryToSeason" class="input-group-addon">[[#{to}]]:</label>
 				<select id="rivalryToSeason" class="form-control" onchange="rivalrySeasonsChanged(); reloadRivalries()">
-					<option value="">All seasons</option>
+					<option value="">[[#{allSeasons}]]</option>
 					<option th:each="aSeason : ${seasons}" th:value="${aSeason}" value="2005" th:text="${aSeason}">2005</option>
 				</select>
 			</div>
 		</div>
 		<div class="col-md-2">
 			<select id="rivalryIndoor" class="form-control" onchange="reloadRivalries()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-				<option value="">Outdoor / Indoor</option>
-				<option value="false">Outdoor</option>
-				<option value="true">Indoor</option>
+				<option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+				<option value="false">[[#{outdoor}]]</option>
+				<option value="true">[[#{indoor}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="rivalryBestOf" class="form-control" onchange="reloadRivalries()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-				<option value="">Best of any</option>
-				<option value="3">Best of 3</option>
-				<option value="5">Best of 5</option>
+				<option value="">[[#{bestOfAny}]]</option>
+				<option value="3">[[#{bestOf3}]]</option>
+				<option value="5">[[#{bestOf5}]]</option>
 			</select>
 		</div>
 		<div class="col-md-3">
 			<select id="rivalryCountry" class="form-control" onchange="reloadRivalries()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-				<option value="">Vs all countries</option>
-				<option th:each="aCountry : ${countries}" th:value="${aCountry.alpha3}" value="SUI" th:text="${aCountry.name}">Switzerland</option>
+				<option value="">[[#{vsAllCountries}]]</option>
+				<option th:each="aCountry : ${countries}" th:value="${aCountry.alpha3}" value="SUI"
+						th:text="__${#locale}__ == 'zh' ? ${aCountry.toLocale().getDisplayCountry('zh')} : ${aCountry.toLocale().getDisplayCountry('en')}">
+					Switzerland
+				</option>
             </select>
         </div>
     </div>
@@ -293,11 +299,12 @@
         <div class="col-md-4">
             <select id="rivalryTournament" class="form-control" onchange="reloadRivalries()" data-toggle="tooltip"
                     data-placement="top" title="Filter by tournament">
-                <option value="">All tournaments</option>
-                <optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam"
+				<option value="">[[#{allTournaments}]]</option>
+				<optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
                           th:class="'bg-level-' + ${lts.key.code}">
                     <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                            th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}">Wimbledon
+							th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+							th:class="'bg-level-' + ${tournament.level}">Wimbledon
                     </option>
                 </optgroup>
             </select>
@@ -305,9 +312,9 @@
         <div class="col-md-2">
             <select id="rivalrySpeed" class="form-control" onchange="reloadRivalries()" data-toggle="tooltip"
                     data-placement="top" title="Filter by court speed">
-                <option value="">All speeds</option>
+				<option value="">[[#{allSpeeds}]]</option>
                 <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                        style="color: white" value="50" class="points-50" th:text="${aSpeed.text}">Medium
+						style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}">Medium
                 </option>
             </select>
         </div>
@@ -332,7 +339,7 @@
 </div>
 <div id="clearRivalryFilterButton" class="btn-group margin-right">
 	<button type="button" class="btn btn-default" onclick="clearRivalryFilter()" data-toggle="tooltip" data-placement="top" title="Clear all filters">
-		<i class="fa fa-eraser"></i>&nbsp;&nbsp;Clear
+		<i class="fa fa-eraser"></i>&nbsp;&nbsp;[[#{clear}]]
 	</button>
 </div>
 <style scoped="scoped">
@@ -343,14 +350,26 @@
 <table id="rivalriesTable" class="table table-condensed table-hover table-striped">
 	<thead>
 	<tr>
-		<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="200">Opponent</th>
-		<th data-column-id="bestRank" data-type="numeric" data-width="100" data-align="right" data-header-align="right">Best Rank</th>
-		<th data-column-id="matches" data-formatter="matches" data-order="desc" data-width="90" data-align="right" data-header-align="right">Matches</th>
-		<th data-column-id="won" data-formatter="matchesWon" data-width="60" data-align="right" data-header-align="right">Won</th>
-		<th data-column-id="lost" data-formatter="matchesLost" data-width="60" data-align="right" data-header-align="right">Lost</th>
-		<th data-column-id="wonPctStr" data-formatter="wonPctStr" data-width="70" data-align="right" data-header-align="right">Win %</th>
-		<th data-column-id="lastMatch" data-formatter="lastMatch" data-sortable="false" data-width="450">Last Match</th>
-		<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="75">Stats</th>
+		<th data-column-id="name" data-formatter="player" data-sortable="false" data-width="200">[[#{opponent}]]</th>
+		<th data-column-id="bestRank" data-type="numeric" data-width="100" data-align="right" data-header-align="right">
+			[[#{bestRank}]]
+		</th>
+		<th data-column-id="matches" data-formatter="matches" data-order="desc" data-width="90" data-align="right"
+			data-header-align="right">[[#{matches}]]
+		</th>
+		<th data-column-id="won" data-formatter="matchesWon" data-width="60" data-align="right"
+			data-header-align="right">[[#{won}]]
+		</th>
+		<th data-column-id="lost" data-formatter="matchesLost" data-width="60" data-align="right"
+			data-header-align="right">[[#{lost}]]
+		</th>
+		<th data-column-id="wonPctStr" data-formatter="wonPctStr" data-width="70" data-align="right"
+			data-header-align="right">[[#{win}]] %
+		</th>
+		<th data-column-id="lastMatch" data-formatter="lastMatch" data-sortable="false" data-width="450">
+			[[#{lastMatch}]]
+		</th>
+		<th data-column-id="stats" data-formatter="stats" data-sortable="false" data-width="75">[[#{stats}]]</th>
 		<th data-column-id="h2h" data-formatter="h2h" data-sortable="false" data-width="55" data-css-class="h2h-column">H2H</th>
 	</tr>
 	</thead>

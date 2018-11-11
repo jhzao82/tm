@@ -133,9 +133,12 @@
 	</div>
 	<div class="col-md-2">
 		<select id="statsOpponent" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
-			<option value="">Vs all</option>
-			<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
-				<option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1" th:text="${anOpponent.text}" th:selected="${anOpponent.name() == opponent}">Vs No. 1</option>
+            <option value="">[[#{vsAll}]]</option>
+            <optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+                      label="Rank">
+                <option th:each="anOpponent : ${opponentCategory.value}" th:value="${anOpponent}" value="NO_1"
+                        th:text="#{'enum'+${anOpponent}}" th:selected="${anOpponent.name() == opponent}">Vs No. 1
+                </option>
 			</optgroup>
 		</select>
 	</div>
@@ -147,7 +150,7 @@
 	<div class="col-md-1">
 		<div class="pull-right" data-toggle="tooltip" data-placement="auto" title="Advanced filters">
 			<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#statsAdvancedFilter">
-				Adv.&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+                [[#{adv}]]&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
 			</button>
 		</div>
 	</div>
@@ -157,57 +160,64 @@
 	<div class="row margin-top">
 		<div class="col-md-4">
 			<div id="statsDateRange" class="input-group">
-				<label for="statsFromDate" class="input-group-addon">From:</label>
+                <label for="statsFromDate" class="input-group-addon">[[#{from}]]:</label>
 				<input id="statsFromDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(fromDate, 'dd-MM-yyyy')}" onchange="reloadStats()"/>
-				<label for="statsToDate" class="input-group-addon">To:</label>
+                <label for="statsToDate" class="input-group-addon">[[#{to}]]:</label>
 				<input id="statsToDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(toDate, 'dd-MM-yyyy')}" onchange="reloadStats()"/>
 			</div>
 		</div>
 		<div class="col-md-2">
 			<select id="statsIndoor" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by outdoor / indoor">
-				<option value="">Outdoor / Indoor</option>
-				<option value="false" th:selected="${indoor == false}">Outdoor</option>
-				<option value="true" th:selected="${indoor}">Indoor</option>
+                <option value="">[[#{outdoor}]] / [[#{indoor}]]</option>
+                <option value="false" th:selected="${indoor == false}">[[#{outdoor}]]</option>
+                <option value="true" th:selected="${indoor}">[[#{indoor}]]</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select id="statsResult" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by tournament result">
-				<option value="">All results</option>
-				<option th:each="aResult : ${results}" th:value="${aResult.code}" th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W" th:text="${aResult.text}" th:selected="${aResult.code == result}">Win</option>
+                <option value="">[[#{allResults}]]</option>
+                <option th:each="aResult : ${results}" th:value="${aResult.code}"
+                        th:class="|bg-result-${aResult.baseCode}|" value="W" class="bg-result-W"
+                        th:text="#{'enum'+${aResult}}" th:selected="${aResult.code == result}">Win
+                </option>
 			</select>
 		</div>
 		<div class="col-md-3">
 			<select id="statsCountry" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by opponent country">
-				<option value="">Vs all countries</option>
-				<option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI" th:text="${country.name}" th:selected="${country.alpha3 == countryId}">Switzerland</option>
+                <option value="">[[#{vsAllCountries}]]</option>
+                <option th:each="country : ${countries}" th:value="${country.alpha3}" value="SUI"
+                        th:text="__${#locale}__ == 'zh' ? ${country.toLocale().getDisplayCountry('zh')} : ${country.toLocale().getDisplayCountry('en')}"
+                        th:selected="${country.alpha3 == countryId}">Switzerland
+                </option>
 			</select>
 		</div>
 	</div>
 	<div class="row margin-top">
 		<div class="col-md-2">
 			<select id="statsBestOf" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by best of">
-				<option value="">Best of any</option>
-				<option value="3" th:selected="${bestOf == 3}">Best of 3</option>
-				<option value="5" th:selected="${bestOf == 5}">Best of 5</option>
+                <option value="">[[#{bestOfAny}]]</option>
+                <option value="3" th:selected="${bestOf == 3}">[[#{bestOf3}]]</option>
+                <option value="5" th:selected="${bestOf == 5}">[[#{bestOf5}]]</option>
             </select>
         </div>
         <div class="col-md-2">
             <select id="statsSpeed" class="form-control" onchange="reloadStats()" data-toggle="tooltip"
                     data-placement="top" title="Filter by court speed">
-                <option value="">All speeds</option>
+                <option value="">[[#{allSpeeds}]]</option>
                 <option th:each="aSpeed : ${speeds}" th:value="${aSpeed.speed}" th:class="|points-${aSpeed.speed}|"
-                        style="color: white" value="50" class="points-50" th:text="${aSpeed.text}"
+                        style="color: white" value="50" class="points-50" th:text="#{'enum'+${aSpeed}}"
                         th:selected="${aSpeed.speed == speed}">Medium
                 </option>
             </select>
         </div>
 		<div class="col-md-3">
 			<select id="statsTournament" class="form-control" onchange="reloadStats()" data-toggle="tooltip" data-placement="top" title="Filter by tournament">
-				<option value="">All tournaments</option>
-                <optgroup th:each="lts : ${tournaments}" th:label="${lts.key.text}" label="Grand Slam"
+                <option value="">[[#{allTournaments}]]</option>
+                <optgroup th:each="lts : ${tournaments}" th:label="#{'enum'+${lts.key}}" label="Grand Slam"
                           th:class="'bg-level-' + ${lts.key.code}">
                     <option th:each="tournament : ${lts.value}" th:value="${tournament.id}" value="101"
-                            th:text="${tournament.name}" th:class="'bg-level-' + ${tournament.level}"
+                            th:text="__${#locale}__ == 'zh' and ${tournament.chineseName} != null ? ${tournament.chineseName} : ${tournament.name}"
+                            th:class="'bg-level-' + ${tournament.level}"
                             th:selected="${tournament.id == tournamentId}">Wimbledon
                     </option>
                 </optgroup>

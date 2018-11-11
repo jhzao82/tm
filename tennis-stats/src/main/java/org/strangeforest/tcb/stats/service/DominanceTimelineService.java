@@ -19,6 +19,7 @@ import static org.strangeforest.tcb.stats.model.core.Surface.*;
 import static org.strangeforest.tcb.stats.service.ParamsUtil.*;
 import static org.strangeforest.tcb.stats.service.ResultSetUtil.*;
 import static org.strangeforest.tcb.stats.util.PercentageUtil.*;
+import static org.strangeforest.tcb.stats.util.NameUtil.*;
 
 @Service
 public class DominanceTimelineService {
@@ -34,7 +35,7 @@ public class DominanceTimelineService {
 	.build();
 
 	private static final String TIMELINE_QUERY = //language=SQL
-		"SELECT player_id, p.dob, p.name, p.last_name, p.country_id, p.active, g.goat_points, array(SELECT ROW(s.season, s.goat_points)\n" +
+            "SELECT player_id, p.dob, p.name, p.chinese_name, p.last_name, p.country_id, p.active, g.goat_points, array(SELECT ROW(s.season, s.goat_points)\n" +
 		"  FROM %1$s s\n" +
 		"  WHERE s.player_id = g.player_id%2$s\n" +
 		"  ORDER BY s.season DESC\n" +
@@ -144,7 +145,7 @@ public class DominanceTimelineService {
 	private PlayerDominanceTimeline mapPlayer(Surface surface, AtomicInteger rank, ResultSet rs) throws SQLException {
 		int playerId = rs.getInt("player_id");
 		String name = rs.getString("name");
-        String chineseName = rs.getString("name");
+        String chineseName = rs.getString("chinese_name") != null ? shortenChineseName(rs.getString("chinese_name")) : null;
 		String lastName = rs.getString("last_name");
 		String countryId = getInternedString(rs, "country_id");
 		boolean active = rs.getBoolean("active");

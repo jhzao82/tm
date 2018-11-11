@@ -85,7 +85,7 @@
 		<tr>
 			<th colspan="2" class="first-header first-column text-center valign-middle grand-total" style="padding: 3px">
 				<select id="goatPointsSurface" class="form-control" style="height: 24px; padding: 2px 5px" onchange="reloadPlayerGOATPoints()" data-toggle="tooltip" data-placement="top" title="Select overall or GOAT Points by surface">
-					<option value="">Overall</option>
+                    <option value="">[[#{overall}]]</option>
 					<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:selected="${aSurface.code == surface}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}">Hard</option>
 				</select>
 			</th>
@@ -94,13 +94,13 @@
 			<th colspan="3" rowspan="2" class="first-header first-column last-column text-center valign-middle achievements">Achievements</th>
 		</tr>
 		<tr>
-			<th colspan="2" class="first-column text-center valign-middle grand-total">GOAT Points</th>
+            <th colspan="2" class="first-column text-center valign-middle grand-total">[[#{goatPoints}]]</th>
 			<th th:each="level : ${levelResults}" th:colspan="${level.value.size()}" class="level first-column text-center" th:data-level="${level.key}" th:text="${level.key}">G</th>
 			<th title="Davis Cup and World Team Cup" class="first-column text-center bg-level-D">D&amp;T</th>
-			<th title="Tournament Level" class="first-column tournament">Level</th>
+            <th title="Tournament Level" class="first-column tournament">[[#{level}]]</th>
 		</tr>
 		<tr>
-			<th class="first-column total">Season</th>
+            <th class="first-column total">[[#{season}]]</th>
 			<th class="first-column total" th:title="#{goatPoints.total.title}">Pts</th>
 			<th:block th:each="level : ${levelResults}">
 				<th th:each="result : ${level.value}" class="result text-center" th:attrappend="class=${resultStat.first ? ' first-column' : ''}" th:data-result="${result}" th:text="${result}">W</th>
@@ -252,7 +252,7 @@
 		</th:block>
 		<thead>
 		<tr>
-			<th class="first-header first-column grand-total">Total</th>
+            <th class="first-header first-column grand-total">[[#{total}]]</th>
 			<th class="points first-header first-column grand-total" th:text="${goatPoints.totalPoints}"></th>
 			<th th:colspan="${levelResultCount + 9}" class="first-header first-column last-column"></th>
 		</tr>

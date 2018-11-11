@@ -59,6 +59,7 @@
 					"finalEx": finalExFormatter
 				},
 				labels: {
+					all: "[[#{all}]]",
 					search: "[[#{search}]]",
 					infos: "[[#{showing}]] {{ctx.start}} [[#{to}]] {{ctx.end}} [[#{of}]] {{ctx.total}} [[#{entries}]]",
 					loading: "[[#{loading}]]",
@@ -132,7 +133,7 @@
 						th:text="#{'enum'+${aSurface}}" th:selected="${aSurface.code == surface}">Hard
 				</option>
 				<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP"
-						th:text="#{'enum'+${surfaceGroup}}"
+						th:text="#{'enumSurfaceGroup'+${surfaceGroup}}"
 						th:selected="${surfaceGroup.codes.length() > 1 && surfaceGroup.codes == surface}">Fast (H, G,
 					Cp)
 				</option>
@@ -190,7 +191,7 @@
 			<th data-column-id="participation" data-formatter="participation" data-width="60" data-align="right"
 				data-header-align="right">[[#{part}]]
 			</th>
-			<th data-column-id="strength" data-type="numeric" data-width="50" data-align="right"
+			<th data-column-id="strength" data-type="numeric" data-width="60" data-align="right"
 				data-header-align="right">[[#{str}]]
 			</th>
 			<th data-column-id="averageEloRating" data-type="numeric" data-width="50" data-align="right" data-header-align="right">Elo</th>

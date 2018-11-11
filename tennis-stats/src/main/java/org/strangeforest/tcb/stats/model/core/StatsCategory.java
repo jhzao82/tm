@@ -92,18 +92,18 @@ public final class StatsCategory {
 	private static final String SETS_WON_PCT = "p_sets::REAL / nullif(" + TOTAL_SETS + ", 0)";
 	private static final String MATCHES_WON_PCT = "p_matches::REAL / nullif(" + TOTAL_MATCHES + ", 0)";
 
-	private static final String ACES_AND_DFS = "Aces & DFs";
-	private static final String SERVE = "Serve";
-	private static final String RETURN = "Return";
-	private static final String POINTS = "Points";
-	private static final String GAMES = "Games";
-	private static final String TIE_BREAKS = "Tie Breaks";
-	private static final String SETS = "Sets";
-	private static final String MATCHES = "Matches";
-	private static final String PERFORMANCE = "Performance";
-	private static final String OPPONENT_CATEGORY = "Opponent";
-	private static final String UPSETS_CATEGORY = "Upsets";
-	private static final String TIME_CATEGORY = "Time";
+    private static final String ACES_AND_DFS = "acesDFs";
+    private static final String SERVE = "serve";
+    private static final String RETURN = "return";
+    private static final String POINTS = "points";
+    private static final String GAMES = "games";
+    private static final String TIE_BREAKS = "tieBreaks";
+    private static final String SETS = "sets";
+    private static final String MATCHES = "matches";
+    private static final String PERFORMANCE = "performance";
+    private static final String OPPONENT_CATEGORY = "opponent";
+    private static final String UPSETS_CATEGORY = "upsets";
+    private static final String TIME_CATEGORY = "time";
 
 	static {
 		// Aces & DFs

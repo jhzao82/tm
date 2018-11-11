@@ -10,7 +10,7 @@
 <!--/*@thymesVar id="timeline" type="org.strangeforest.tcb.stats.model.DominanceTimeline"*/-->
 <!--/*@thymesVar id="dominanceRatioCoefficient" type="java.lang.Integer"*/-->
 <!--/*@thymesVar id="minGOATPoints" type="java.lang.Integer"*/-->
-<head th:replace="fragments/head :: commonHead(~{::title/text()}, false, ~{::template})">
+<head th:replace="fragments/head :: commonHead(#{titleDominanceTimeline}, false, ~{::template})">
 	<title>Dominance Timeline</title>
 	<template>
 	<meta name="description" content="Tennis Dominance Timeline by tennis achievements, Elo ratings and predictability"/>
@@ -148,28 +148,31 @@
 </head>
 <body class="container">
 	<header th:include="fragments/header :: title"></header>
-	<h3 class="text-nowrap"><i class="fa fa-history"></i> Dominance Timeline</h3>
+    <h3 class="text-nowrap"><i class="fa fa-history"></i> [[#{titleDominanceTimeline}]]</h3>
 	<div class="row">
 		<div class="col-md-5 col-lg-4">
 			<div class="input-group">
-				<label for="fromSeason" class="input-group-addon">From:</label>
+                <label for="fromSeason" class="input-group-addon">[[#{from}]]:</label>
 				<select id="fromSeason" class="form-control" onchange="reloadDominanceTimeline()" data-toggle="tooltip" data-placement="top" title="Select from season">
-					<option value="">All seasons</option>
+                    <option value="">[[#{allSeasons}]]</option>
 					<option th:each="season : ${seasons}" th:value="${season}" value="1968" th:selected="${season == fromSeason}" th:text="${season}">1968</option>
 				</select>
-				<label for="toSeason" class="input-group-addon">To:</label>
+                <label for="toSeason" class="input-group-addon">[[#{to}]]:</label>
 				<select id="toSeason" class="form-control" onchange="reloadDominanceTimeline()" data-toggle="tooltip" data-placement="top" title="Select to season">
-					<option value="">All seasons</option>
+                    <option value="">[[#{allSeasons}]]</option>
 					<option th:each="season : ${seasons}" th:value="${season}" value="2017" th:selected="${season == toSeason}" th:text="${season}">2017</option>
 				</select>
 			</div>
 		</div>
 		<div class="col-md-3 col-lg-3">
 			<div class="input-group">
-				<label for="surface" class="input-group-addon">Surface:</label>
+                <label for="surface" class="input-group-addon">[[#{surface}]]:</label>
 				<select id="surface" class="form-control" onchange="reloadDominanceTimeline()" data-toggle="tooltip" data-placement="top" title="Select overall or Dominance Timeline by surface">
-					<option value="">Overall</option>
-					<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:selected="${aSurface.code == surface}" th:text="${aSurface.text}">Hard</option>
+                    <option value="">[[#{overall}]]</option>
+                    <option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+                            th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
+                            th:selected="${aSurface.code == surface}" th:text="#{'enum'+${aSurface}}">Hard
+                    </option>
 				</select>
 			</div>
 		</div>
@@ -194,7 +197,9 @@
 		<tr class="best-player">
 			<th colspan="3" style="padding: 1px 4px; text-align: right; border-right: 3px solid lightgray; height: 85px">Era</th>
 			<th th:each="era : ${timeline.dominanceEras}" th:class="'points-' + ${era.dominanceRatioRounded}" style="padding: 1px" th:colspan="${era.seasonCount}">
-				<span th:if="${era.player}" th:text="${era.player.lastName}" class="best-player era-player">Sampras</span>
+                <span th:if="${era.player}"
+                      th:text="__${#locale}__ == 'zh' and ${era.player.chineseName} != null ? ${era.player.chineseName} : ${era.player.lastName}"
+                      class="best-player era-player">Sampras</span>
 			</th>
 		</tr>
 		<tr class="season">
@@ -206,7 +211,8 @@
 		<tr class="best-player">
 			<th colspan="3" style="padding: 1px 4px; text-align: right; border-right: 3px solid lightgray; height: 85px">Season Best Player</th>
 			<th th:each="season : ${timeline.dominanceSeasons}" th:class="'points-' + ${season.dominanceRatioRounded}" style="padding: 1px">
-				<span th:text="${season.bestPlayer.lastName}" class="best-player">Federer</span>
+                <span th:text="__${#locale}__ == 'zh' and ${season.bestPlayer.chineseName} != null ? ${season.bestPlayer.chineseName} : ${season.bestPlayer.lastName}"
+                      class="best-player">Federer</span>
 			</th>
 		</tr>
 		<tr class="season">
@@ -288,8 +294,9 @@
 		<tr th:each="player : ${timeline.players}" class="player" th:data-player-id="${player.playerId}">
 			<td style="padding: 1px 4px">
 				<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/ch.png'" th:title="${player.country.id}" title="SUI" width="24" height="20"/>
-				<a th:href="${language}+@{/playerProfile(playerId=${player.playerId})}" th:text="${player.name}"
-				   style="vertical-align: middle" title="Show profile">Roger Federer</a>
+                <a th:href="${language}+@{/playerProfile(playerId=${player.playerId})}"
+                   th:text="__${#locale}__ == 'zh' and ${player.chineseName} != null ? ${player.chineseName} : ${player.name}"
+                   style="vertical-align: middle" title="Show profile">Roger Federer</a>
 				<img th:if="${player.active}" src="/images/active.png" title="Active" width="12" height="12"/>
 			</td>
 			<td style="padding: 1px 4px" th:text="${player.dob.year}">1985</td>

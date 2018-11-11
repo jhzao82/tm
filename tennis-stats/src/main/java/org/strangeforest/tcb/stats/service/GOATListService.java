@@ -133,7 +133,7 @@ public class GOATListService {
 				int goatRank = rs.getInt("goat_rank");
 				int playerId = rs.getInt("player_id");
 				String name = rs.getString("last_name");
-				String chineseName = shortenChineseName(rs.getString("chinese_name"));
+                String chineseName = rs.getString("chinese_name") != null ? shortenChineseName(rs.getString("chinese_name")) : null;
 				String countryId = getInternedString(rs, "country_id");
 				boolean active = rs.getBoolean("active");
 				int goatPoints = rs.getInt("goat_points");

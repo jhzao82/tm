@@ -47,11 +47,11 @@
 	<!--/* General */-->
 	<tr>
         <th class="text-right" colspan="2" width="40%"><a th:href="@{/playerProfile(playerId=${player1.id})}"
-                                                          th:text="__${#locale}__ == 'zh' ? ${player1.chineseName} : ${player1.name}">Roger
+                                                          th:text="__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}">Roger
             Federer</a></th>
         <th class="text-center" width="20%">[[#{vs}]]</th>
         <th class="text-left" colspan="2" width="40%"><a th:href="@{/playerProfile(playerId=${player2.id})}"
-                                                         th:text="__${#locale}__ == 'zh' ? ${player2.chineseName} : ${player2.name}">Rafael
+                                                         th:text="__${#locale}__ == 'zh' and ${player2.chineseName} != null  ? ${player2.chineseName} : ${player2.name}">Rafael
             Nadal</a></th>
 	</tr>
 	<tr>
@@ -68,13 +68,13 @@
         <td class="text-right" colspan="2"><img th:src="@{/images/flags/{code}.png(code=${player1.country.code})}"
                                                 src="/images/flags/us.png" th:title="${player1.country.id}" title="USA"
                                                 width="24" height="20"/> <span
-                th:text="__${#locale}__ == 'zh' ? ${player1.country.chineseName} : ${player1.country.name}">United States</span>
+                th:text="__${#locale}__ == 'zh' and ${player1.country.chineseName} != null ? ${player1.country.chineseName} : ${player1.country.name}">United States</span>
         </td>
         <th class="text-center">[[#{country}]]</th>
         <td class="text-left" colspan="2"><img th:src="@{/images/flags/{code}.png(code=${player2.country.code})}"
                                                src="/images/flags/us.png" th:title="${player2.country.id}" title="USA"
                                                width="24" height="20"/> <span
-                th:text="__${#locale}__ == 'zh' ? ${player2.country.chineseName} : ${player2.country.name}">United States</span>
+                th:text="__${#locale}__ == 'zh' and ${player2.country.chineseName} != null  ? ${player2.country.chineseName} : ${player2.country.name}">United States</span>
         </td>
 	</tr>
 	<tr th:if="${player1.birthplace != null || player2.birthplace != null}">
@@ -318,7 +318,7 @@
 			<span style="vertical-align: middle" th:text="${#temporals.format(lastEvent.date, 'dd-MM-yyyy')}">15-07-2015</span>
                 <a th:href="@{/tournamentEvent(tournamentEventId=${lastEvent.tournamentEventId})}" class="label label-"
                    th:attrappend="class=${lastEvent.level}"
-                   th:text="__${#locale}__ == 'zh' ? ${lastEvent.chineseName} : ${lastEvent.name}"
+                   th:text="__${#locale}__ == 'zh' and ${lastEvent.chineseName} != null ? ${lastEvent.chineseName} : ${lastEvent.name}"
                    th:title="${levels[lastEvent.level]}">Wimbledon</a>
                 <span th:if="${lastEvent.surface}" id="lastEventSurface1" class="label"
                       th:data-surface="${lastEvent.surface}">[[#{'enum'+${lastEvent.surface}}]]<span
@@ -332,7 +332,7 @@
 			<span style="vertical-align: middle" th:text="${#temporals.format(lastEvent.date, 'dd-MM-yyyy')}">15-07-2015</span>
                 <a th:href="@{/tournamentEvent(tournamentEventId=${lastEvent.tournamentEventId})}" class="label label-"
                    th:attrappend="class=${lastEvent.level}"
-                   th:text="__${#locale}__ == 'zh' ? ${lastEvent.chineseName} : ${lastEvent.name}"
+                   th:text="__${#locale}__ == 'zh' and ${lastEvent.chineseName} != null ? ${lastEvent.chineseName} : ${lastEvent.name}"
                    th:title="${levels[lastEvent.level]}">Wimbledon</a>
                 <span th:if="${lastEvent.surface}" id="lastEventSurface1" class="label"
                       th:data-surface="${lastEvent.surface}">[[#{'enum'+${lastEvent.surface}}]]<span

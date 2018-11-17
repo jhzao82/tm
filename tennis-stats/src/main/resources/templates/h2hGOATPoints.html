@@ -62,21 +62,31 @@
 <table id="goatPointsTable" class="table table-condensed table-hover table-bordered text-nowrap">
 	<thead>
 	<tr>
-		<th colspan="3" rowspan="2" class="first-header first-column last-column text-center valign-middle achievements">Achievements</th>
-		<th colspan="4" rowspan="2" class="first-header first-column text-center valign-middle ranking">Ranking</th>
-		<th rowspan="2" class="first-header first-column text-center tournament">Tournament</th>
+        <th colspan="3" rowspan="2"
+            class="first-header first-column last-column text-center valign-middle achievements">[[#{achievements}]]
+        </th>
+        <th colspan="4" rowspan="2" class="first-header first-column text-center valign-middle ranking">[[#{ranking}]]
+        </th>
+        <th rowspan="2" class="first-header first-column text-center tournament">[[#{tournament}]]</th>
 		<th colspan="3" class="first-header first-column text-center valign-middle grand-total" style="padding: 3px">
-			<select id="surface" class="form-control" style="height: 24px; padding: 2px 5px" onchange="reloadH2HGOATPoints()" data-toggle="tooltip" data-placement="top" title="Select overall or GOAT Points by surface">
-				<option value="">Overall</option>
-				<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:selected="${aSurface.code == surface}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}">Hard</option>
+            <select id="surface" class="form-control" style="padding: 2px 5px" onchange="reloadH2HGOATPoints()"
+                    data-toggle="tooltip" data-placement="top" title="Select overall or GOAT Points by surface">
+                <option value="">[[#{overall}]]</option>
+                <option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+                        th:selected="${aSurface.code == surface}" th:class="|bg-surface-${aSurface.code}|" value="H"
+                        class="bg-surface-H" th:text="#{'enum'+${aSurface}}">Hard
+                </option>
 			</select>
 		</th>
-		<th rowspan="2" class="first-header first-column text-center tournament">Tournament</th>
-		<th colspan="4" rowspan="2" class="first-header first-column text-center valign-middle ranking">Ranking</th>
-		<th colspan="3" rowspan="2" class="first-header first-column last-column text-center valign-middle achievements">Achievements</th>
+        <th rowspan="2" class="first-header first-column text-center tournament">[[#{tournament}]]</th>
+        <th colspan="4" rowspan="2" class="first-header first-column text-center valign-middle ranking">[[#{ranking}]]
+        </th>
+        <th colspan="3" rowspan="2"
+            class="first-header first-column last-column text-center valign-middle achievements">[[#{achievements}]]
+        </th>
 	</tr>
 	<tr>
-		<th colspan="3" class="first-header first-column text-center valign-middle grand-total">GOAT Points</th>
+        <th colspan="3" class="first-header first-column text-center valign-middle grand-total">[[#{goatPoints}]]</th>
 	</tr>
 	<tr>
 		<th class="first-column last-column text-center achievements" th:title="#{goatPoints.achievements.title}">Ach P</th>
@@ -138,7 +148,7 @@
 		<th class="points first-header ranking" th:text="${goatPoints1.yearEndRankPoints}">8</th>
 		<th class="points first-header first-column tournament" th:title="#{goatPoints.totalTournament.title}" th:text="${goatPoints1.tournamentPoints}">235</th>
 		<th class="points first-header first-column total" th:text="${goatPoints1.seasonsPoints}">250</th>
-		<th class="first-header first-column text-center total">All Seasons</th>
+        <th class="first-header first-column text-center total">[[#{allSeasons}]]</th>
 		<th class="points first-header first-column total" th:text="${goatPoints2.seasonsPoints}">250</th>
 		<th class="points first-header first-column tournament" th:title="#{goatPoints.totalTournament.title}" th:text="${goatPoints2.tournamentPoints}">235</th>
 		<th class="points first-header first-column ranking" th:text="${goatPoints2.yearEndRankPoints}">8</th>
@@ -155,26 +165,26 @@
 	<tr th:if="${goatPoints1.bestRankPoints > 0 || goatPoints2.bestRankPoints > 0}">
 		<td colspan="3" class="first-column last-column"></td>
 		<td class="points first-column" th:text="${goatPoints1.bestRankPoints > 0 ? goatPoints1.bestRankPoints : _}"></td>
-		<td colspan="3" class="first-column text-left">Best Rank</td>
+        <td colspan="3" class="first-column text-left">[[#{bestRank}]]</td>
 		<td class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints1.bestRankPoints > 0 ? goatPoints1.bestRankPoints : _}"></td>
 		<td class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints2.bestRankPoints > 0 ? goatPoints2.bestRankPoints : _}"></td>
 		<td class="first-column"></td>
-		<td colspan="3" class="first-column text-right">Best Rank</td>
+        <td colspan="3" class="first-column text-right">[[#{bestRank}]]</td>
 		<td class="points first-column" th:text="${goatPoints2.bestRankPoints > 0 ? goatPoints2.bestRankPoints : _}"></td>
 		<td colspan="3" class="first-column last-column"></td>
 	</tr>
 	<tr th:if="${goatPoints1.bestEloRatingPoints > 0 || goatPoints2.bestEloRatingPoints > 0}">
 		<td colspan="3" class="first-column last-column"></td>
 		<td class="points first-column" th:text="${goatPoints1.bestEloRatingPoints > 0 ? goatPoints1.bestEloRatingPoints : _}"></td>
-		<td colspan="3" class="first-column text-left">Peak Elo Rating</td>
+        <td colspan="3" class="first-column text-left">[[#{peakEloRating}]]</td>
 		<td class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints1.bestEloRatingPoints > 0 ? goatPoints1.bestEloRatingPoints : _}"></td>
 		<td class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints2.bestEloRatingPoints > 0 ? goatPoints2.bestEloRatingPoints : _}"></td>
 		<td class="first-column"></td>
-		<td colspan="3" class="first-column text-right">Peak Elo Rating</td>
+        <td colspan="3" class="first-column text-right">[[#{peakEloRating}]]</td>
 		<td class="points first-column" th:text="${goatPoints2.bestEloRatingPoints > 0 ? goatPoints2.bestEloRatingPoints : _}"></td>
 		<td colspan="3" class="first-column last-column"></td>
 	</tr>
@@ -183,13 +193,19 @@
 	<tr>
 		<th colspan="3" class="first-header first-column last-column"></th>
 		<th class="points first-header first-column ranking" th:text="${goatPoints1.rankingPoints}"></th>
-		<th colspan="3" class="first-header first-column text-left ranking" th:title="#{goatPoints.totalRanking.title}">Total Ranking</th>
+        <th colspan="3" class="first-header first-column text-left ranking" th:title="#{goatPoints.totalRanking.title}">
+            [[#{totalRanking}]]
+        </th>
 		<th class="first-header first-column"></th>
 		<th class="points first-header first-column ranking" th:text="${goatPoints1.careerRankingPoints}"></th>
-		<th class="first-header first-column text-center ranking" th:title="#{goatPoints.careerRanking.title}">Career Rnk</th>
+        <th class="first-header first-column text-center ranking" th:title="#{goatPoints.careerRanking.title}">
+            [[#{careerRnk}]]
+        </th>
 		<th class="points first-header first-column ranking" th:text="${goatPoints2.careerRankingPoints}"></th>
 		<th class="first-header first-column"></th>
-		<th colspan="3" class="first-header first-column text-right ranking" th:title="#{goatPoints.totalRanking.title}">Total Ranking</th>
+        <th colspan="3" class="first-header first-column text-right ranking"
+            th:title="#{goatPoints.totalRanking.title}">[[#{totalRanking}]]
+        </th>
 		<th class="points first-header first-column ranking" th:text="${goatPoints2.rankingPoints}"></th>
 		<th colspan="3" class="first-header first-column last-column"></th>
 	</tr>
@@ -221,24 +237,24 @@
 	</tr>
 	<tr th:if="${goatPoints1.recordsPoints > 0 || goatPoints2.recordsPoints > 0}">
 		<td class="points first-column last-column" th:text="${goatPoints1.recordsPoints > 0 ? goatPoints1.recordsPoints : _}"></td>
-		<td colspan="2" class="first-column text-left">Records</td>
+        <td colspan="2" class="first-column text-left">[[#{records}]]</td>
 		<td colspan="5" class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints1.recordsPoints > 0 ? goatPoints1.recordsPoints : _}"></td>
 		<td class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints2.recordsPoints > 0 ? goatPoints2.recordsPoints : _}"></td>
 		<td colspan="5" class="first-column"></td>
-		<td colspan="2" class="first-column text-right">Records</td>
+        <td colspan="2" class="first-column text-right">[[#{records}]]</td>
 		<td class="points first-column last-column" th:text="${goatPoints2.recordsPoints > 0 ? goatPoints2.recordsPoints : _}"></td>
 	</tr>
 	<tr th:if="${goatPoints1.bestSeasonPoints > 0 || goatPoints2.bestSeasonPoints > 0}">
 		<td class="points first-column last-column" th:text="${goatPoints1.bestSeasonPoints > 0 ? goatPoints1.bestSeasonPoints : _}"></td>
-		<td colspan="2" class="first-column text-left">Best Seasons</td>
+        <td colspan="2" class="first-column text-left">[[#{bestSeasons}]]</td>
 		<td colspan="5" class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints1.bestSeasonPoints > 0 ? goatPoints1.bestSeasonPoints : _}"></td>
 		<td class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints2.bestSeasonPoints > 0 ? goatPoints2.bestSeasonPoints : _}"></td>
 		<td colspan="5" class="first-column"></td>
-		<td colspan="2" class="first-column text-right">Best Seasons</td>
+        <td colspan="2" class="first-column text-right">[[#{bestSeasons}]]</td>
 		<td class="points first-column last-column" th:text="${goatPoints2.bestSeasonPoints > 0 ? goatPoints2.bestSeasonPoints : _}"></td>
 	</tr>
 	<tr th:if="${goatPoints1.greatestRivalriesPoints > 0 || goatPoints2.greatestRivalriesPoints > 0}">
@@ -254,24 +270,24 @@
 	</tr>
 	<tr th:if="${goatPoints1.performancePoints > 0 || goatPoints2.performancePoints > 0}">
 		<td class="points first-column last-column" th:text="${goatPoints1.performancePoints > 0 ? goatPoints1.performancePoints : _}"></td>
-		<td colspan="2" class="first-column text-left">Performance</td>
+        <td colspan="2" class="first-column text-left">[[#{performance}]]</td>
 		<td colspan="5" class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints1.performancePoints > 0 ? goatPoints1.performancePoints : _}"></td>
 		<td class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints2.performancePoints > 0 ? goatPoints2.performancePoints : _}"></td>
 		<td colspan="5" class="first-column"></td>
-		<td colspan="2" class="first-column text-right">Performance</td>
+        <td colspan="2" class="first-column text-right">[[#{performance}]]</td>
 		<td class="points first-column last-column" th:text="${goatPoints2.performancePoints > 0 ? goatPoints2.performancePoints : _}"></td>
 	</tr>
 	<tr th:if="${goatPoints1.statisticsPoints > 0 || goatPoints2.statisticsPoints > 0}">
 		<td class="points first-column last-column" th:text="${goatPoints1.statisticsPoints > 0 ? goatPoints1.statisticsPoints : _}"></td>
-		<td colspan="2" class="first-column text-left">Statistics</td>
+        <td colspan="2" class="first-column text-left">[[#{statistics}]]</td>
 		<td colspan="5" class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints1.statisticsPoints > 0 ? goatPoints1.statisticsPoints : _}"></td>
 		<td class="first-column"></td>
 		<td class="points first-column" th:text="${goatPoints2.statisticsPoints > 0 ? goatPoints2.statisticsPoints : _}"></td>
 		<td colspan="5" class="first-column"></td>
-		<td colspan="2" class="first-column text-right">Statistics</td>
+        <td colspan="2" class="first-column text-right">[[#{statistics}]]</td>
 		<td class="points first-column last-column" th:text="${goatPoints2.statisticsPoints > 0 ? goatPoints2.statisticsPoints : _}"></td>
 	</tr>
 	</tbody>
@@ -295,7 +311,7 @@
 		<th class="points first-header first-column grand-total">
 			<a th:href="@{/playerProfile(playerId=${playerId1}, tab=goatPoints, surface=${surface})}" th:text="${goatPoints1.totalPoints}" class="points-link" title="Show GOAT Points distribution">155</a>
 		</th>
-		<th class="first-header first-column text-center grand-total">Total</th>
+        <th class="first-header first-column text-center grand-total">[[#{total}]]</th>
 		<th class="points first-header first-column grand-total">
 			<a th:href="@{/playerProfile(playerId=${playerId2}, tab=goatPoints, surface=${surface})}" th:text="${goatPoints2.totalPoints}" class="points-link" title="Show GOAT Points distribution">155</a>
 		</th>

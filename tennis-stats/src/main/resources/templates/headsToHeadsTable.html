@@ -51,10 +51,12 @@
 <table id="headsToHeadsTable" class="table table-condensed table-hover table-bordered">
 	<thead>
 	<tr>
-		<th style="border-right: 3px solid lightgray">Player</th>
+		<th style="border-right: 3px solid lightgray">[[#{player}]]</th>
 		<th style="border-right: 3px solid lightgray; text-align: center">Totals</th>
 		<th th:each="rivalry : ${headsToHeads.rivalries}" style="text-align: center">
-			<a th:with="player=${rivalry.player1}" th:href="@{/playerProfile(playerId=${player.playerId})}" th:text="${playerCount <= 10 ? player.name : player.initials}" th:title="|Show ${player.name} profile|">Roger Federer</a>
+			<a th:with="player=${rivalry.player1}" th:href="@{/playerProfile(playerId=${player.playerId})}"
+			   th:text="${playerCount} <= 10 ? (__${#locale}__ == 'zh' and ${player.chineseName} != null ? ${player.chineseName} : ${player.name}) : ${player.initials}"
+			   th:title="|Show ${player.name} profile|">Roger Federer</a>
 		</th>
 	</tr>
 	</thead>
@@ -62,7 +64,9 @@
 	<tr th:unless="${headsToHeads.empty}" th:each="hRivalry : ${headsToHeads.rivalries}">
 		<th th:with="player=${hRivalry.player1}">
 			<img th:src="@{/images/flags/{code}.png(code=${player.country.code})}" src="/images/flags/ch.png'" th:title="${player.country.id}" title="SUI" width="24" height="20"/>
-			<a th:href="@{/playerProfile(playerId=${player.playerId})}" th:text="${player.name}" title="Show profile">Roger Federer</a>
+			<a th:href="@{/playerProfile(playerId=${player.playerId})}"
+			   th:text="__${#locale}__ == 'zh' and ${player.chineseName} != null ? ${player.chineseName} : ${player.name}"
+			   title="Show profile">Roger Federer</a>
 			<img th:if="${player.active}" src="/images/active.png" title="Active" width="12" height="12" style="vertical-align: 0"/>
 		</th>
 		<th style="text-align: center">
@@ -88,9 +92,11 @@
 <table th:unless="${headsToHeads.empty}" id="playersStatsTable" class="table table-condensed table-hover table-bordered text-nowrap">
 	<thead>
 	<tr style="border-bottom: 3px solid lightgray">
-		<th style="border-right: 3px solid lightgray">Player</th>
+		<th style="border-right: 3px solid lightgray">[[#{player}]]</th>
 		<th th:each="rivalry : ${headsToHeads.rivalries}" style="text-align: center">
-			<a th:with="player=${rivalry.player1}" th:href="@{/playerProfile(playerId=${player.playerId})}" th:text="${playerCount <= 10 ? player.name : player.initials}" th:title="|Show ${player.name} profile|">Roger Federer</a>
+			<a th:with="player=${rivalry.player1}" th:href="@{/playerProfile(playerId=${player.playerId})}"
+			   th:text="${playerCount} <= 10 ? (__${#locale}__ == 'zh' and ${player.chineseName} != null ? ${player.chineseName} : ${player.name}) : ${player.initials}"
+			   th:title="|Show ${player.name} profile|">Roger Federer</a>
 		</th>
 	</tr>
 	</thead>
@@ -105,7 +111,10 @@
 	<tbody>
 	<th:block th:each="subGroup : ${group.subGroups}" th:if="${hasPointStats || !subGroup.needsStats}">
 	<tr th:each="category : ${subGroup.categories}" th:if="${hasPointStats || !category.needsStats}" th:class="${'stats-group stats-group-' + group.id + (categoryStat.first ? ' first-row' : '')}" th:with="indexMod3=${subGroupStat.index % 3}">
-		<th class="stats-header stats-" th:attrappend="class=${indexMod3 == 0 ? 'serve' : (indexMod3 == 1 ? 'return' : 'total')}" th:title="#{${category.descriptionId}}" th:text="${category.title}">Ace %</th>
+		<th class="stats-header stats-"
+			th:attrappend="class=${indexMod3 == 0 ? 'serve' : (indexMod3 == 1 ? 'return' : 'total')}"
+			th:title="#{${category.descriptionId}}" th:text="#{'stats'+${#strings.capitalize(category.name)}}">Ace %
+		</th>
 		<td th:each="hRivalry : ${headsToHeads.rivalries}" th:with="player=${hRivalry.player1}, stats=${playersStats.get(player.playerId)}" th:text="${!category.needsStats || stats.hasPointStats() ? category.getStatFormatted(stats) : _}" class="stats" th:attrappend="class=${category.hasRawData() ? ' pct-data' : _}">10%</td>
 		<td th:if="${category.hasRawData()}" th:each="hRivalry : ${headsToHeads.rivalries}" th:with="player=${hRivalry.player1}, stats=${playersStats.get(player.playerId)}" th:text="${!category.needsStats || stats.hasPointStats() ? category.getStatUp(stats) + ' / ' + category.getStatDown(stats) : _}" class="raw-data stats">10 / 100</td>
 	</tr>
@@ -114,9 +123,11 @@
 	</th:block>
 	<thead>
 	<tr style="border-top: 3px solid lightgray">
-		<th style="border-right: 3px solid lightgray">Player</th>
+		<th style="border-right: 3px solid lightgray">[[#{player}]]</th>
 		<th th:each="rivalry : ${headsToHeads.rivalries}" style="text-align: center">
-			<a th:with="player=${rivalry.player1}" th:href="@{/playerProfile(playerId=${player.playerId})}" th:text="${playerCount <= 10 ? player.name : player.initials}" th:title="|Show ${player.name} profile|">Roger Federer</a>
+			<a th:with="player=${rivalry.player1}" th:href="@{/playerProfile(playerId=${player.playerId})}"
+			   th:text="${playerCount} <= 10 ? (__${#locale}__ == 'zh' and ${player.chineseName} != null ? ${player.chineseName} : ${player.name}) : ${player.initials}"
+			   th:title="|Show ${player.name} profile|">Roger Federer</a>
 		</th>
 	</tr>
 	</thead>

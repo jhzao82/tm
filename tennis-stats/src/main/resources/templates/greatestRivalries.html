@@ -66,7 +66,9 @@
 					},
 					"lastMatch": function(column, row) {
 						var match = row.lastMatch;
-						return shortName(match.winnerId === row.player1.playerId ? row.player1.name : row.player2.name) + " [ " + formatScore(match.score) + " ] at " +
+						player1Name = row.player1.chineseName != undefined ? row.player1.chineseName : row.player1.name;
+						player2Name = row.player2.chineseName != undefined ? row.player2.chineseName : row.player2.name;
+						return shortName(match.winnerId === row.player1.playerId ? player1Name : player2Name) + " [ " + formatScore(match.score) + " ] at " +
 							match.season + " " + tournamentEventFormatter(column, match) + " " + surfaceFormatter(column, match) + " " + match.round;
 					},
 					"h2h2": function(column, row) {
@@ -96,7 +98,7 @@
 			$search.before($("#clearDiv").remove());
 			$search.after($("#advFilterDiv").remove());
 			$search.remove();
-			$rivalriesTable.find("th[data-column-id='rivalry'] > a > span.text").html("<span title='Player with more GOAT points is on the left side'>Rivalry</span>");
+			$rivalriesTable.find("th[data-column-id='rivalry'] > a > span.text").html("<span title='Player with more GOAT points is on the left side'>[[#{rivalry}]]</span>");
 			filterChanged();
 			$("[data-toggle='tooltip']").tooltip();
 			setBootgridTitles($rivalriesTable, [
@@ -108,6 +110,12 @@
 			]);
 		});
 		function shortName(name) {
+			if (name == undefined)
+				return '';
+			if (/[\u4E00-\u9FA5]/i.test(name)) {
+				var names = name.split("·");
+				return names.pop();
+			}
 			var names = name.match(/[^A-Z\s]+/g);
 			for (var i = 0; i < names.length - 1; i++)
 				name = name.replace(names[i], '.');
@@ -239,7 +247,7 @@
         </div>
 		<div class="col-md-2">
 			<select id="bestRank" class="form-control" onchange="reloadGreatestRivalries()" data-toggle="tooltip" data-placement="top" title="Filter by player best rank">
-				<option value="">All players</option>
+                <option value="">[[#{allPlayers}]]</option>
 				<option value="1">Between once No. 1</option>
 				<option value="2">Between once Top 2</option>
 				<option value="3">Between once Top 3</option>
@@ -250,7 +258,7 @@
 		</div>
 		<div class="col-md-2">
 			<div class="input-group" data-toggle="tooltip" data-placement="top" title="Override minimum matches">
-				<label for="minMatchesOverride" class="input-group-addon">Min. matches:</label>
+                <label for="minMatchesOverride" class="input-group-addon">[[#{minEntries}]]:</label>
 				<input id="minMatchesOverride" type="text" size="6" class="form-control" oninput="reloadGreatestRivalries()" onchange="reloadGreatestRivalries()"/>
 			</div>
 		</div>
@@ -300,7 +308,7 @@
 	<table id="greatestRivalriesTable" class="table table-condensed table-hover table-striped">
 		<thead>
 		<tr>
-			<th data-column-id="rank" data-type="numeric" data-width="55" data-sortable="false">Rnk</th>
+            <th data-column-id="rank" data-type="numeric" data-width="55" data-sortable="false">[[#{rnk}]]</th>
 			<th data-column-id="rivalry" data-formatter="rivalry" data-width="320" data-sortable="false">
 				[[#{rivalry}]]
 			</th>

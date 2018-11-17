@@ -19,7 +19,7 @@ public class Tournament {
 	private int averageEloRating;
 	private final List<PlayerRow> topPlayers;
 
-    public Tournament(int id, String extId, String name, String chineseName, List<String> levels, List<String> surfaces, Map<String, Integer> courtSpeeds, int eventCount, String seasons, int playerCount, double participation, int strength, int averageEloRating, List<PlayerRow> topPlayers) {
+    public Tournament(int id, String extId, String name, String chineseName, List<String> levels, List<String> surfaces, Map<String, Integer> speeds, int eventCount, String seasons, int playerCount, double participation, int strength, int averageEloRating, List<PlayerRow> topPlayers) {
 		this.id = id;
 		this.extId = extId;
 		this.name = name;

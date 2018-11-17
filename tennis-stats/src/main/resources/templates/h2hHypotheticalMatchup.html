@@ -109,27 +109,36 @@
 <div class="row">
 	<div class="col-md-3">
 		<select id="predictionSurface" class="form-control" onchange="predictionSurfaceChanged(); predictMatch()" data-toggle="tooltip" data-placement="top" title="Select surface">
-			<option value="">Unknown surface</option>
-			<option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}" th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H" th:text="${aSurface.text}" th:selected="${aSurface.code == surface}">Hard</option>
+            <option value="">[[#{unknownSurface}]]</option>
+            <option th:each="aSurface : ${surfaces}" th:value="${aSurface.code}"
+                    th:class="|bg-surface-${aSurface.code}|" value="H" class="bg-surface-H"
+                    th:text="#{'enum'+${aSurface}}" th:selected="${aSurface.code == surface}">Hard
+            </option>
 		</select>
 	</div>
 	<div class="col-md-3">
 		<select id="predictionIndoor" class="form-control" onchange="predictMatch()" data-toggle="tooltip" data-placement="top" title="Select outdoor / indoor">
-			<option value="">Unknown outdoor / indoor</option>
-			<option value="false" th:selected="${indoor == false}">Outdoor</option>
-			<option value="true" th:selected="${indoor == true}">Indoor</option>
+            <option value="">[[#{unknownOutdoorIndoor}]]</option>
+            <option value="false" th:selected="${indoor == false}">[[#{outdoor}]]</option>
+            <option value="true" th:selected="${indoor == true}">[[#{indoor}]]</option>
 		</select>
 	</div>
 	<div class="col-md-3">
 		<select id="predictionLevel" class="form-control" onchange="predictMatch()" data-toggle="tooltip" data-placement="top" title="Select tournament level">
-			<option value="">Unknown level</option>
-			<option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|" value="G" class="bg-level-G" th:text="${aLevel.text}" th:selected="${aLevel.code == level}">Grand Slam</option>
+            <option value="">[[#{unknownLevel}]]</option>
+            <option th:each="aLevel : ${levels}" th:value="${aLevel.code}" th:class="|bg-level-${aLevel.code}|"
+                    value="G" class="bg-level-G" th:text="#{'enum'+${aLevel}}" th:selected="${aLevel.code == level}">
+                Grand Slam
+            </option>
 		</select>
 	</div>
 	<div class="col-md-3">
 		<select id="predictionRound" class="form-control" onchange="predictMatch()" data-toggle="tooltip" data-placement="top" title="Select round">
-			<option value="">Unknown round</option>
-			<option th:each="aRound : ${rounds}" th:value="${aRound.code}" th:class="|bg-result-${aRound.baseCode}|" value="F" class="bg-result-F" th:text="${aRound.text}" th:selected="${aRound.code == round}">Final</option>
+            <option value="">[[#{unknownRound}]]</option>
+            <option th:each="aRound : ${rounds}" th:value="${aRound.code}" th:class="|bg-result-${aRound.baseCode}|"
+                    value="F" class="bg-result-F" th:text="#{'enum'+${aRound}}" th:selected="${aRound.code == round}">
+                Final
+            </option>
 		</select>
 	</div>
 </div>
@@ -137,13 +146,14 @@
 	<div class="col-md-2 col-md-offset-3">
 		<div class="checkbox">
 			<label data-toggle="tooltip" data-placement="top" title="Predict match with current form on the same date for both players">
-				<input id="predictionSameDate" type="checkbox" th:checked="${sameDates}" onchange="onSameDateChanged()"/> On Same Date
+                <input id="predictionSameDate" type="checkbox" th:checked="${sameDates}"
+                       onchange="onSameDateChanged()"/> [[#{onSameDate}]]
 			</label>
 		</div>
 	</div>
 	<div id="predictionDateDiv" class="col-md-3" th:style="'display: ' + ${sameDates ? 'inline-block' : 'none'}">
 		<div class="input-group">
-			<label for="predictionDate" class="input-group-addon">On Date:</label>
+            <label for="predictionDate" class="input-group-addon">[[#{onDate}]]:</label>
 			<input id="predictionDate" type="text" maxlength="10" class="form-control" th:value="${#temporals.format(date, 'dd-MM-yyyy')}" onchange="predictMatch()"/>
 		</div>
 	</div>
@@ -204,14 +214,18 @@
 		<td class="text-right" width="40%">
 			<h4 class="text-nowrap">
 				<img th:src="@{/images/flags/{code}.png(code=${player1.country.code})}" src="/images/flags/ch.png'" style="margin-top: -4px" th:title="${player1.country.id}" title="SUI" width="24" height="20"/>
-				<a th:href="@{/playerProfile(playerId=${player1.id})}" th:text="${player1.name}">Roger Federer</a>
+                <a th:href="@{/playerProfile(playerId=${player1.id})}"
+                   th:text="__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}">Roger
+                    Federer</a>
 			</h4>
 		</td>
-		<th class="text-center">vs</th>
+        <th class="text-center">[[#{vs}]]</th>
 		<td class="text-left" width="40%">
 			<h4 class="text-nowrap">
 				<img th:src="@{/images/flags/{code}.png(code=${player2.country.code})}" src="/images/flags/es.png'" style="margin-top: -4px" th:title="${player2.country.id}" title="ESP" width="24" height="20"/>
-				<a th:href="@{/playerProfile(playerId=${player2.id})}" th:text="${player2.name}">Rafael Nadal</a>
+                <a th:href="@{/playerProfile(playerId=${player2.id})}"
+                   th:text="__${#locale}__ == 'zh' and ${player2.chineseName} != null  ? ${player2.chineseName} : ${player2.name}">Rafael
+                    Nadal</a>
 			</h4>
 		</td>
 	</tr>
@@ -219,7 +233,7 @@
 		<td class="text-right">
 			<h4 th:text="${#numbers.formatDecimal(100 * prediction.winProbability1, 1, 1) + '%'}">60.0%</h4>
 		</td>
-		<th class="text-center">Win Probability</th>
+        <th class="text-center">[[#{winProbability}]]</th>
 		<td class="text-left">
 			<h4 th:text="${#numbers.formatDecimal(100 * prediction.winProbability2, 1, 1) + '%'}">40.0%</h4>
 		</td>
@@ -239,7 +253,7 @@
 		<td th:with="rank1=${prediction.rankingData1.rank}" class="text-right">
 			<div th:if="${rank1}" th:text="${rank1}">10</div>
 		</td>
-		<th class="text-center">ATP Ranking</th>
+        <th class="text-center">[[#{atpRanking}]]</th>
 		<td th:with="rank2=${prediction.rankingData2.rank}" class="text-left">
 			<div th:if="${rank2}" th:text="${rank2}">15</div>
 		</td>
@@ -248,7 +262,7 @@
 		<td th:with="rankPoints1=${prediction.rankingData1.rankPoints}" class="text-right">
 			<div th:if="${rankPoints1}" th:text="${rankPoints1}">10400</div>
 		</td>
-		<th class="text-center">ATP Points</th>
+        <th class="text-center">[[#{atpPoints}]]</th>
 		<td th:with="rankPoints2=${prediction.rankingData2.rankPoints}" class="text-left">
 			<div th:if="${rankPoints2}" th:text="${rankPoints2}">5600</div>
 		</td>
@@ -257,7 +271,7 @@
 		<td th:with="eloRating1=${prediction.rankingData1.eloRating}" class="text-right">
 			<div th:if="${eloRating1}" th:text="${eloRating1}">2350</div>
 		</td>
-		<th class="text-center">Elo Rating</th>
+        <th class="text-center">[[#{eloRating}]]</th>
 		<td th:with="eloRating2=${prediction.rankingData2.eloRating}" class="text-left">
 			<div th:if="${eloRating2}" th:text="${eloRating2}">2250</div>
 		</td>
@@ -266,7 +280,7 @@
 		<td th:with="eloRating1=${prediction.rankingData1.recentEloRating}" class="text-right">
 			<div th:if="${eloRating1}" th:text="${eloRating1}">2350</div>
 		</td>
-		<th class="text-center">Recent Elo Rating</th>
+        <th class="text-center">[[#{recentEloRating}]]</th>
 		<td th:with="eloRating2=${prediction.rankingData2.recentEloRating}" class="text-left">
 			<div th:if="${eloRating2}" th:text="${eloRating2}">2250</div>
 		</td>
@@ -293,7 +307,7 @@
 		<td th:with="eloRating1=${prediction.rankingData1.setEloRating}" class="text-right">
 			<div th:if="${eloRating1}" th:text="${eloRating1}">2350</div>
 		</td>
-		<th class="text-center">Set Elo Rating</th>
+        <th class="text-center">[[#{setEloRating}]]</th>
 		<td th:with="eloRating2=${prediction.rankingData2.setEloRating}" class="text-left">
 			<div th:if="${eloRating2}" th:text="${eloRating2}">2250</div>
 		</td>
@@ -362,8 +376,8 @@
 	</tr>
 </table>
 <p>
-	<em>* <a href="#" data-toggle="popover" data-trigger="focus" data-placement="auto" data-popover="#matchPredictionPopover"><strong>Match Prediction</strong></a> can be for specific surface, tournament level and/or round.<br/>
-	Prediction can be for the same date for both players, but also for Hypothetical Matchup between two players on their peaks!</em>
+    <!--em>* <a href="#" data-toggle="popover" data-trigger="focus" data-placement="auto" data-popover="#matchPredictionPopover"><strong>Match Prediction</strong></a> can be for specific surface, tournament level and/or round.<br/>
+    Prediction can be for the same date for both players, but also for Hypothetical Matchup between two players on their peaks!</em-->
 </p>
 <div th:include="fragments/aboutForecast :: aboutPrediction"></div>
 </th:block>

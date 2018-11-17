@@ -61,19 +61,24 @@
 <div class="row">
 	<div class="col-md-4">
 		<div class="input-group">
-			<label for="statsCategory" class="input-group-addon">Category:</label>
+            <label for="statsCategory" class="input-group-addon">[[#{category}]]:</label>
 			<select id="statsCategory" class="form-control">
-				<optgroup th:each="categoryClass : ${categoryClasses}" th:label="${categoryClass.key}" label="Serve">
-					<option th:each="category : ${categoryClass.value}" th:value="${category.name}" value="aces" th:text="${category.title}" th:title="#{__${category.descriptionId}__}">Aces</option>
+                <optgroup th:each="categoryClass : ${categoryClasses}"
+                          th:label="#{'text'+${#strings.replace(categoryClass.key, ' ','').replace('&','')}}"
+                          label="Serve">
+                    <option th:each="category : ${categoryClass.value}" th:value="${category.name}" value="aces"
+                            th:text="#{'stats'+${#strings.capitalize(category.name)}}"
+                            th:title="#{__${category.descriptionId}__}">Aces
+                    </option>
 				</optgroup>
 			</select>
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="input-group">
-			<label for="statsChartSurface" class="input-group-addon">Surface:</label>
+            <label for="statsChartSurface" class="input-group-addon">[[#{surface}]]:</label>
 			<select id="statsChartSurface" class="form-control">
-				<option value="">All surfaces</option>
+                <option value="">[[#{allSurfaces}]]</option>
 				<option th:each="surface : ${surfaces}" th:value="${surface.code}" th:class="|bg-surface-${surface.code}|" value="H" class="bg-surface-H" th:text="${surface.text}">Hard</option>
 				<option th:each="surfaceGroup : ${surfaceGroups}" th:value="${surfaceGroup.codes}" value="HGP" th:text="${surfaceGroup.text}">Fast (H, G, Cp)</option>
 			</select>
@@ -83,14 +88,14 @@
 <div class="row" style="margin-top: 5px">
 	<div class="col-md-4">
 		<div class="input-group">
-			<label for="statsFromSeason" class="input-group-addon">From:</label>
+            <label for="statsFromSeason" class="input-group-addon">[[#{from}]]:</label>
 			<select id="statsFromSeason" class="form-control" onchange="onStatsSeasonRangeChange()">
-				<option value="">All seasons</option>
+                <option value="">[[#{allSeasons}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
-			<label for="statsToSeason" class="input-group-addon">To:</label>
+            <label for="statsToSeason" class="input-group-addon">[[#{to}]]:</label>
 			<select id="statsToSeason" class="form-control" onchange="onStatsSeasonRangeChange()">
-				<option value="">All seasons</option>
+                <option value="">[[#{allSeasons}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
 		</div>
@@ -98,17 +103,17 @@
 	<div class="col-md-1">
 		<div id="statsByAgeDiv" class="checkbox">
 			<label data-toggle="tooltip" data-placement="top" title="Show chart by age">
-				<input id="statsByAge" type="checkbox"/> By age
+                <input id="statsByAge" type="checkbox"/> [[#{byAge}]]
 			</label>
 		</div>
 	</div>
 	<div class="col-md-2">
 		<div id="statsChartSize" style="margin-top: 6px"></div>
-		<div style="text-align: center; opacity: 0.5">Chart size</div>
+        <div style="text-align: center; opacity: 0.5">[[#{chartSize}]]</div>
 	</div>
 	<div class="col-md-2">
 		<a class="btn btn-primary pull-right" href="#" role="button" onclick="drawStatsChart()">
-			<i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Draw Chart
+            <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;[[#{drawChart}]]
 		</a>
 	</div>
 </div>

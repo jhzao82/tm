@@ -54,7 +54,7 @@
 <div class="row">
 	<div class="col-md-4">
 		<div class="input-group">
-			<label for="perfCategory" class="input-group-addon">Category:</label>
+            <label for="perfCategory" class="input-group-addon">[[#{category}]]:</label>
 			<select id="perfCategory" class="form-control">
 				<optgroup th:each="categoryClass : ${categoryClasses}" th:label="${categoryClass.key}" label="Performance">
 					<option th:each="category : ${categoryClass.value}" th:value="${category.name}" value="matches" th:class="${category.cssClass}" th:text="${category.title}">Overall</option>
@@ -66,14 +66,14 @@
 <div class="row" style="margin-top: 5px">
 	<div class="col-md-4">
 		<div class="input-group">
-			<label for="perfFromSeason" class="input-group-addon">From:</label>
+            <label for="perfFromSeason" class="input-group-addon">[[#{from}]]:</label>
 			<select id="perfFromSeason" class="form-control" onchange="onPerfSeasonRangeChange()">
-				<option value="">All seasons</option>
+                <option value="">[[#{allSeasons}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
-			<label for="perfToSeason" class="input-group-addon">To:</label>
+            <label for="perfToSeason" class="input-group-addon">[[#{to}]]:</label>
 			<select id="perfToSeason" class="form-control" onchange="onPerfSeasonRangeChange()">
-				<option value="">All seasons</option>
+                <option value="">[[#{allSeasons}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
 		</div>
@@ -81,17 +81,17 @@
 	<div class="col-md-1">
 		<div id="perfByAgeDiv" class="checkbox">
 			<label data-toggle="tooltip" data-placement="top" title="Show chart by age">
-				<input id="perfByAge" type="checkbox"/> By age
+                <input id="perfByAge" type="checkbox"/> [[#{byAge}]]
 			</label>
 		</div>
 	</div>
 	<div class="col-md-2">
 		<div id="perfChartSize" style="margin-top: 6px"></div>
-		<div style="text-align: center; opacity: 0.5">Chart size</div>
+        <div style="text-align: center; opacity: 0.5">[[#{chartSize}]]</div>
 	</div>
 	<div class="col-md-2">
 		<a class="btn btn-primary pull-right" href="#" role="button" onclick="drawPerformanceChart()">
-			<i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Draw Chart
+            <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;[[#{drawChart}]]
 		</a>
 	</div>
 </div>

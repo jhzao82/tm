@@ -100,10 +100,14 @@
 <div class="row">
 	<div class="col-md-3">
 		<div class="input-group">
-			<label for="rankType" class="input-group-addon">Rank type:</label>
+            <label for="rankType" class="input-group-addon">[[#{rankType}]]:</label>
 			<select id="rankType" class="form-control" onchange="onRankTypeChange()">
-				<optgroup th:each="rankCategory : ${rankCategories}" th:label="${rankCategory.text}" label="ATP">
-					<option th:each="aRankType : ${rankCategory.rankTypes}" th:value="${aRankType}" th:class="${aRankType.surface == null ? _ : 'bg-surface-' + aRankType.surface.code}" value="RANK" th:text="${aRankType.text}" th:selected="${aRankType.name() == rankType}">ATP Ranking</option>
+                <optgroup th:each="rankCategory : ${rankCategories}" th:label="${rankCategory}" label="ATP">
+                    <option th:each="aRankType : ${rankCategory.rankTypes}" th:value="${aRankType}"
+                            th:class="${aRankType.surface == null ? _ : 'bg-surface-' + aRankType.surface.code}"
+                            value="RANK" th:text="#{'enum'+${aRankType}}" th:selected="${aRankType.name() == rankType}">
+                        ATP Ranking
+                    </option>
 				</optgroup>
 			</select>
 		</div>
@@ -117,25 +121,25 @@
 	</div>
 	<div class="col-md-2">
 		<div id="rankChartSize" style="margin-top: 6px"></div>
-		<div style="text-align: center; opacity: 0.5; height: 15px">Chart size</div>
+        <div style="text-align: center; opacity: 0.5; height: 15px">[[#{chartSize}]]</div>
 	</div>
 	<div class="col-md-2">
 		<a class="btn btn-primary pull-right" href="#" role="button" onclick="drawRankingChart()">
-			<i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Draw Chart
+            <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;[[#{drawChart}]]
 		</a>
 	</div>
 </div>
 <div class="row" style="margin-top: 5px">
 	<div class="col-md-3">
 		<div class="input-group">
-			<label for="rankingTimeSpan" class="input-group-addon">Time span:</label>
+            <label for="rankingTimeSpan" class="input-group-addon">[[#{timeSpan}]]:</label>
 			<select id="rankingTimeSpan" class="form-control" onchange="onRankingTimeSpanChange()">
-				<option value="CR">Career</option>
-				<option value="1">Last 52 weeks</option>
-				<option value="2">Last two years</option>
-				<option value="3">Last three years</option>
-				<option value="5">Last five years</option>
-				<option value="10">Last ten years</option>
+                <option value="CR">[[#{career}]]</option>
+                <option value="1">[[#{last52weeks}]]</option>
+                <option value="2">[[#{lastTwoYears}]]</option>
+                <option value="3">[[#{lastThreeYears}]]</option>
+                <option value="5">[[#{lastFiveYears}]]</option>
+                <option value="10">[[#{lastTenYears}]]</option>
 				<option value="CS" th:selected="${fromDate != null || toDate != null}">Custom</option>
 			</select>
 		</div>
@@ -143,32 +147,33 @@
 	<div class="col-md-2">
 		<div id="rankingBySeasonDiv" class="checkbox">
 			<label data-toggle="tooltip" data-placement="top" title="Show chart by season (year-end)">
-				<input id="rankingBySeason" type="checkbox" onchange="onRankingTimeSpanChange()" th:checked="${bySeason}"/> By season
+                <input id="rankingBySeason" type="checkbox" onchange="onRankingTimeSpanChange()"
+                       th:checked="${bySeason}"/> [[#{bySeason}]]
 			</label>
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div id="rankingDateRange" class="input-group" style="display: none">
-			<label for="rankingFromDate" class="input-group-addon">From:</label>
+            <label for="rankingFromDate" class="input-group-addon">[[#{from}]]:</label>
 			<input id="rankingFromDate" type="text" maxlength="10" class="form-control" th:value="${fromDate}"/>
-			<label for="rankingToDate" class="input-group-addon">To:</label>
+            <label for="rankingToDate" class="input-group-addon">[[#{to}]]:</label>
 			<input id="rankingToDate" type="text" maxlength="10" class="form-control" th:value="${toDate}"/>
 		</div>
 		<div id="rankingSeasonRange" class="input-group" style="display: none">
-			<label for="rankingFromSeason" class="input-group-addon">From:</label>
+            <label for="rankingFromSeason" class="input-group-addon">[[#{from}]]:</label>
 			<select id="rankingFromSeason" class="form-control">
-				<option value="">All seasons</option>
+                <option value="">[[#{allSeasons}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
-			<label for="rankingToSeason" class="input-group-addon">To:</label>
+            <label for="rankingToSeason" class="input-group-addon">[[#{to}]]:</label>
 			<select id="rankingToSeason" class="form-control">
-				<option value="">All seasons</option>
+                <option value="">[[#{allSeasons}]]</option>
 				<option th:each="season : ${seasons}" th:value="${season}" value="2005" th:text="${season}">2005</option>
 			</select>
 		</div>
 		<div id="rankingByAgeDiv" class="checkbox">
 			<label data-toggle="tooltip" data-placement="top" title="Show chart by age">
-				<input id="rankingByAge" type="checkbox"/> By age
+                <input id="rankingByAge" type="checkbox"/> [[#{byAge}]]
 			</label>
 		</div>
 	</div>
@@ -185,38 +190,42 @@
 <div id="rankChart"></div>
 <div th:if="${highlights}" class="row">
 	<div class="col-md-5">
-		<h4>Ranking Highlights</h4>
+        <h4>[[#{rankingHighlights}]]</h4>
 		<table class="table table-condensed text-nowrap">
 			<tr th:if="${highlights.currentRank > 0}">
-				<th>Current Rank</th>
+                <th>[[#{currentRank}]]</th>
 				<td th:text="${highlights.currentRank} + ' (' + ${highlights.currentRankPoints} + ')'">10 (3000)</td>
 			</tr>
 			<tr th:if="${highlights.bestRank > 0}">
-				<th>Best Rank</th>
+                <th>[[#{bestRank}]]</th>
 				<td th:text="${highlights.bestRank} + ' (' + ${#temporals.format(highlights.bestRankDate, 'dd-MM-yyyy')} + ')'">5 (01-01-2010)</td>
 			</tr>
 			<tr th:if="${highlights.bestRankPoints > 0}">
-				<th>Most Rank Points</th>
+                <th>[[#{mostRankPoints}]]</th>
 				<td th:text="${highlights.bestRankPoints} + ' (' + ${#temporals.format(highlights.bestRankPointsDate, 'dd-MM-yyyy')} + ')'">5000 (01-01-2011)</td>
 			</tr>
 			<tr th:if="${highlights.bestYearEndRank > 0}">
-				<th>Best Year-End Rank</th>
+                <th>[[#{bestYearEndRank}]]</th>
 				<td th:text="${highlights.bestYearEndRank} + ' (' + ${highlights.bestYearEndRankSeasons} + ')'">10 (2001, 2003)</td>
 			</tr>
 			<tr th:if="${highlights.bestYearEndRankPoints > 0}">
-				<th>Most Year-End Rank Points</th>
+                <th>[[#{mostYearEndRankPoints}]]</th>
 				<td th:text="${highlights.bestYearEndRankPoints} + ' (' + ${highlights.bestYearEndRankPointsSeasons} + ')'">3450 (2001, 2003)</td>
 			</tr>
 			<tr th:if="${highlights.mostFrequentRank}" th:with="mostFrequentRank=${highlights.mostFrequentRank}">
-				<th>Most Frequent Rank</th>
-				<td th:text="${mostFrequentRank.rank} + ' (' + ${#numbers.formatInteger(mostFrequentRank.duration, 0)} + ' week' + ${mostFrequentRank.duration > 1 ? 's' : ''} + ')'">10 (20 weeks)</td>
+                <th>[[#{mostFrequentRank}]]</th>
+                <td th:text="${mostFrequentRank.rank} + ' (' + ${#numbers.formatInteger(mostFrequentRank.duration, 0)} + ' ' + #{week} + (${mostFrequentRank.duration} > 1 and __${#locale}__ == 'en' ? 's' : '') + ')'">
+                    10 (20 weeks)
+                </td>
 			</tr>
 			<tr th:if="${highlights.mostFrequentYearEndRank}" th:with="mostFrequentRank=${highlights.mostFrequentYearEndRank}">
-				<th>Most Frequent Year-End Rank</th>
-				<td th:text="${mostFrequentRank.rank} + ' (' + ${mostFrequentRank.duration} + ' year' + ${mostFrequentRank.duration > 1 ? 's' : ''} + ')'">10 (3 years)</td>
+                <th>[[#{mostFrequentYearEndRank}]]</th>
+                <td th:text="${mostFrequentRank.rank} + ' (' + ${mostFrequentRank.duration} + ' ' + #{year} + (${mostFrequentRank.duration} > 1 and __${#locale}__ == 'en' ? 's' : '') + ')'">
+                    10 (3 years)
+                </td>
 			</tr>
 			<tr th:if="${highlights.goatPoints > 0}">
-				<th>GOAT Rank</th>
+                <th>[[#{goatRank}]]</th>
 				<td>
 					<th:block th:text="${highlights.goatRank}">50</th:block>
 					(<a th:href="@{/playerProfile(playerId=${playerId}, tab=goatPoints)}" th:text="${highlights.goatPoints}" title="Show GOAT points distribution">25</a>)
@@ -226,76 +235,76 @@
 	</div>
 	<div class="col-md-2">
 		<th:block th:if="${highlights.weeksInTop100 > 0}">
-		<h4>Weeks</h4>
+            <h4>[[#{weeks}]]</h4>
 		<table class="table table-condensed text-nowrap">
 			<tr th:if="${highlights.weeksAtNo1 > 0}">
-				<th>At No. 1</th>
+                <th>[[#{atNo1}]]</th>
 				<td th:text="${highlights.weeksAtNo1}" align="right">50</td>
 			</tr>
 			<tr th:if="${highlights.weeksInTop5 > 0}">
-				<th>In Top 5</th>
+                <th>[[#{inTop5}]]</th>
 				<td th:text="${highlights.weeksInTop5}" align="right">100</td>
 			</tr>
 			<tr th:if="${highlights.weeksInTop10 > 0}">
-				<th>In Top 10</th>
+                <th>[[#{inTop10}]]</th>
 				<td th:text="${highlights.weeksInTop10}" align="right">200</td>
 			</tr>
 			<tr th:if="${highlights.weeksInTop20 > 0}">
-				<th>In Top 20</th>
+                <th>[[#{inTop20}]]</th>
 				<td th:text="${highlights.weeksInTop20}" align="right">300</td>
 			</tr>
 			<tr th:if="${highlights.weeksInTop50 > 0}">
-				<th>In Top 50</th>
+                <th>[[#{inTop50}]]</th>
 				<td th:text="${highlights.weeksInTop50}" align="right">400</td>
 			</tr>
 			<tr th:if="${highlights.weeksInTop100 > 0}">
-				<th>In Top 100</th>
+                <th>[[#{inTop100}]]</th>
 				<td th:text="${highlights.weeksInTop100}" align="right">500</td>
 			</tr>
 		</table>
 		</th:block>
 		<th:block th:if="${highlights.yearEndsInTop100 > 0}">
-		<h4>Year-Ends</h4>
+            <h4>[[#{yearEnds}]]</h4>
 		<table class="table table-condensed text-nowrap">
 			<tr th:if="${highlights.yearEndsAtNo1 > 0}">
-				<th>At No. 1</th>
+                <th>[[#{atNo1}]]</th>
 				<td th:text="${highlights.yearEndsAtNo1}" align="right">1</td>
 			</tr>
 			<tr th:if="${highlights.yearEndsInTop5 > 0}">
-				<th>In Top 5</th>
+                <th>[[#{inTop5}]]</th>
 				<td th:text="${highlights.yearEndsInTop5}" align="right">1</td>
 			</tr>
 			<tr th:if="${highlights.yearEndsInTop10 > 0}">
-				<th>In Top 10</th>
+                <th>[[#{inTop10}]]</th>
 				<td th:text="${highlights.yearEndsInTop10}" align="right">2</td>
 			</tr>
 			<tr th:if="${highlights.yearEndsInTop20 > 0}">
-				<th>In Top 20</th>
+                <th>[[#{inTop20}]]</th>
 				<td th:text="${highlights.yearEndsInTop20}" align="right">3</td>
 			</tr>
 			<tr th:if="${highlights.yearEndsInTop50 > 0}">
-				<th>In Top 50</th>
+                <th>[[#{inTop50}]]</th>
 				<td th:text="${highlights.yearEndsInTop50}" align="right">4</td>
 			</tr>
 			<tr th:if="${highlights.yearEndsInTop100 > 0}">
-				<th>In Top 100</th>
+                <th>[[#{inTop100}]]</th>
 				<td th:text="${highlights.yearEndsInTop100}" align="right">5</td>
 			</tr>
 		</table>
 		</th:block>
 	</div>
 	<div th:if="${highlights.hasElo()}" class="col-md-5">
-		<h4>Elo Ranking</h4>
+        <h4>[[#{eloRanking}]]</h4>
 		<table class="table table-condensed text-nowrap" th:with="hasCurrent=${highlights.hasCurrentElo()}">
 			<tr>
 				<th>Elo</th>
-				<th th:if="${hasCurrent}" class="text-right">Current</th>
-				<th class="text-right">Best Rank</th>
-				<th class="text-right">Peak Rating</th>
+                <th th:if="${hasCurrent}" class="text-right">[[#{current}]]</th>
+                <th class="text-right">[[#{bestRank}]]</th>
+                <th class="text-right">[[#{peakRating}]]</th>
 			</tr>
 			<th:block th:with="elo=${highlights.elo}">
 			<tr th:unless="${elo.empty}">
-				<th>Overall</th>
+                <th>[[#{overall}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -303,7 +312,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.recentElo}">
 			<tr th:unless="${elo.empty}">
-				<th>Recent</th>
+                <th>[[#{recent}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -311,7 +320,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.hardElo}">
 			<tr class="bg-surface-H" th:unless="${elo.empty}">
-				<th>Hard</th>
+                <th>[[#{hard}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -319,7 +328,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.clayElo}">
 			<tr class="bg-surface-C" th:unless="${elo.empty}">
-				<th>Clay</th>
+                <th>[[#{clay}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -327,7 +336,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.grassElo}">
 			<tr class="bg-surface-G" th:unless="${elo.empty}">
-				<th>Grass</th>
+                <th>[[#{grass}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -335,7 +344,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.carpetElo}">
 			<tr class="bg-surface-P" th:unless="${elo.empty}">
-				<th>Carpet</th>
+                <th>[[#{carpet}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -343,7 +352,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.outdoorElo}">
 			<tr th:unless="${elo.empty}">
-				<th>Outdoor</th>
+                <th>[[#{outdoor}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -351,7 +360,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.indoorElo}">
 			<tr th:unless="${elo.empty}">
-				<th>Indoor</th>
+                <th>[[#{indoor}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -359,7 +368,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.setElo}">
 			<tr th:unless="${elo.empty}">
-				<th>Set</th>
+                <th>[[#{set}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -367,7 +376,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.gameElo}">
 			<tr th:unless="${elo.empty}">
-				<th>Game</th>
+                <th>[[#{game}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -375,7 +384,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.serviceGameElo}">
 			<tr th:unless="${elo.empty}">
-				<th>Service Game</th>
+                <th>[[#{serviceGame}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -383,7 +392,7 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.returnGameElo}">
 			<tr th:unless="${elo.empty}">
-				<th>Return Game</th>
+                <th>[[#{returnGame}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
@@ -391,14 +400,14 @@
 			</th:block>
 			<th:block th:with="elo=${highlights.tieBreakElo}">
 			<tr th:unless="${elo.empty}">
-				<th>Tie Break</th>
+                <th>[[#{tieBreak}]]</th>
 				<td th:if="${hasCurrent}" th:text="${elo.currentRank > 0 ? elo.currentRank + ' (' + elo.currentRating + ')' : _}" align="right">5 (2210)</td>
 				<td th:text="${elo.bestRank > 0 ? elo.bestRank + ' (' + #temporals.format(elo.bestRankDate, 'dd-MM-yyyy') + ')' : _}" align="right">5 (01-01-2010)</td>
 				<td th:text="${elo.bestRating > 0 ? elo.bestRating + ' (' + #temporals.format(elo.bestRatingDate, 'dd-MM-yyyy') + ')' : _}" align="right">2450 (01-01-2011)</td>
 			</tr>
 			</th:block>
 		</table>
-		<th:block th:include="fragments/aboutElo :: aboutElo('left')"/>
+        <!--th:block th:include="fragments/aboutElo :: aboutElo('left')"/-->
 		<div th:include="fragments/aboutElo :: aboutEloFormula"></div>
 	</div>
 </div>

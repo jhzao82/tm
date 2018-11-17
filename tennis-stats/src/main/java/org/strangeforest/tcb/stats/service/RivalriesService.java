@@ -180,8 +180,8 @@ public class RivalriesService {
 		"    PARTITION BY CASE WHEN player_id_1 < player_id_2 THEN player_id_1 || '-' || player_id_2 ELSE player_id_2 || '-' || player_id_1 END ORDER BY player_id_1\n" +
 		"  )\n" +
 		")\n" +
-		"SELECT r.player_id_1, p1.name name_1, p1.country_id country_id_1, p1.active active_1, p1.goat_points goat_points_1,\n" +
-		"  r.player_id_2, p2.name name_2, p2.country_id country_id_2, p2.active active_2, p2.goat_points goat_points_2, r.matches, r.won, r.lost,\n" +
+				"SELECT r.player_id_1, p1.name name_1, p1.chinese_name chinese_name_1, p1.country_id country_id_1, p1.active active_1, p1.goat_points goat_points_1,\n" +
+				"  r.player_id_2, p2.name name_2, p2.chinese_name chinese_name_2, p2.country_id country_id_2, p2.active active_2, p2.goat_points goat_points_2, r.matches, r.won, r.lost,\n" +
 		"%3$s\n" +
 		"FROM rivalries_3 r\n" +
 		"INNER JOIN player_v p1 ON p1.player_id = r.player_id_1\n" +
@@ -448,7 +448,7 @@ public class RivalriesService {
 		return new RivalryPlayer(
 			rs.getInt("player_id" + suffix),
 			rs.getString("name" + suffix),
-                rs.getString("chinese_name" + suffix),
+				rs.getString("chinese_name" + suffix),
 			getInternedString(rs, "country_id" + suffix),
 			rs.getBoolean("active" + suffix),
 			rs.getInt("goat_points" + suffix)
@@ -464,7 +464,7 @@ public class RivalriesService {
 			rs.getBoolean("indoor"),
 			rs.getInt("tournament_event_id"),
 			rs.getString("tournament"),
-                rs.getString("chinese_tournament"),
+				rs.getString("chinese_tournament"),
 			getInternedString(rs, "round"),
 			rs.getInt("winner_id"),
 			rs.getInt("loser_id"),

@@ -17,7 +17,7 @@
 <!--/*@thymesVar id="tournamentId" type="java.lang.Integer"*/-->
 <!--/*@thymesVar id="rankType" type="java.lang.String"*/-->
 <!--/*@thymesVar id="params" type="org.strangeforest.tcb.stats.controller.ParamsUtil"*/-->
-<head th:replace="fragments/head :: commonHead(${anyPlayerSelected} ? (${player1} != null ? (__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}) : '?') + ' vs ' +  (${player2} != null ? (__${#locale}__ == 'zh' and ${player2.chineseName} != null  ? ${player2.chineseName} : ${player2.name}) : '?') : ~{::title/text()}, true, ~{::template})">
+<head th:replace="fragments/head :: commonHead(${anyPlayerSelected} ? (${player1} != null ? (__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}) : '?') + ' vs ' +  (${player2} != null ? (__${#locale}__ == 'zh' and ${player2.chineseName} != null  ? ${player2.chineseName} : ${player2.name}) : '?') : (__${#locale}__ == 'zh' ? 'H2H' : ~{::title/text()}), true, ~{::template})">
 	<title>Head-to-Head</title>
 	<template>
 		<meta name="description"
@@ -112,18 +112,18 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="input-group">
-                <label for="player1" class="input-group-addon"><i class="fa fa-user"></i> Player 1:</label>
+				<label for="player1" class="input-group-addon"><i class="fa fa-user"></i> [[#{player}]] 1:</label>
                 <input id="player1" type="text" class="ui-widget search-field form-control" size="30"
-                       th:value="(${player1} != null ? (__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}) : '')"
-                       th:data-playerId="${player1 != null ? player1.id : _}" placeholder="Search Player 1"/>
+					   th:value="(${player1} != null ? (__${#locale}__ == 'zh' and ${player1.chineseName} != null ? ${player1.chineseName} : ${player1.name}) : '')"
+					   th:data-playerId="${player1 != null ? player1.id : _}" th:placeholder="#{searchPlayer1}"/>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="input-group">
-                <label for="player2" class="input-group-addon"><i class="fa fa-user"></i> Player 2:</label>
+				<label for="player2" class="input-group-addon"><i class="fa fa-user"></i> [[#{player}]] 2:</label>
                 <input id="player2" type="text" class="ui-widget search-field form-control" size="30"
-                       th:value="(${player2} != null ? (__${#locale}__ == 'zh' and ${player2.chineseName} != null ? ${player2.chineseName} : ${player2.name}) : '')"
-                       placeholder="Search Player 2"/>
+					   th:value="(${player2} != null ? (__${#locale}__ == 'zh' and ${player2.chineseName} != null ? ${player2.chineseName} : ${player2.name}) : '')"
+					   th:placeholder="#{searchPlayer2}"/>
 			</div>
 		</div>
 	</div>
@@ -153,9 +153,9 @@
 		</div>
 	</div>
 	<br th:if="${neitherPlayerSelected}"/>
-	<div th:if="${neitherPlayerSelected}" class="alert alert-info">Please select players for H2H comparision.</div>
-	<div th:if="${anyPlayerSelected && !bothPlayersSelected}" class="alert alert-info">Please select another player for H2H comparision.</div>
-	<div th:if="${bothPlayersSelected && samePlayersSelected}" class="alert alert-warning">Cannot compare the same player!</div>
+	<div th:if="${neitherPlayerSelected}" class="alert alert-info">[[#{h2hinfo1}]]</div>
+	<div th:if="${anyPlayerSelected && !bothPlayersSelected}" class="alert alert-info">[[#{h2hinfo2}]]</div>
+	<div th:if="${bothPlayersSelected && samePlayersSelected}" class="alert alert-warning">[[#{h2hinfo3}]]</div>
 	<th:block th:if="${bothPlayersSelected && !samePlayersSelected}">
 	<ul id="h2hPills" class="nav nav-pills tab-param" th:with="playerIdsParams='?playerId1=' + ${player1.id} + '&playerId2=' + ${player2.id}, playerIdParams='?playerId=' + ${player1.id} + '&playerId=' + ${player2.id}">
 		<li><a id="profilesPill" data-toggle="pill" href="#profiles" th:data-url="'/h2hProfiles' + ${playerIdsParams}">[[#{profiles}]]</a>

@@ -436,3 +436,21 @@ a.black:focus {
 .form-control {
     padding: 4px 10px;
 }
+@media (width <= 500px) {
+.btn-group {
+    width: 100%;
+}
+.btn{
+    width: 100%;
+}
+.form-group.search {
+    width: 100%;
+    margin-top: 10px;
+}
+.margin-left, .no-margin-left {
+    margin-left:0;
+}
+.col-sm-12 {
+    margin: 0 -15px;
+}
+}

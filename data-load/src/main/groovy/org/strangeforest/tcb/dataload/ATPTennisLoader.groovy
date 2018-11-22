@@ -228,6 +228,15 @@ class ATPTennisLoader {
 
 		println 'Loading team tournament winners...'
 		executeSQLFile(sql, '/team-tournament-winners.sql')
+
+		println "Updating player's chinese name..."
+		executeSQLFile(sql, '/update-player-chinese-name.sql')
+
+		println "Updating tournament's chinese name..."
+		executeSQLFile(sql, '/update-tournament-chinese-name.sql')
+
+		println "Updating tournament event's chinese name..."
+		executeSQLFile(sql, '/update-tournament-event-chinese-name.sql')
 	}
 
 	def correctData(sql) {

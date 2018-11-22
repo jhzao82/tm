@@ -76,7 +76,7 @@
 		function rankTypeChanged(skipDatesLoad) {
 			var rankType = $("#rankType").val();
 			var $rankingsTable = $("#rankingsTable");
-			$rankingsTable.find("th[data-column-id='points'] > a > span.text").html(rankType === "RANK" ? [[#{points}]] : "Elo Rating");
+			$rankingsTable.find("th[data-column-id='points'] > a > span.text").html(rankType === "RANK" ? [[#{points}]] : [[#{eloRating}]]);
 			$rankingsTable.find("th[data-column-id='pointsDiff'] > a > span.text").html(rankType === "RANK" ? "Pts. +/-" : "Elo +/-");
 			$("#eloInfo").css("display", rankType !== "RANK" ? "inline" : "none");
 			seasonChanged(skipDatesLoad);
@@ -101,7 +101,7 @@
 		}
 		function populateDates(season, dates) {
 			var $date = $("#date");
-			$date.append("<option value=''>" + (season == new Date().getFullYear() ? [[#{current}]] : "Year-end") + "</option>");
+			$date.append("<option value=''>" + (season == new Date().getFullYear() ? [[#{current}]] :[[ #{yearEnd}]]) + "</option>");
 			for (var i = 0; i < dates.length; i++) {
 				var date = formatDate(dates[i]);
 				$date.append("<option value='" + date + "'" + (date == "[(${#temporals.format(date, 'dd-MM-yyyy')})]" ? " selected='selected'" : "") + ">" + date + "</option>");
@@ -201,12 +201,12 @@
 		</tr>
 		</thead>
 	</table>
-	<div id="estimatedRankingInfo" style="display: none">
+	<!--div id="estimatedRankingInfo" style="display: none">
 		<th:block th:include="fragments/aboutRanking :: aboutEstimatedRanking"/>
 	</div>
 	<div id="eloInfo" style="display: none">
 		<th:block th:include="fragments/aboutElo :: aboutElo('top')"/>
-	</div>
+	</div-->
 	<th:block th:include="fragments/deviceDetector :: deviceDetectors"/>
 	<footer th:include="fragments/footer :: copy"></footer>
 	<div th:include="fragments/aboutElo :: aboutEloFormula"></div>

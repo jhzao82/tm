@@ -436,21 +436,60 @@ a.black:focus {
 .form-control {
     padding: 4px 10px;
 }
+footer {
+    margin-top: 10px;
+}
 @media (width <= 500px) {
+.row .input-group {
+    margin-top: 20px;
+}
 .btn-group {
-    width: 100%;
-}
-.btn{
-    width: 100%;
-}
-.form-group.search {
     width: 100%;
     margin-top: 10px;
 }
+.btn, .tab-pane button{
+    width: 100%;
+}
+#rankingTopN .btn{
+    width: auto;
+}
+.form-group.search {
+    width: 100%;
+    margin: 10px 0;
+}
 .margin-left, .no-margin-left {
-    margin-left:0;
+    margin-left: 0;
+}
+.margin-right, .no-margin-right {
+    margin-right: 0;
 }
 .col-sm-12 {
     margin: 0 -15px;
+}
+.grid-title {
+    margin: 10px 0;
+}
+.tab-pane .input-group {
+    margin-top: 10px;
+}
+.tab-pane .btn {
+    margin-top: 10px;
+}
+.row select {
+    margin-bottom: 10px;
+}
+#resultsTable th {
+    display:block;
+}
+.row .pull-left, .row .pull-right {
+    width: 100%;
+}
+#rankingTopN {
+    position: relative;
+}
+#rankingTopN .fa-search-plus {
+    position: absolute;
+    right: 10px;
+    top: 25px;
 }
 }

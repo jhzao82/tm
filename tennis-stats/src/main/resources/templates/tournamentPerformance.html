@@ -291,7 +291,8 @@
 <div id="perfOpponentDiv" class="btn-group pull-left margin-right">
 	<select id="perfOpponent" class="form-control" onchange="perfOpponentChanged(); reloadTopPerformers()" data-toggle="tooltip" data-placement="top" title="Filter by opponent">
 		<option value="">[[#{vsAll}]]</option>
-		<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="${opponentCategory.key.text}" label="Rank">
+		<optgroup th:each="opponentCategory : ${opponentCategories}" th:label="#{'vs'+${opponentCategory.key}}"
+				  label="Rank">
 			<option th:each="opponent : ${opponentCategory.value}" th:value="${opponent}" value="NO_1"
 					th:text="#{'enum'+${opponent}}">Vs No. 1
 			</option>
@@ -337,5 +338,5 @@
 	</tr>
 	</thead>
 </table>
-<p><i>* Minimum <span id="perfMinEntries">10 matches</span></i></p>
+	<!--p><i>* Minimum <span id="perfMinEntries">10 matches</span></i></p-->
 </th:block>

@@ -35,7 +35,7 @@ subprojects {
 	remotes {
 		def home = System.properties['user.home']
 		digitalOcean {
-			host = '46.101.166.59'
+			host = '118.24.70.118'
 			user = 'root'
 			identity = file("${home}/.ssh/id_rsa")
 		}

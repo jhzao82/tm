@@ -30,6 +30,9 @@ class WikipediaPlayerDataLoader {
 	}
 
 	def updatePlayerData() {
+		def f = new File('wiki-not-found-players.txt')
+		def badlist = f.exists() ? f.collect { it } : []
+		def url = ''
 		def stopwatch = Stopwatch.createStarted()
 		println 'Updating player data'
 		def playerIds = sqlPool.withSql {
@@ -41,7 +44,9 @@ class WikipediaPlayerDataLoader {
 			pool.submit{
 				playerIds.parallelStream().forEach { playerId ->
 					try {
-						def url = playerService.getPlayerWikipediaUrl(playerId)
+						url = playerService.getPlayerWikipediaUrl(playerId)
+						if (badlist.contains(url))
+							throw new Exception("not found")
 						def playerData = findPlayerData(url)
 						if (playerData) {
 							updatePlayer(playerId, playerData)
@@ -56,6 +61,8 @@ class WikipediaPlayerDataLoader {
 							printf(' %1$.2f%%\n', 100.0 * total.get() / playerIds.size())
 					}
 					catch (Exception ex) {
+						if (ex.toString().find("retry 5") != -1)
+							f << url + "\n"
 						System.err.println 'Error finding player data for player: ' + playerId
 						ex.printStackTrace()
 					}

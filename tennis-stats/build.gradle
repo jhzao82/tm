@@ -133,7 +133,7 @@ task fullDeployToDigitalOcean {
 		def version = project.property('version')
 		def tennisStats = "tennis-stats-${version}"
 		def tennisStatsDist = "${tennisStats}.tar"
-		def srcPath = 'build/distributions'
+		def srcPath = '/home/fkl/github/tennis-crystal-ball/tennis-stats/build/distributions'
 		def destPath = '/tcb'
 		ssh.run {
 			session(remotes.digitalOcean) {

@@ -439,7 +439,8 @@ a.black:focus {
 footer {
     margin-top: 10px;
 }
-@media (width <= 500px) {
+
+@media (max-width: 480px) or (max-width: 767px) or (max-width: 991px) {
 .row .input-group {
     margin-top: 20px;
 }
@@ -487,9 +488,19 @@ footer {
 #rankingTopN {
     position: relative;
 }
+#rankingTopN .pull-left{
+    position: absolute;
+    margin-top: 5px;
+}
 #rankingTopN .fa-search-plus {
     position: absolute;
     right: 10px;
     top: 25px;
+}
+.bootgrid-table {
+    table-layout: auto;
+}
+#recordsTable-header .row {
+    margin-left: 0;
 }
 }

@@ -45,7 +45,12 @@ function autocompletePlayer(id) {
 				if (ui.item)
 					window.location.href = "/playerProfile?playerId=" + ui.item.id;
 			}
-		});
+		}).autocomplete( "instance" )._renderItem = function( ul, item ) {
+		    var chineseLabel = ( isChinese && item.chineseLabel != undefined ) ? item.chineseLabel  + "<br>" : "";
+            return $( "<li>" )
+              .append( "<div>" + chineseLabel + item.label + "</div>" )
+              .appendTo( ul );
+          };
 	});
 }
 

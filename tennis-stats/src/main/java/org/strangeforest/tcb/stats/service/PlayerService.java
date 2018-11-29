@@ -54,12 +54,12 @@ public class PlayerService {
 		"WHERE winner_id = :playerId OR loser_id = :playerId";
 
 	private static final String PLAYER_AUTOCOMPLETE_QUERY =
-		"SELECT player_id, name, country_id FROM player_v\n" +
+			"SELECT player_id, name, chinese_name, country_id FROM player_v\n" +
 		"WHERE name ILIKE '%' || :name || '%' OR nicknames ILIKE '%' || :name || '%'\n" +
 		"ORDER BY goat_points DESC, best_rank, name LIMIT :count";
 
 	private static final String PLAYER_AUTOCOMPLETE_EX_QUERY =
-		"SELECT player_id, name, country_id, least(name <-> :name, nicknames <-> :name) AS dist FROM player_v\n" +
+			"SELECT player_id, name, chinese_name, country_id, least(name <-> :name, nicknames <-> :name) AS dist FROM player_v\n" +
 		"WHERE name <-> :name <= :distance OR nicknames <-> :name <= :distance\n" +
 		"ORDER BY dist, goat_points DESC, best_rank, name LIMIT :count";
 
@@ -296,7 +296,8 @@ public class PlayerService {
 	private AutocompleteOption playerAutocompleteOptionMapper(ResultSet rs, int rowNum) throws SQLException {
 		String id = rs.getString("player_id");
 		String name = rs.getString("name");
+		String chineseName = rs.getString("chinese_name");
 		String countryId = getInternedString(rs, "country_id");
-		return new AutocompleteOption(id, name, name + " (" + countryId + ')');
+		return new AutocompleteOption(id, name, name + " (" + countryId + ')', chineseName);
 	}
 }

@@ -115,7 +115,7 @@ task quickDeployToDigitalOcean {
 	doLast {
 		def version = project.property('version')
 		def tennisStatsJar = "tennis-stats-${version}.jar"
-		def srcPath = 'build/libs'
+		def srcPath = '/home/fkl/github/tennis-crystal-ball/tennis-stats/build/libs'
 		def destPath = '/tcb/tennis-stats/lib'
 		ssh.run {
 			session(remotes.digitalOcean) {

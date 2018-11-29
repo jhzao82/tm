@@ -8,11 +8,13 @@ public class AutocompleteOption {
 	private final String id;
 	private final String value;
 	private final String label;
+    private final String chineseLabel;
 
-	public AutocompleteOption(String id, String value, String label) {
+    public AutocompleteOption(String id, String value, String label, String chineseLabel) {
 		this.id = requireNonNull(id);
 		this.value = value;
 		this.label = label;
+        this.chineseLabel = chineseLabel;
 	}
 
 	public String getId() {
@@ -26,6 +28,10 @@ public class AutocompleteOption {
 	public String getLabel() {
 		return label;
 	}
+
+    public String getChineseLabel() {
+        return chineseLabel;
+    }
 
 
 	// Object methods

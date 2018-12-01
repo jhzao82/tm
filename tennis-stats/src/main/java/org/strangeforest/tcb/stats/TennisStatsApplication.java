@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.*;
 import org.springframework.scheduling.annotation.*;
 import org.springframework.context.annotation.*;
 import org.springframework.boot.web.servlet.*;
+import org.springframework.web.filter.*;
 
 @SpringBootApplication
 @EnableCaching
@@ -22,5 +23,10 @@ public class TennisStatsApplication {
 		registrationBean.setFilter(new UrlFilter());
 		registrationBean.addUrlPatterns("/*");
 		return registrationBean;
+	}
+
+	@Bean
+	public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
+		return new ShallowEtagHeaderFilter();
 	}
 }

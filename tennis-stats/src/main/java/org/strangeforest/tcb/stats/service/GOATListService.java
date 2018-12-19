@@ -19,9 +19,8 @@ import static java.lang.String.*;
 import static java.util.Arrays.*;
 import static java.util.stream.Collectors.*;
 import static org.strangeforest.tcb.stats.service.FilterUtil.*;
-import static org.strangeforest.tcb.stats.service.ParamsUtil.*;
-import static org.strangeforest.tcb.stats.service.ResultSetUtil.*;
-import static org.strangeforest.tcb.stats.util.NameUtil.shortenChineseName;
+import static org.strangeforest.tcb.stats.util.ParamsUtil.*;
+import static org.strangeforest.tcb.stats.util.ResultSetUtil.*;
 
 @Service
 public class GOATListService {
@@ -148,17 +147,17 @@ public class GOATListService {
 	}
 
 	@Cacheable("GOATList.Count")
-	public int getPlayerCount(String surface, PlayerListFilter filter, GOATListConfig config) {
-		Surface aSurface = Surface.safeDecode(surface);
-		return Math.min(MAX_PLAYER_COUNT, jdbcTemplate.queryForObject(
-			format(GOAT_COUNT_QUERY,
-				config.hasDefaultTournamentFactors() ? "" : "WITH " + getTournamentGOATPointsTable(aSurface), getTableName(aSurface), config.hasDefaultTournamentFactors() ? "" : TOURNAMENT_GOAT_POINTS_JOIN,
-				getGOATPointsExpression(aSurface, config), getSurfaceCriteria(aSurface), filter.getCriteria(), getOldLegendsCriteria(config.isOldLegends())
-			),
-			getParams(aSurface, filter, config),
-			Integer.class
-		));
-	}
+    public int getPlayerCount(String surface, PlayerListFilter filter, GOATListConfig config) {
+        Surface aSurface = Surface.safeDecode(surface);
+        return Math.min(MAX_PLAYER_COUNT, jdbcTemplate.queryForObject(
+                format(GOAT_COUNT_QUERY,
+                        config.hasDefaultTournamentFactors() ? "" : "WITH " + getTournamentGOATPointsTable(aSurface), getTableName(aSurface), config.hasDefaultTournamentFactors() ? "" : TOURNAMENT_GOAT_POINTS_JOIN,
+                        getGOATPointsExpression(aSurface, config), getSurfaceCriteria(aSurface), filter.getCriteria(), getOldLegendsCriteria(config.isOldLegends())
+                ),
+                getParams(aSurface, filter, config),
+                Integer.class
+        ));
+    }
 
 	@Cacheable("GOATList.Table")
 	public BootgridTable<GOATListRow> getGOATListTable(int playerCount, String surface, PlayerListFilter filter, GOATListConfig config, String orderBy, int pageSize, int currentPage) {

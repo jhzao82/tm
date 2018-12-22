@@ -13,6 +13,7 @@ public class Player {
 	private String name;
     private String chineseName;
 	private LocalDate dob;
+	private LocalDate dod;
 	private int age;
 	private Country country;
 	private String birthplace;
@@ -91,6 +92,14 @@ public class Player {
 
 	public void setDob(LocalDate dob) {
 		this.dob = dob;
+	}
+
+	public LocalDate getDod() {
+		return dod;
+	}
+
+	public void setDod(LocalDate dod) {
+		this.dod = dod;
 	}
 
 	public int getAge() {

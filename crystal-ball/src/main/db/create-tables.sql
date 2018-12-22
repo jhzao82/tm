@@ -70,6 +70,7 @@ CREATE TABLE player (
 	last_name TEXT,
 	chinese_name TEXT,
 	dob DATE,
+	dod DATE,
 	country_id TEXT NOT NULL,
 	birthplace TEXT,
 	residence TEXT,
